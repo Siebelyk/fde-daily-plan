@@ -148,8 +148,14 @@ from secure_rag import SecureRAGPipeline  # 使用 Day 19 的 pipeline
 ## 进阶挑战
 
 1. 集成 Garak 做更全面的自动化扫描
+   - 💡 **思路提示**：pip install garak，配置 probes 列表后扫描 RAG 端点；对比扫描前后的防御覆盖率
+   - 📎 **参考**：[Garak GitHub 仓库](https://github.com/leondz/garak)
 2. 设计回归测试：每次更新防御规则后验证不产生退化
+   - 💡 **思路提示**：用 pytest + fixtures 管理测试数据集，每次规则更新后跑回归确保不引入新的 false negative
+   - 📎 **参考**：[pytest 文档](https://docs.pytest.org/)
 3. 实现持续监控 dashboard
+   - 💡 **思路提示**：用 Streamlit 或 Gradio 做一个简单 dashboard 展示每日扫描结果、攻击趋势、防御覆盖率
+   - 📎 **参考**：[Streamlit 官网](https://streamlit.io/)
 
 ---
 

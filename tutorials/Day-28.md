@@ -165,8 +165,14 @@ for p in PROJECTS:
 ## 进阶挑战
 
 1. 录制 3 个项目的 demo 视频
+   - 💡 **思路提示**：用 OBS 或 QuickTime 录屏，每个 demo 控制在 3-5 分钟，重点展示攻击-防御-结果
+   - 📎 **参考**：[OBS Studio 官网](https://obsproject.com/)
 2. 准备一份 1-page 的安全架构图
+   - 💡 **思路提示**：用 draw.io 或 Excalidraw 画安全架构图，展示数据流 + 防御层 + 信任边界
+   - 📎 **参考**：[Excalidraw 在线画图](https://excalidraw.com/)
 3. 找同学做模拟面试并录音回听
+   - 💡 **思路提示**：用 STAR 法则（Situation-Task-Action-Result）回答行为问题；技术问题先讲原理再讲实战经验
+   - 📎 **参考**：[STAR 面试法指南](https://www.themuse.com/advice/interviewing-questions-and-answers-the-star-method)
 
 ---
 

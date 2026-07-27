@@ -177,8 +177,14 @@ print(f"SafeAnalyze memory: {safe_analyze.long_term} (should be empty)")
 ## 进阶挑战
 
 1. 用 AutoGen 框架复现同样的攻击
+   - 💡 **思路提示**：AutoGen 的 GroupChat 支持多 Agent 通信，用 ConversableAgent 配置共享 memory
+   - 📎 **参考**：[Microsoft AutoGen 文档](https://microsoft.github.io/autogen/)
 2. 设计一个 Agent 信任评分衰减机制
+   - 💡 **思路提示**：信任分随时间衰减（exponential decay），每次成功交互 +delta，每次可疑交互 -2*delta
+   - 📎 **参考**：[信任衰减模型](https://en.wikipedia.org/wiki/Decay_model)
 3. 研究区块链/Audit log 在 Agent 通信溯源中的应用
+   - 💡 **思路提示**：用 append-only log（类似区块链）记录 Agent 间消息，事后可完整溯源攻击链路
+   - 📎 **参考**：[Hyperledger — 审计链实践](https://github.com/hyperledger-labs/fablo)
 
 ---
 

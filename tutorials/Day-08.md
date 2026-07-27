@@ -117,8 +117,14 @@ for name, attack in ATTACKS.items():
 ## 进阶挑战
 
 1. 用真实 API 测试每种攻击是否被模型拒绝
+   - 💡 **思路提示**：用 OpenAI API 的 gpt-4o 测试每类攻击，记录 model='gpt-4o' 的拒绝响应
+   - 📎 **参考**：[OpenAI Chat API 参考](https://platform.openai.com/docs/api-reference/chat)
 2. 尝试构造能绕过检测器的新型 injection
+   - 💡 **思路提示**：尝试编码绕过（base64/URL encode）、分隔符注入、payload 拆分等检测器盲区
+   - 📎 **参考**：[Prompt Injection 攻击综述](https://arxiv.org/abs/2310.12815)
 3. 研究 NeMo Guardrails 的 injection 检测方案
+   - 💡 **思路提示**：NeMo Guardrails 用 Colang 定义对话流规则，可配置 input/output rail 做注入检测
+   - 📎 **参考**：[NVIDIA NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
 
 ---
 

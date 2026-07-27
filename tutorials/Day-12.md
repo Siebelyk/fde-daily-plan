@@ -157,8 +157,14 @@ for t in mock_stream(tokens):
 ## 进阶挑战
 
 1. 研究如何在 SSE 流中实现 look-ahead 检测
+   - 💡 **思路提示**：在 SSE 流中维护一个 buffer，每次收到新 token 时检查 buffer 尾部是否匹配敏感模式
+   - 📎 **参考**：[SSE (Server-Sent Events) MDN](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
 2. 尝试用 embedding 相似度做语义级敏感检测
+   - 💡 **思路提示**：用 sentence-transformers 编码输出片段，与敏感模式库做 cosine similarity 阈值检测
+   - 📎 **参考**：[Sentence-Transformers 文档](https://www.sbert.net/)
 3. 设计一个流式输出的安全审计日志方案
+   - 💡 **思路提示**：记录每个 SSE event 的 timestamp、content、token_count、filtered_flag；用异步队列写入
+   - 📎 **参考**：[Python asyncio.Queue 文档](https://docs.python.org/3/library/asyncio-queue.html)
 
 ---
 

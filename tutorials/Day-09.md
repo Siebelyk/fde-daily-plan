@@ -120,8 +120,14 @@ for name, convo in JAILBREAKS.items():
 ## 进阶挑战
 
 1. 尝试用 GPT-4 模型测试越狱是否更容易/更难
+   - 💡 **思路提示**：GPT-4 的对齐更强但不是免疫；尝试更长上下文的渐进式越狱，记录效果差异
+   - 📎 **参考**：[GPT-4 越狱研究](https://arxiv.org/abs/2308.03825)
 2. 研究对抗性后缀攻击 (GCG attack) 的原理
+   - 💡 **思路提示**：GCG attack 通过梯度搜索找到对抗性后缀，自动化生成 jailbreak token 序列
+   - 📎 **参考**：[GCG Attack 论文 (Zou et al.)](https://arxiv.org/abs/2307.15043)
 3. 设计一个多轮对话的安全状态机
+   - 💡 **思路提示**：用有限状态机跟踪对话状态：normal → suspicious → blocked，每个状态有对应的过滤策略
+   - 📎 **参考**：[LangGraph — 状态机 Agent 框架](https://langchain-ai.github.io/langgraph/)
 
 ---
 

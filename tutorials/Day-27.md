@@ -193,8 +193,14 @@ class LLMSecurityAssessment:
 ## 进阶挑战
 
 1. 设计一个持续安全监控 dashboard
+   - 💡 **思路提示**：用 Grafana + Prometheus 做安全监控面板，展示 Garak 扫描结果趋势、攻击类型分布
+   - 📎 **参考**：[Grafana 官网](https://grafana.com/)
 2. 研究 Garak 自定义 probe 的编写方法
+   - 💡 **思路提示**：继承 garak.probes.base.Probe 类，实现 probe() 方法定义自定义攻击模板
+   - 📎 **参考**：[Garak Probe 编写指南](https://github.com/leondz/garak/blob/main/docs/source/probestypes.rst)
 3. 对比 Garak vs PyRIT vs Lakera Guard 的能力差异
+   - 💡 **思路提示**：Garak 专注漏洞探测（probe-based），PyRIT 支持自动化攻击编排（multi-turn），Lakera Guard 是商用防御 API
+   - 📎 **参考**：[PyRIT GitHub 仓库](https://github.com/Azure/PyRIT)
 
 ---
 

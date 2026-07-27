@@ -183,9 +183,17 @@ curl 'localhost:8000/audit?token=token-alice'
 ## 进阶挑战
 
 1. 用 ChromaDB 替代 TF-IDF 实现真实向量检索
+   - 💡 **思路提示**：ChromaDB 的 PersistentClient 支持本地持久化，用 collection.add() 批量入库
+   - 📎 **参考**：[ChromaDB 使用指南](https://docs.trychroma.com/usage-guide)
 2. 添加 OAuth 2.0 认证
+   - 💡 **思路提示**：用 authlib 库实现 OAuth 2.0 Authorization Code flow，支持 Google/GitHub 登录
+   - 📎 **参考**：[AuthLib 文档](https://authlib.org/)
 3. 实现 Docker Compose 部署 + Redis 缓存
+   - 💡 **思路提示**：docker-compose.yml 定义 api + redis + chromadb 三个服务，注意 volume 挂载和数据持久化
+   - 📎 **参考**：[Docker Compose 文档](https://docs.docker.com/compose/)
 4. 添加 Prometheus 监控指标
+   - 💡 **思路提示**：用 prometheus-fastapi-instrumentator 自动收集请求指标，自定义 RAG 检索质量指标
+   - 📎 **参考**：[FastAPI Prometheus 集成](https://github.com/tralln/prometheus-fastapi-instrumentator)
 
 ---
 

@@ -139,8 +139,14 @@ vLLM 部署安全 = API 认证 + 速率限制 + 输出过滤 + 日志审计 + �
 ## 进阶挑战
 
 1. 用 Docker Compose 部署 vLLM + nginx + Redis 做完整安全栈
+   - 💡 **思路提示**：docker-compose.yml 定义 vllm + nginx（反向代理 + 限流） + redis（缓存/限流） 三层架构
+   - 📎 **参考**：[vLLM 部署文档](https://docs.vllm.ai/en/latest/serving/deployment.html)
 2. 研究 vLLM 的 PagedAttention 对安全的影响
+   - 💡 **思路提示**：PagedAttention 的分页复用在多用户场景下可能带来跨 session 信息泄露，需测试隔离性
+   - 📎 **参考**：[vLLM / PagedAttention 论文](https://arxiv.org/abs/2309.06180)
 3. 实现 vLLM 的 Prometheus 指标导出
+   - 💡 **思路提示**：vLLM 内置 Prometheus 指标，查看 /metrics 端点；关注 num_requests_running、gpu_cache_usage
+   - 📎 **参考**：[vLLM Metrics 文档](https://docs.vllm.ai/en/latest/serving/metrics.html)
 
 ---
 

@@ -200,9 +200,17 @@ print(f"Audit entries: {len(r.json())}")
 ## 进阶挑战
 
 1. 用 Redis 替代内存存储实现分布式限流
+   - 💡 **思路提示**：用 redis-py 实现 token bucket 或 sliding window 限流，多实例共享 Redis 保证一致性
+   - 📎 **参考**：[Redis 分布式限流](https://redis.io/docs/manual/patterns/distributed-locks/)
 2. 添加 Prometheus 指标端点 /metrics
+   - 💡 **思路提示**：用 prometheus-fastapi-instrumentator 自动暴露 /metrics，或手动定义自定义指标
+   - 📎 **参考**：[FastAPI Prometheus 集成](https://github.com/tralln/prometheus-fastapi-instrumentator)
 3. 实现规则的 YAML 配置热加载
+   - 💡 **思路提示**：用 watchdog 库监听 YAML 文件变更，变更后重新加载规则，无需重启服务
+   - 📎 **参考**：[Python Watchdog 文档](https://python-watchdog.readthedocs.io/)
 4. 用 Docker Compose 部署网关 + Redis + Prometheus
+   - 💡 **思路提示**：docker-compose.yml 定义 3 个服务，注意网络隔离和 health check
+   - 📎 **参考**：[Docker Compose 文档](https://docs.docker.com/compose/)
 
 ---
 

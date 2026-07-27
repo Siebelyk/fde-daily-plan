@@ -188,8 +188,14 @@ Stats: {pipeline.stats}")
 ## 进阶挑战
 
 1. 集成 NeMo Guardrails 并对比效果
+   - 💡 **思路提示**：pip install nemoguardrails，用 Colang 定义 input rail 检测注入、output rail 过滤敏感信息
+   - 📎 **参考**：[NeMo Guardrails GitHub](https://github.com/NVIDIA/NeMo-Guardrails)
 2. 实现配置文件驱动的规则管理（YAML/JSON）
+   - 💡 **思路提示**：用 YAML 定义规则（pattern + action），运行时热加载；参考 Guardrails AI 的配置模式
+   - 📎 **参考**：[Guardrails AI 文档](https://www.guardrailsai.com/)
 3. 添加 Prometheus 指标：每层拦截率、误报率、延迟
+   - 💡 **思路提示**：为每层定义 Counter（拦截次数）和 Histogram（延迟），导出到 /metrics 端点
+   - 📎 **参考**：[prometheus-client Python](https://github.com/prometheus/client_python)
 
 ---
 

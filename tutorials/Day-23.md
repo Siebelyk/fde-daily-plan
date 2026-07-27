@@ -180,8 +180,14 @@ MCP 安全是 Agent 生态的关键：任何 MCP Server 都是潜在攻击入口
 ## 进阶挑战
 
 1. 研究 MCP 的权限模型和 OAuth 支持
+   - 💡 **思路提示**：MCP 的 OAuth 用于 Server-Client 认证，研究 trust chain 和工具签名机制
+   - 📎 **参考**：[MCP 协议规范](https://modelcontextprotocol.io/specification)
 2. 设计一个 MCP Server 的信任评分系统
+   - 💡 **思路提示**：为每个 MCP Server 维护一个信任分：历史交互成功率 + 安全审计结果 + 用户确认率
+   - 📎 **参考**：[Agent 安全综述论文](https://arxiv.org/abs/2402.11357)
 3. 实现 MCP 交互的完整审计日志
+   - 💡 **思路提示**：记录每次 MCP 交互的：server_id、tool_name、request、response、user_confirmation
+   - 📎 **参考**：[MCP Tools 概念文档](https://modelcontextprotocol.io/docs/concepts/tools)
 
 ---
 

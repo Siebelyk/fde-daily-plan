@@ -108,8 +108,14 @@ for tc in test_cases:
 ## 进阶挑战
 
 1. 尝试用 embedding 相似度替代 Jaccard，看效果是否更好
+   - 💡 **思路提示**：用 sentence-transformers 的 SentenceTransformer 编码后算 cosine similarity，对比 Jaccard 和 embedding 两种方法的一致性差异
+   - 📎 **参考**：[Sentence-Transformers 文档](https://www.sbert.net/)
 2. 研究 SelfCheckGPT 的具体实现
+   - 💡 **思路提示**：SelfCheckGPT 通过多次采样 + 一致性投票检测幻觉，核心是 '不确定的模型会产生不一致的回答'
+   - 📎 **参考**：[SelfCheckGPT 论文](https://arxiv.org/abs/2303.17651)
 3. 思考：如何在 RAG 系统中集成幻觉检测？
+   - 💡 **思路提示**：在 RAG 的 retrieve 和 generate 之间加一层 fact-checking：用检索到的源文档做 entailment 校验
+   - 📎 **参考**：[RAGAS — RAG 评估框架](https://arxiv.org/abs/2311.09120)
 
 ---
 

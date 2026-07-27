@@ -172,9 +172,17 @@ test_rate_limit()
 ## 进阶挑战
 
 1. 添加 API Key 认证层
+   - 💡 **思路提示**：用 FastAPI 的 Security + HTTPBearer 实现 API Key 验证，配合 dependency injection
+   - 📎 **参考**：[FastAPI Security 文档](https://fastapi.tiangolo.com/tutorial/security/)
 2. 用 Redis 替代内存存储速率限制和审计日志
+   - 💡 **思路提示**：用 redis-py 的 incr + expire 实现滑动窗口限流；审计日志用 Redis List 存储
+   - 📎 **参考**：[Redis 分布式模式文档](https://redis.io/docs/manual/patterns/distributed-locks/)
 3. 添加 Prometheus 指标导出
+   - 💡 **思路提示**：用 prometheus-client 库暴露 /metrics 端点，监控 QPS、拦截率、延迟分布
+   - 📎 **参考**：[prometheus-client Python 库](https://github.com/prometheus/client_python)
 4. 用 Docker 容器化部署
+   - 💡 **思路提示**：写 Dockerfile 时注意非 root 用户运行、最小化镜像（slim/alpine）、.dockerignore
+   - 📎 **参考**：[Docker 构建最佳实践](https://docs.docker.com/build/building/best-practices/)
 
 ---
 

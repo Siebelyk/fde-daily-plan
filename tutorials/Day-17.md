@@ -131,8 +131,14 @@ Embedding 投毒防御：入库前异常检测 + embedding 多样性检查 + 检
 ## 进阶挑战
 
 1. 用真实 embedding 模型 (text-embedding-ada-002) 测试
+   - 💡 **思路提示**：用 OpenAI 的 text-embedding-3-small 编码，对比随机 embedding 看投毒检测难度差异
+   - 📎 **参考**：[OpenAI Embeddings 指南](https://platform.openai.com/docs/guides/embeddings)
 2. 研究对抗性 embedding（gradient-based attack on embeddings）
+   - 💡 **思路提示**：HotFlip 攻击通过梯度搜索找到能改变检索结果的对抗性 embedding 变更
+   - 📎 **参考**：[HotFlip — 对抗性文本攻击](https://arxiv.org/abs/1712.06151)
 3. 设计一个 embedding 入库审核 pipeline
+   - 💡 **思路提示**：入库前做：1) 向量维度校验 2) 余弦相似度去重 3) 异常检测 (Isolation Forest) 4) 人工审核标记
+   - 📎 **参考**：[scikit-learn 异常检测](https://scikit-learn.org/stable/modules/outlier_detection.html)
 
 ---
 

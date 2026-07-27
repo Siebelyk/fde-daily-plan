@@ -104,8 +104,14 @@ Attention 权重高 ≠ 一定被攻击利用，但高权重 token 对输出影�
 ## 进阶挑战
 
 1. 尝试用真实 BERT tokenizer 获取 embedding，看 attention 分布是否不同
+   - 💡 **思路提示**：用 HuggingFace transformers 的 BertTokenizer.from_pretrained('bert-base-uncased') 获取 token id，再用模型获取 attention weights
+   - 📎 **参考**：[HuggingFace Transformers 快速入门](https://huggingface.co/docs/transformers/quickstart)
 2. 增加 head 数量，观察 multi-head attention 下 injection 是否仍然有效
+   - 💡 **思路提示**：将 Q/K/V 按头数拆分：reshape(-1, h, d_h) 后分别做 attention，再 concat
+   - 📎 **参考**：[The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
 3. 思考：如果对 attention 加 mask 限制 injection token 只能 attend 自身，能否缓解攻击？
+   - 💡 **思路提示**：PyTorch 的 nn.MultiheadAttention 有 attn_mask 参数，尝试用三角矩阵限制 injection token 的 attention 范围
+   - 📎 **参考**：[PyTorch MultiheadAttention 文档](https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html)
 
 ---
 

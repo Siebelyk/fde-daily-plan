@@ -171,8 +171,14 @@ Stats: {pipeline.stats}")
 ## 进阶挑战
 
 1. 用真实 OpenAI API 替换模拟调用
+   - 💡 **思路提示**：替换 mock 函数为 openai.ChatCompletion.create，注意异常处理和 token 限制
+   - 📎 **参考**：[OpenAI Chat API 参考](https://platform.openai.com/docs/api-reference/chat)
 2. 添加 Layer 4：LLM-as-Judge 做语义级安全验证
+   - 💡 **思路提示**：Layer 4 用第二个 LLM 审查第一个 LLM 的输出，判断是否包含注入/敏感信息；注意成本和延迟
+   - 📎 **参考**：[LLM-as-Judge 论文](https://arxiv.org/abs/2305.14992)
 3. 实现配置文件驱动的规则管理
+   - 💡 **思路提示**：用 YAML 定义每层规则（阈值、正则、黑名单），运行时热加载
+   - 📎 **参考**：[PyYAML 文档](https://pyyaml.org/wiki/PyYAMLDocumentation)
 
 ---
 

@@ -156,8 +156,14 @@ Boundary-aware check: {result}")
 ## 进阶挑战
 
 1. 测试不同分块大小和 overlap 对注入成功率的影响
+   - 💡 **思路提示**：固定 overlap 为 0，调整 chunk_size 从 256 到 1024，记录注入成功率随分块大小的变化
+   - 📎 **参考**：[LangChain 文档分块器](https://python.langchain.com/docs/modules/data_connection/document_transformers/)
 2. 研究语义分块是否能降低注入风险
+   - 💡 **思路提示**：语义分块按句子/段落切分而非固定长度，能避免跨语义边界拼接产生的注入点
+   - 📎 **参考**：[LangChain Semantic Chunker](https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker/)
 3. 设计一个分块前的文档级安全扫描器
+   - 💡 **思路提示**：在分块前对全文做一次指令性内容扫描（正则 + 语义），标记可疑段块后再分块
+   - 📎 **参考**：[OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
 ---
 

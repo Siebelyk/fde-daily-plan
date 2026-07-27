@@ -152,8 +152,14 @@ API 安全是 FDE 的核心技能：Key 管理 + SSRF 防护 + 速率限制 + �
 ## 进阶挑战
 
 1. 研究 OAuth 2.0 + API Key 的组合认证方案
+   - 💡 **思路提示**：OAuth 2.0 负责用户授权，API Key 负责应用级访问控制，两者组合实现双层认证
+   - 📎 **参考**：[OAuth 2.0 (RFC 6749)](https://datatracker.ietf.org/doc/html/rfc6749)
 2. 实现基于 Redis 的分布式速率限制
+   - 💡 **思路提示**：用 Redis 的 INCR + EXPIRE 实现滑动窗口；分布式场景用 Redis Lua 脚本保证原子性
+   - 📎 **参考**：[Redis INCR 文档](https://redis.io/commands/incr/)
 3. 添加 API 请求/响应的完整审计日志
+   - 💡 **思路提示**：记录 request/response 的 timestamp、user_id、endpoint、status_code、latency；用 structured logging (JSON)
+   - 📎 **参考**：[Python logging 文档](https://docs.python.org/3/library/logging.html)
 
 ---
 

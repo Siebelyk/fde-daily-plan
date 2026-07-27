@@ -195,8 +195,14 @@ def check_container_security():
 ## 进阶挑战
 
 1. 用 Trivy 做容器镜像漏洞扫描
+   - 💡 **思路提示**：trivy image 扫描镜像层漏洞，配合 CI pipeline 在构建时拦截高危镜像
+   - 📎 **参考**：[Trivy — 容器漏洞扫描器](https://github.com/aquasecurity/trivy)
 2. 实现 K8s 的 Pod Security Standards (restricted)
+   - 💡 **思路提示**：K8s Pod Security Standards restricted 级别禁止 privileged、hostNetwork、hostPID 等
+   - 📎 **参考**：[K8s Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
 3. 设计 GPU 资源的 QoS 策略
+   - 💡 **思路提示**：用 NVIDIA GPU Operator 的 vGPU 切分或 time-slicing 做多租户 GPU 资源隔离
+   - 📎 **参考**：[NVIDIA GPU Operator 文档](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/)
 
 ---
 

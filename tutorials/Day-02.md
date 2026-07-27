@@ -95,8 +95,14 @@ for n, a in zip(toks_n, toks_a):
 ## 进阶挑战
 
 1. 尝试更多绕过：同音字替换、Unicode 同形字符、大小写变体
+   - 💡 **思路提示**：用 unicodedata.normalize('NFKD', text) 检测 Unicode 同形字符；同音字可用 pypinyin 库辅助
+   - 📎 **参考**：[Unicode Security Considerations (UTR #36)](https://www.unicode.org/reports/tr36/)
 2. 思考：token 级别过滤有何实际意义？如何结合多层防御？
+   - 💡 **思路提示**：参考纵深防御思路：token 级 + 语义级 + 规则级三层叠加，单层绕过不代表整体绕过
+   - 📎 **参考**：[OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 3. 用真实 API 测试绕过后模型是否真的执行了注入指令
+   - 💡 **思路提示**：用 OpenAI API 的 logprobs 或 moderation endpoint 验证模型是否真的被注入
+   - 📎 **参考**：[OpenAI Moderation API 指南](https://platform.openai.com/docs/guides/moderation)
 
 ---
 

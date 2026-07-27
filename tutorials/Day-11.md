@@ -153,8 +153,14 @@ Function Calling 安全 = 工具白名单 + 参数校验 + 返回值清洗。攻
 ## 进阶挑战
 
 1. 研究 OpenAI 的 strict function calling 模式
+   - 💡 **思路提示**：OpenAI 的 strict mode 限制 function 输出 schema，减少参数注入风险
+   - 📎 **参考**：[OpenAI Function Calling 指南](https://platform.openai.com/docs/guides/function-calling)
 2. 思考如何限制 function 的调用频率和权限范围
+   - 💡 **思路提示**：为每个 function 定义 allowed_scopes，调用前检查当前 session 的权限范围是否覆盖
+   - 📎 **参考**：[OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 3. 设计一个 function 调用的沙箱隔离方案
+   - 💡 **思路提示**：用 subprocess + seccomp/strace 限制系统调用，或用 gVisor/kata-containers 做容器级沙箱
+   - 📎 **参考**：[gVisor — 容器沙箱](https://github.com/google/gvisor)
 
 ---
 

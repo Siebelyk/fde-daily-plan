@@ -148,8 +148,14 @@ print(f"Original DB: {len(db.metadata)} docs")
 ## 进阶挑战
 
 1. 用 ChromaDB 实现同样的投毒和防御
+   - 💡 **思路提示**：ChromaDB 的 Python API 与 FAISS 类似，注意 collection 的 metadata 过滤功能
+   - 📎 **参考**：[ChromaDB 文档](https://docs.trychroma.com/)
 2. 研究多租户向量数据库的隔离方案
+   - 💡 **思路提示**：多租户隔离：collection 级隔离 + metadata tenant_id 过滤 + API 层权限校验三层叠加
+   - 📎 **参考**：[Pinecone 向量数据库安全指南](https://www.pinecone.io/learn/vector-database-security/)
 3. 设计一个向量数据库的安全审计报告
+   - 💡 **思路提示**：报告应包含：投毒检测率、误报率、攻击向量分类、防御覆盖率、建议修复项
+   - 📎 **参考**：[OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
 ---
 

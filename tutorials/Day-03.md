@@ -85,8 +85,14 @@ RLHF 对齐不是绝对安全的，越狱技术不断进化。生产环境需要
 ## 进阶挑战
 
 1. 尝试更多越狱：DAN、多语言绕过、前缀攻击
+   - 💡 **思路提示**：DAN 系列越狱可在 jailbreakchat.com 找到模板；多语言绕过尝试把指令翻译成小语种再发
+   - 📎 **参考**：[Jailbreak Chat — 越狱模板集合](https://www.jailbreakchat.com/)
 2. 记录哪些越狱最有效，思考为什么 RLHF 没能覆盖
+   - 💡 **思路提示**：RLHF 基于人类反馈训练，覆盖面取决于训练数据中是否包含类似攻击；对抗性强的越狱往往不在训练分布内
+   - 📎 **参考**：[InstructGPT 论文 (RLHF)](https://arxiv.org/abs/2203.02155)
 3. 研究 Constitutional AI 与 RLHF 的区别
+   - 💡 **思路提示**：Constitutional AI 让模型用规则自我批评修正，RLHF 依赖人工标注；核心区别在于反馈来源
+   - 📎 **参考**：[Constitutional AI 论文 (Anthropic)](https://arxiv.org/abs/2212.08073)
 
 ---
 

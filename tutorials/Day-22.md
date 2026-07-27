@@ -190,8 +190,14 @@ Agent 安全是 LLM 安全面临的最大挑战：Agent 有执行能力，被劫
 ## 进阶挑战
 
 1. 用 LangChain AgentExecutor 实现同样的注入测试
+   - 💡 **思路提示**：LangChain 的 AgentExecutor 支持 tool injection 测试，用 agent.run() 观察被注入后的行为
+   - 📎 **参考**：[LangChain Agent 文档](https://python.langchain.com/docs/modules/agents/)
 2. 研究 multi-step injection（跨轮次注入）
+   - 💡 **思路提示**：跨轮次注入：第 1 轮在 observation 中埋入指令，第 2 轮触发执行；测试 Agent 的上下文记忆是否被污染
+   - 📎 **参考**：[Agent 安全综述论文](https://arxiv.org/abs/2402.11357)
 3. 设计 Agent 行为审计日志
+   - 💡 **思路提示**：记录每次 tool call 的：tool_name、input、output、timestamp、reasoning；用 JSON Lines 格式存储
+   - 📎 **参考**：[LangChain Callbacks 文档](https://python.langchain.com/docs/modules/callbacks/)
 
 ---
 

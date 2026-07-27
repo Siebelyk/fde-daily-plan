@@ -109,8 +109,14 @@ KV Cache 投毒需要：共享缓存 + 前缀复用两个条件同时满足。�
 ## 进阶挑战
 
 1. 思考：PagedAttention 的分页机制是否增加了缓存投毒风险？
+   - 💡 **思路提示**：PagedAttention 把 KV Cache 分页存储，跨 session 复用可能带来跨用户缓存泄露
+   - 📎 **参考**：[vLLM / PagedAttention 论文](https://arxiv.org/abs/2309.06180)
 2. 研究 vLLM 的 prefix caching 配置选项
+   - 💡 **思路提示**：查看 vLLM 的 --enable-prefix-caching 参数，理解前缀匹配逻辑
+   - 📎 **参考**：[vLLM 服务参数文档](https://docs.vllm.ai/en/latest/serving/args.html)
 3. 设计一个缓存投毒的检测方案
+   - 💡 **思路提示**：在缓存写入前做内容校验（hash 签名），读取后做完整性校验；考虑 session 级隔离
+   - 📎 **参考**：[OWASP Cache Poisoning](https://owasp.org/www-community/attacks/Cache_Poisoning)
 
 ---
 
