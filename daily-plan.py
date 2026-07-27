@@ -40,7 +40,12 @@ def generate_plan(day, entry):
         for s in demo["steps"]:
             md += f"- {s}\n"
     if "tutorial" in demo:
-        md += f"\n### 保姆教程\n\n{demo['tutorial']}\n"
+        github_repo = config.get("github_repo", "")
+        if github_repo:
+            tut_link = f"{github_repo}/blob/main/tutorials/Day-{day:02d}.md"
+            md += f"\n### 保姆教程\n\n[点击查看完整教程]({tut_link})\n"
+        else:
+            md += f"\n### 保姆教程\n\n{demo['tutorial']}\n"
     md += "\n---\n\n## 学习记录\n\n"
     md += "- [ ] 完成阅读推荐资料\n- [ ] 完成 Demo 练习\n- [ ] 记录学习笔记\n- [ ] 遇到的问题与解决思路：\n"
     return md
