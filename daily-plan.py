@@ -23,9 +23,9 @@ date_str = today.strftime("%Y-%m-%d")
 # ---- 生成 Markdown ----
 def generate_plan(day, entry):
     objectives = entry["objectives"] if isinstance(entry["objectives"], list) else [entry["objectives"]]
-   md = f"# 我的FDE学习计划 — Day {day}\n\n"
-   md += f"> {date_str} 周{weekday_cn} | {entry['phase']} | 第 {entry['week']} 周\n\n---\n\n"
-   md += f"## 今日主题\n\n**{entry['title']}**\n\n"
+    md = f"# 我的FDE学习计划 — Day {day}\n\n"
+    md += f"> {date_str} 周{weekday_cn} | {entry['phase']} | 第 {entry['week']} 周\n\n---\n\n"
+    md += f"## 今日主题\n\n**{entry['title']}**\n\n"
     md += "## 学习目标\n\n"
     for i, obj in enumerate(objectives, 1):
         md += f"{i}. {obj}\n"
