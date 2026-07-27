@@ -1,0 +1,6 @@
+logs/
+__pycache__/
+*.pyc
+.DS_Store
+今日计划/
+config.json
