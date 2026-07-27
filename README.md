@@ -152,6 +152,41 @@ crontab -e  # 添加：30 8 * * * cd /path/to/fde-daily-plan && python3 daily-pl
 
 > 此功能为可选的个人学习辅助，课程核心内容不依赖推送配置。
 
+## 学习进度打卡
+
+复制下面的清单到你的笔记里，每完成一天打个勾：
+
+```markdown
+- [ ] Day 01  Transformer 与注意力机制
+- [ ] Day 02  Tokenization 与词嵌入
+- [ ] Day 03  GPT 系列演进与对齐安全
+- [ ] Day 04  推理优化与 KV Cache 安全
+- [ ] Day 05  幻觉检测与安全风险
+- [ ] Day 06  开源模型生态与安全评估
+- [ ] Day 07  第一周实战：安全 LLM 推理服务
+- [ ] Day 08  Prompt Injection 攻防入门
+- [ ] Day 09  Jailbreak 与越狱技术
+- [ ] Day 10  API 安全实战
+- [ ] Day 11  Function Calling 与工具劫持
+- [ ] Day 12  流式输出与信息泄露
+- [ ] Day 13  防御工程：输入过滤、输出检查与 Guardrails
+- [ ] Day 14  第二周实战：安全 API 网关
+- [ ] Day 15  RAG 基础与间接注入
+- [ ] Day 16  文档分块与分块边界注入
+- [ ] Day 17  Embedding 安全与投毒检测
+- [ ] Day 18  向量数据库安全与投毒攻击
+- [ ] Day 19  安全 RAG Pipeline：三层防御架构
+- [ ] Day 20  RAG 红队测试与自动化扫描
+- [ ] Day 21  第三周实战：企业级安全 RAG
+- [ ] Day 22  ReAct Agent 原理与注入攻击
+- [ ] Day 23  MCP 协议安全与工具投毒
+- [ ] Day 24  多 Agent 横向移动与记忆投毒
+- [ ] Day 25  vLLM 服务安全与模型部署加固
+- [ ] Day 26  容器化 LLM 服务安全
+- [ ] Day 27  红队实战：Garak 与 PyRIT 自动化测试
+- [ ] Day 28  FDE 面试准备与最终复习
+```
+
 ## 贡献
 
 欢迎提交 Issue 和 PR：修正错误、补充资料、新增 Demo。

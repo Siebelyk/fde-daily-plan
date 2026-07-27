@@ -43,7 +43,8 @@ def generate_plan(day, entry):
         github_repo = config.get("github_repo", "")
         if github_repo:
             tut_link = f"{github_repo}/blob/main/tutorials/Day-{day:02d}.md"
-            md += f"\n### 保姆教程\n\n[点击查看完整教程]({tut_link})\n"
+            colab_link = f"https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-{day:02d}.ipynb"
+            md += f"\n### 保姆教程\n\n[点击查看完整教程]({tut_link})\n\n**在线运行**：[打开 Colab Notebook]({colab_link}) — 无需本地环境，浏览器直接跑\n"
         else:
             md += f"\n### 保姆教程\n\n{demo['tutorial']}\n"
     md += "\n---\n\n## 学习记录\n\n"
@@ -80,8 +81,10 @@ def generate_wechat_md(day, entry):
         github_repo = config.get("github_repo", "")
         if github_repo:
             tut_link = f"{github_repo}/blob/main/tutorials/Day-{day:02d}.md"
+            colab_link = f"https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-{day:02d}.ipynb"
             lines.append("")
             lines.append(f"**保姆教程**：[点击查看完整教程]({tut_link})")
+            lines.append(f"**在线运行**：[Colab Notebook]({colab_link})")
         else:
             tutorial = demo["tutorial"]
             if len(tutorial) > 800:

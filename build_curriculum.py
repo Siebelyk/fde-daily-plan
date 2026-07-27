@@ -4058,6 +4058,17 @@ def generate_readme():
     lines.append("> 此功能为可选的个人学习辅助，课程核心内容不依赖推送配置。")
     lines.append("")
 
+    # Progress tracker
+    lines.append("## 学习进度打卡")
+    lines.append("")
+    lines.append("复制下面的清单到你的笔记里，每完成一天打个勾：")
+    lines.append("")
+    lines.append("```markdown")
+    for d in DAYS:
+        w = d["week"]
+        lines.append(f"- [{' '}] Day {d['day']:02d}  {d['title']}")
+    lines.append("```")
+    lines.append("")
     lines.append("## 贡献")
     lines.append("")
     lines.append("欢迎提交 Issue 和 PR：修正错误、补充资料、新增 Demo。")
@@ -4096,8 +4107,12 @@ def _split_tutorial_cells(tutorial_text):
                 lang, code = m.group(1), m.group(2)
                 if lang == 'python':
                     cells.append(('code', code))
+                elif lang == 'bash':
+                    # In Colab, bash commands need ! prefix
+                    colab_code = ''.join(f'!{line}' if line.strip() and not line.startswith('#') else line for line in code.splitlines(True))
+                    cells.append(('code', colab_code))
                 else:
-                    # bash, yaml, dockerfile etc -> markdown with code fence
+                    # yaml, dockerfile etc -> markdown with code fence
                     cells.append(('markdown', part))
         else:
             cells.append(('markdown', part))

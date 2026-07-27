@@ -1,0 +1,19 @@
+# FDE AI Security 28天实战计划 - 依赖列表
+# 核心库
+numpy>=1.21
+matplotlib>=3.5
+scikit-learn>=1.0
+# API 服务
+fastapi>=0.100
+uvicorn>=0.20
+httpx>=0.24
+python-multipart>=0.0.5
+pyjwt>=2.8
+# LLM / Tokenizer
+openai>=1.0
+tiktoken>=0.5
+# 安全测试工具（按需安装，Day 27 使用）
+# garak
+# pyrit
+# 推理引擎（Day 25 使用，需要 GPU 环境）
+# vllm

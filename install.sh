@@ -1,5 +1,5 @@
 #!/bin/bash
-# 安装 FDE 每日学习计划定时任务到 macOS launchd
+# 安装 我的FDE学习计划定时任务到 macOS launchd
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -12,7 +12,7 @@ PUSH_HOUR=$(python3 -c "import json; print(json.load(open('$SCRIPT_DIR/config.js
 PUSH_MIN=$(python3 -c "import json; print(json.load(open('$SCRIPT_DIR/config.json')).get('push_time','08:30').split(':')[1])" 2>/dev/null || echo "30")
 
 echo "============================================"
-echo "  FDE 每日学习计划 - 定时任务安装"
+echo "  我的FDE学习计划 - 定时任务安装"
 echo "============================================"
 echo ""
 echo "  脚本路径:  $SCRIPT_DIR/daily-plan.py"
