@@ -102,6 +102,31 @@ cat tutorials/Day-01.md
 python3 build_curriculum.py
 ```
 
+## 在线运行 Notebook
+
+每个 Demo 都有对应的 Jupyter Notebook，支持一键在 Google Colab 中运行：
+
+- 零环境配置：打开 Colab 链接即可运行，无需本地安装任何依赖
+- 逐 cell 执行：每个步骤可以单独运行，看到中间输出
+- 可视化友好：matplotlib 图表直接在 notebook 中展示
+
+| Day | Notebook | Day | Notebook |
+|-----|----------|-----|----------|
+| [Day 1](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-01.ipynb) | [Day 15](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-15.ipynb) |
+| [Day 2](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-02.ipynb) | [Day 16](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-16.ipynb) |
+| [Day 3](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-03.ipynb) | [Day 17](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-17.ipynb) |
+| [Day 4](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-04.ipynb) | [Day 18](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-18.ipynb) |
+| [Day 5](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-05.ipynb) | [Day 19](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-19.ipynb) |
+| [Day 6](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-06.ipynb) | [Day 20](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-20.ipynb) |
+| [Day 7](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-07.ipynb) | [Day 21](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-21.ipynb) |
+| [Day 8](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-08.ipynb) | [Day 22](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-22.ipynb) |
+| [Day 9](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-09.ipynb) | [Day 23](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-23.ipynb) |
+| [Day 10](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-10.ipynb) | [Day 24](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-24.ipynb) |
+| [Day 11](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-11.ipynb) | [Day 25](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-25.ipynb) |
+| [Day 12](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-12.ipynb) | [Day 26](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-26.ipynb) |
+| [Day 13](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-13.ipynb) | [Day 27](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-27.ipynb) |
+| [Day 14](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-14.ipynb) | [Day 28](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-28.ipynb) |
+
 ## 核心项目展示
 
 课程中你会完成以下可写进简历的项目：

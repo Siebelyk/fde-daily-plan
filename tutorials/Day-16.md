@@ -2,6 +2,10 @@
 
 > 🟢 RAG 安全全链路 · 第 3 周
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-16.ipynb)
+
+[💻 在线运行 Notebook](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-16.ipynb) — 无需本地环境，浏览器直接跑
+
 ---
 
 ## 学习目标

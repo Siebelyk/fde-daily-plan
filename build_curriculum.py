@@ -3865,7 +3865,11 @@ def generate_tutorial_md(idx, entry):
     day = entry["day"]
     demo = entry["demo"]
     md = f"# Day {day}：{entry['title']}\n\n"
-    md += f"> {_phase_color(entry['phase'])} {entry['phase']} · 第 {entry['week']} 周\n\n---\n\n"
+    md += f"> {_phase_color(entry['phase'])} {entry['phase']} · 第 {entry['week']} 周\n\n"
+    # Colab badge
+    nb_url = f"https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-{day:02d}.ipynb"
+    md += f'[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]({nb_url})\n\n'
+    md += f"[💻 在线运行 Notebook]({nb_url}) — 无需本地环境，浏览器直接跑\n\n---\n\n"
 
     # Learning objectives
     md += "## 学习目标\n\n"
@@ -4008,6 +4012,25 @@ def generate_readme():
     lines.append("```")
     lines.append("")
 
+    # Interactive notebooks
+    lines.append("## 在线运行 Notebook")
+    lines.append("")
+    lines.append("每个 Demo 都有对应的 Jupyter Notebook，支持一键在 Google Colab 中运行：")
+    lines.append("")
+    lines.append("- 零环境配置：打开 Colab 链接即可运行，无需本地安装任何依赖")
+    lines.append("- 逐 cell 执行：每个步骤可以单独运行，看到中间输出")
+    lines.append("- 可视化友好：matplotlib 图表直接在 notebook 中展示")
+    lines.append("")
+    lines.append("| Day | Notebook | Day | Notebook |")
+    lines.append("|-----|----------|-----|----------|")
+    half = 14
+    for i in range(half):
+        d1 = DAYS[i]
+        d2 = DAYS[i + half]
+        nb1 = f"[Day {d1['day']}](https://colab.research.google.com/github/{GITHUB_REPO}/blob/main/notebooks/Day-{d1['day']:02d}.ipynb)"
+        nb2 = f"[Day {d2['day']}](https://colab.research.google.com/github/{GITHUB_REPO}/blob/main/notebooks/Day-{d2['day']:02d}.ipynb)"
+        lines.append(f"| {nb1} | {nb2} |")
+    lines.append("")
     lines.append("## 核心项目展示")
     lines.append("")
     lines.append("课程中你会完成以下可写进简历的项目：")
@@ -4048,6 +4071,122 @@ def generate_readme():
     return "\n".join(lines)
 
 
+
+# ============================================================
+# NOTEBOOK GENERATOR — produces notebooks/Day-01.ipynb ... Day-28.ipynb
+# ============================================================
+import re
+
+GITHUB_REPO = "Siebelyk/fde-daily-plan"
+
+def _split_tutorial_cells(tutorial_text):
+    """Parse markdown tutorial into a list of (cell_type, source) tuples.
+    cell_type: 'markdown' or 'code'
+    Python code blocks become code cells; everything else becomes markdown cells.
+    """
+    cells = []
+    # Split on code blocks, keeping the delimiters
+    parts = re.split(r'(```\w+\n.*?```)', tutorial_text, flags=re.DOTALL)
+    for part in parts:
+        if not part.strip():
+            continue
+        if part.startswith('```'):
+            m = re.match(r'```(\w+)\n(.*?)```', part, re.DOTALL)
+            if m:
+                lang, code = m.group(1), m.group(2)
+                if lang == 'python':
+                    cells.append(('code', code))
+                else:
+                    # bash, yaml, dockerfile etc -> markdown with code fence
+                    cells.append(('markdown', part))
+        else:
+            cells.append(('markdown', part))
+    return cells
+
+
+def generate_notebook(idx, entry):
+    """Generate a Jupyter notebook dict for a single day."""
+    day = entry["day"]
+    demo = entry["demo"]
+    tutorial = demo["tutorial"].replace("{security_note}", demo["security_note"])
+
+    nb = {
+        "nbformat": 4,
+        "nbformat_minor": 5,
+        "metadata": {
+            "colab": {"provenance": []},
+            "kernelspec": {"name": "python3", "display_name": "Python 3"},
+            "language_info": {"name": "python"},
+        },
+        "cells": [],
+    }
+
+    def add_md(text):
+        nb["cells"].append({
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": text.splitlines(True),
+        })
+
+    def add_code(code):
+        nb["cells"].append({
+            "cell_type": "code",
+            "metadata": {},
+            "source": code.splitlines(True),
+            "outputs": [],
+            "execution_count": None,
+        })
+
+    # Title cell
+    add_md(f"# Day {day}：{entry['title']}\n\n"
+          f"{_phase_color(entry['phase'])} {entry['phase']} · 第 {entry['week']} 周\n\n"
+          f"[在 GitHub 查看教程](https://github.com/{GITHUB_REPO}/blob/main/tutorials/Day-{day:02d}.md)")
+
+    # Learning objectives
+    obj_text = "## 学习目标\n\n"
+    for i, obj in enumerate(entry["objectives"], 1):
+        obj_text += f"{i}. {obj}\n"
+    add_md(obj_text)
+
+    # Resources
+    res_text = "## 推荐资料\n\n"
+    for r in entry["resources"]:
+        res_text += f"- {_type_label(r['type'])} [{r['title']}]({r['url']})\n"
+    add_md(res_text)
+
+    # Demo overview
+    add_md(f"## Demo：{demo['title']}\n\n{demo['description']}\n\n"
+           f"难度：{demo['difficulty']} | 预计：{demo['time']}")
+
+    # Tutorial cells (split into markdown and code)
+    cells = _split_tutorial_cells(tutorial)
+    for cell_type, source in cells:
+        if cell_type == 'code':
+            add_code(source)
+        else:
+            add_md(source)
+
+    # Security analysis (already in tutorial via replacement, but ensure it's there)
+    # Challenges
+    ch_text = "## 进阶挑战\n\n"
+    hints = CHALLENGE_HINTS.get(day, [])
+    for i, ch in enumerate(demo["challenges"], 1):
+        ch_text += f"{i}. {ch}\n"
+        if i - 1 < len(hints):
+            h = hints[i - 1]
+            ch_text += f"   - 思路提示：{h['hint']}\n"
+            ch_text += f"   - 参考：[{h['ref_title']}]({h['ref_url']})\n"
+    add_md(ch_text)
+
+    # Next day preview
+    if idx + 1 < len(DAYS):
+        nxt = DAYS[idx + 1]
+        add_md(f"---\n\n## 明日预告\n\n**Day {nxt['day']}：{nxt['title']}**\n"
+               f"{_phase_color(nxt['phase'])} {nxt['phase']} · 第 {nxt['week']} 周")
+
+    return nb
+
+
 def main():
     """Generate all output files."""
     curriculum_path = os.path.join(ROOT, "curriculum.json")
@@ -4063,6 +4202,16 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(md)
     print(f"[OK] tutorials/       ({len(DAYS)} files)")
+
+    # Generate Jupyter notebooks
+    notebooks_dir = os.path.join(ROOT, "notebooks")
+    os.makedirs(notebooks_dir, exist_ok=True)
+    for idx, entry in enumerate(DAYS):
+        nb = generate_notebook(idx, entry)
+        path = os.path.join(notebooks_dir, f"Day-{entry['day']:02d}.ipynb")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(nb, f, ensure_ascii=False, indent=1)
+    print(f"[OK] notebooks/        ({len(DAYS)} files)")
 
     readme_path = os.path.join(ROOT, "README.md")
     with open(readme_path, "w", encoding="utf-8") as f:
