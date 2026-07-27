@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# FDE 每日学习计划生成器 — 根据日期计算进度并推送 macOS 通知 + 企业微信
+# 我的FDE学习计划生成器 — 根据日期计算进度并推送 macOS 通知 + 企业微信
 import json, os, sys, subprocess, urllib.request
 from datetime import datetime, date
 
@@ -23,9 +23,9 @@ date_str = today.strftime("%Y-%m-%d")
 # ---- 生成 Markdown ----
 def generate_plan(day, entry):
     objectives = entry["objectives"] if isinstance(entry["objectives"], list) else [entry["objectives"]]
-    md = f"# FDE 每日学习计划 — Day {day}\n\n"
-    md += f"> {date_str} 周{weekday_cn} | {entry['phase']} | 第 {entry['week']} 周\n\n---\n\n"
-    md += f"## 今日主题\n\n**{entry['title']}**\n\n"
+   md = f"# 我的FDE学习计划 — Day {day}\n\n"
+   md += f"> {date_str} 周{weekday_cn} | {entry['phase']} | 第 {entry['week']} 周\n\n---\n\n"
+   md += f"## 今日主题\n\n**{entry['title']}**\n\n"
     md += "## 学习目标\n\n"
     for i, obj in enumerate(objectives, 1):
         md += f"{i}. {obj}\n"
@@ -54,7 +54,7 @@ def generate_plan(day, entry):
 def generate_wechat_md(day, entry):
     objectives = entry["objectives"] if isinstance(entry["objectives"], list) else [entry["objectives"]]
     lines = []
-    lines.append(f"# FDE 每日学习计划 — Day {day}")
+    lines.append(f"# 我的FDE学习计划 — Day {day}")
     lines.append(f"> **{date_str} 周{weekday_cn}** | {entry['phase']} | 第 {entry['week']} 周")
     lines.append("")
     lines.append(f"### 今日主题：**{entry['title']}**")
@@ -96,13 +96,13 @@ output_dir = os.path.join(ROOT, "今日计划")
 os.makedirs(output_dir, exist_ok=True)
 
 if day_index < 1:
-    plan_text = f"# FDE 学习计划尚未开始\n\n开始日期：{config['start_date']}\n\n今天是 {date_str}，距离开始还有 {1 - day_index} 天。"
-    notify_title, notify_body = "FDE 学习计划", f"距离开始还有 {1 - day_index} 天，做好准备！"
-    wechat_md = f"# FDE 学习计划尚未开始\n\n开始日期：{config['start_date']}\n今天是 {date_str}，距离开始还有 {1 - day_index} 天，做好准备！"
+    plan_text = f"# 我的FDE学习计划尚未开始\n\n开始日期：{config['start_date']}\n\n今天是 {date_str}，距离开始还有 {1 - day_index} 天。"
+    notify_title, notify_body = "我的FDE学习计划", f"距离开始还有 {1 - day_index} 天，做好准备！"
+    wechat_md = f"# 我的FDE学习计划尚未开始\n\n开始日期：{config['start_date']}\n今天是 {date_str}，距离开始还有 {1 - day_index} 天，做好准备！"
 elif day_index > config["total_days"]:
-    plan_text = f"# FDE 学习计划已完成！\n\n你在 {config['start_date']} 开始，已坚持 {config['total_days']} 天。\n\n恭喜完成全部课程！"
-    notify_title, notify_body = "FDE 学习计划", f"全部 {config['total_days']} 天课程已完成，恭喜！"
-    wechat_md = f"# FDE 学习计划已完成！\n\n坚持了 {config['total_days']} 天，恭喜完成全部课程！"
+    plan_text = f"# 我的FDE学习计划已完成！\n\n你在 {config['start_date']} 开始，已坚持 {config['total_days']} 天。\n\n恭喜完成全部课程！"
+    notify_title, notify_body = "我的FDE学习计划", f"全部 {config['total_days']} 天课程已完成，恭喜！"
+    wechat_md = f"# 我的FDE学习计划已完成！\n\n坚持了 {config['total_days']} 天，恭喜完成全部课程！"
 else:
     entry = curriculum[day_index - 1]
     plan_text = generate_plan(day_index, entry)

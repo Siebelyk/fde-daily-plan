@@ -3777,7 +3777,7 @@ def generate_readme():
     """Generate a professional, market-ready README.md."""
     lines = []
 
-    lines.append("# FDE AI Security 28 天实战计划")
+    lines.append("# 我的FDE学习计划")
     lines.append("")
     lines.append("> 面向 AI FDE (Forward Deployed Engineer) 方向的 28 天安全实战课程。")
     lines.append("> 每天 = 理论 + 可复现安全 Demo + 保姆教程 + 安全分析 + 进阶挑战。")
