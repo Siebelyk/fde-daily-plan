@@ -72,12 +72,18 @@ def generate_wechat_md(day, entry):
         for s in demo["steps"]:
             lines.append(f"- {s}")
     if "tutorial" in demo:
-        tutorial = demo["tutorial"]
-        if len(tutorial) > 800:
-            tutorial = tutorial[:800] + "\n...(完整教程见本地文件)"
-        lines.append("")
-        lines.append("**保姆教程**")
-        lines.append(tutorial)
+        github_repo = config.get("github_repo", "")
+        if github_repo:
+            tut_link = f"{github_repo}/blob/main/tutorials/Day-{day:02d}.md"
+            lines.append("")
+            lines.append(f"**保姆教程**：[点击查看完整教程]({tut_link})")
+        else:
+            tutorial = demo["tutorial"]
+            if len(tutorial) > 800:
+                tutorial = tutorial[:800] + "\n...(完整教程见本地文件)"
+            lines.append("")
+            lines.append("**保姆教程**")
+            lines.append(tutorial)
     return "\n".join(lines)
 
 # ---- 主逻辑 ----
