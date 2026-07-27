@@ -1,7 +1,7 @@
 {
   "start_date": "2026-07-27",
   "push_time": "08:30",
-  "total_days": 56,
+  "total_days": 28,
   "wechat_webhook": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY_HERE",
   "github_repo": "https://github.com/Siebelyk/fde-daily-plan"
 }

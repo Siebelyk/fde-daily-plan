@@ -1,47 +1,168 @@
-# Day 12: 流式输出与信息泄露
+# Day 12：流式输出与信息泄露
 
-> Prompt Engineering | 第 2 周
+> 🔴 Prompt Injection 攻防实战 · 第 2 周
 
-## Demo: 错误信息泄露审计
+---
 
-触发各种错误，分析错误响应中泄露的信息，实现脱敏处理
+## 学习目标
 
-- 难度：进阶
-- 预计时间：2h
+1. 理解 SSE/流式输出的工作原理
+2. 复现流式输出中的信息泄露攻击
+3. 实现流式输出的安全防护
 
-## 复现步骤
+## 推荐资料
 
-- 1. 实现流式客户端
-- 2. 触发 5 种错误
-- 3. 分析泄露信息
-- 4. 实现脱敏
-- 5. 写安全指南
+- 📖 文档 [OpenAI - Streaming API Reference](https://platform.openai.com/docs/api-reference/streaming)
+- 📌 文章 [LLM Output Leakage Attacks](https://arxiv.org/abs/2308.05421)
+- 📌 标准 [OWASP LLM02 - Insecure Output Handling](https://owasp.org/www-project-top-10-for-llms/)
+
+## Demo 练习：流式输出信息泄露实验
+
+模拟流式 API 输出中的 token-by-token 泄露，实现实时敏感信息检测和流式过滤
+
+| 难度 | 预计时间 |
+|------|----------|
+| 进阶 | 1.5h |
+
+### 复现步骤
+
+1. 模拟 token-by-token 流式输出
+2. 实现流式敏感信息检测器
+3. 设计 buffer-and-check 策略
+4. 测试实时拦截效果
 
 ## 保姆教程
 
+## 环境准备
+```bash
+pip install openai
+```
+
+## 原理速览
+流式输出 (SSE) 让 LLM 逐 token 返回结果，用户体验更好，但安全挑战：
+1. 逐 token 输出难以做整体安全检查
+2. 攻击者可以在长输出中嵌入敏感信息
+3. 流式输出无法"撤回"已发送的 token
+
+防御思路：buffer-and-check —— 攒够一定 token 后检查，发现敏感内容立即截断。
+
 ## 代码
-~~~python
-from openai import OpenAI
-client = OpenAI()
+```python
+import re, time
 
-# 触发错误分析泄露
-for desc, fn in [
-    ("无效Key", lambda: OpenAI(api_key="sk-x").chat.completions.create(
-        model="gpt-4o-mini", messages=[{"role":"user","content":"hi"}])),
-    ("无效模型", lambda: client.chat.completions.create(
-        model="gpt-999", messages=[{"role":"user","content":"hi"}])),
-]:
-    try: fn()
-    except Exception as e:
-        print(f"{desc}: {str(e)[:150]}")
+class StreamSafetyFilter:
+    """流式输出安全过滤器"""
+    def __init__(self, buffer_size=50):
+        self.buffer = ""
+        self.buffer_size = buffer_size
+        self.blocked = False
+        self.sensitive_patterns = [
+            r"sk-[a-zA-Z0-9]{20,}",     # API keys
+            r"\d{3}-\d{2}-\d{4}", # SSN
+            r"(?i)system prompt is:",
+            r"(?i)password[:\s]+\S+",
+            r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}",  # email
+        ]
+        self.compiled = [re.compile(p) for p in self.sensitive_patterns]
 
-# 安全错误处理
-def safe_err(e):
-    m = str(e).lower()
-    if "auth" in m or "key" in m: return "认证失败"
-    if "rate" in m: return "请求频繁"
-    return "服务不可用"
-~~~
+    def feed(self, token):
+        """逐 token 喂入，返回过滤后的输出"""
+        if self.blocked:
+            return None  # 已拦截，丢弃后续 token
+        self.buffer += token
+        # 检查 buffer
+        for pat in self.compiled:
+            if pat.search(self.buffer):
+                self.blocked = True
+                # 返回 buffer 中安全的部分（截断到匹配点之前）
+                match = pat.search(self.buffer)
+                safe_part = self.buffer[:match.start()]
+                return ("BLOCKED", safe_part)
+        # buffer 未满，暂存
+        if len(self.buffer) < self.buffer_size:
+            return None  # 暂不输出
+        # buffer 满，输出并清空
+        output = self.buffer
+        self.buffer = ""
+        return ("OK", output)
+
+    def flush(self):
+        """输出剩余 buffer"""
+        if self.blocked:
+            return None
+        output = self.buffer
+        self.buffer = ""
+        return ("OK", output)
+
+# ---- 模拟流式输出 ----
+def mock_stream(tokens):
+    """模拟 LLM 流式输出"""
+    for t in tokens:
+        time.sleep(0.01)  # 模拟网络延迟
+        yield t
+
+# 测试 1：正常输出
+print("=== Test 1: Normal output ===")
+filter1 = StreamSafetyFilter(buffer_size=20)
+tokens = list("The weather in Beijing is sunny and warm today.")
+for t in mock_stream(tokens):
+    result = filter1.feed(t)
+    if result and result[0] == "OK":
+        print(result[1], end="")
+    elif result and result[0] == "BLOCKED":
+        print(f"
+[BLOCKED] {result[1]}", end="")
+remaining = filter1.flush()
+if remaining:
+    print(remaining[1], end="")
+print()
+
+# 测试 2：含 API key 泄露
+print("
+=== Test 2: API key leak ===")
+filter2 = StreamSafetyFilter(buffer_size=10)
+tokens = list("My API key is sk-proj1234567890abcdefghij for testing")
+for t in mock_stream(tokens):
+    result = filter2.feed(t)
+    if result is None:
+        continue
+    if result[0] == "OK":
+        print(result[1], end="")
+    elif result[0] == "BLOCKED":
+        print(f"
+[INTERCEPTED] Sensitive content detected. Output truncated.")
+        break
+print()
+
+# 测试 3：系统提示泄露
+print("
+=== Test 3: System prompt leak ===")
+filter3 = StreamSafetyFilter(buffer_size=30)
+tokens = list("The system prompt is: You are a helpful assistant")
+for t in mock_stream(tokens):
+    result = filter3.feed(t)
+    if result is None:
+        continue
+    if result[0] == "OK":
+        print(result[1], end="")
+    elif result[0] == "BLOCKED":
+        print(f"
+[INTERCEPTED] System prompt leak prevented.")
+        break
+```
 
 ## 安全分析
-错误信息泄露暴露系统内部结构，生产环境必须脱敏
+流式输出安全 = buffer-and-check + 敏感模式匹配 + 实时截断。关键是平衡延迟和安全：buffer 太小检测不全，太大延迟高。
+
+## 进阶挑战
+
+1. 研究如何在 SSE 流中实现 look-ahead 检测
+2. 尝试用 embedding 相似度做语义级敏感检测
+3. 设计一个流式输出的安全审计日志方案
+
+---
+
+## 明日预告
+
+**Day 13：防御工程：输入过滤、输出检查与 Guardrails**
+> 🔴 Prompt Injection 攻防实战 · 第 2 周
