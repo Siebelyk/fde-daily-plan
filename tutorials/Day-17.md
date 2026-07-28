@@ -1,4 +1,4 @@
-# Day 17：流式输出：SSE/WebSocket 实现
+# Day 17：流式输出：SSE 实时返回
 
 > 🟠 部署交付与生产化 · 第 4 周
 
@@ -19,7 +19,7 @@
 - 📚 文档 [SSE 响应式流式](https://fastapi.tiangolo.com/advanced/custom-response/)
 - 📄 文章 [OpenAI 流式最佳实践](https://cookbook.openai.com/examples/how_to_stream_completions)
 
-## Demo 练习：流式输出实现：SSE 实时返回
+## Demo 练习：SSE 流式接口实现
 
 流式输出是 LLM 应用的体验关键。用 SSE 实时逐字返回，对比非流式体验——带流式的 demo 客户感知差别巨大。
 

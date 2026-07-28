@@ -1,4 +1,4 @@
-# Day 16：推理引擎：vLLM/SGLang 部署
+# Day 16：推理引擎部署：vLLM 与 SGLang
 
 > 🟠 部署交付与生产化 · 第 4 周
 
@@ -20,7 +20,7 @@
 - 📚 文档 [SGLang 官方文档](https://docs.sglang.ai/)
 - 📚 文档 [HuggingFace TGI 文档](https://huggingface.co/docs/text-generation-inference/en/)
 
-## Demo 练习：vLLM 部署实战：从零搭建推理服务
+## Demo 练习：vLLM 服务搭建 + SGLang 对比
 
 vLLM 是推理部署的事实标准。从零起一个 vLLM 服务，对比 SGLang——JD 明确要求 vLLM/SGLang，部署岗必考。
 
@@ -150,5 +150,5 @@ vLLM 部署交付要点：API 认证 + 速率限制 + 输出过滤 + 日志审�
 
 ## 明日预告
 
-**Day 17：流式输出：SSE/WebSocket 实现**
+**Day 17：流式输出：SSE 实时返回**
 > 🟠 部署交付与生产化 · 第 4 周

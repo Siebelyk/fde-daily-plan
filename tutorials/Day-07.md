@@ -1,4 +1,4 @@
-# Day 7：分块策略与向量数据库构建
+# Day 7：分块策略与向量库构建
 
 > 🟢 RAG 构建与交付 · 第 2 周
 
@@ -24,7 +24,7 @@
 - 📚 文档 [Chroma 向量数据库文档](https://docs.trychroma.com/)
 - 🛠 工具 [LlamaIndex 文档](https://docs.llamaindex.ai/)
 
-## Demo 练习：分块策略对比实验：不同策略对检索质量的影响 + Embedding + 向量数据库：构建可交付的检索能力
+## Demo 练习：分块策略对比 + Embedding 向量库
 
 分块策略决定检索质量。对比固定/递归/语义分块对召回的影响，选对策略——交付 RAG 时客户第一个问的就是'你分块怎么做'。
 
@@ -277,5 +277,5 @@ def diversity_check(doc_embeds, min_dist=0.1):
 
 ## 明日预告
 
-**Day 8：检索与重排：混合检索 + Cross-Encoder 重排**
+**Day 8：混合检索 + 重排 + 引用回溯**
 > 🟢 RAG 构建与交付 · 第 2 周

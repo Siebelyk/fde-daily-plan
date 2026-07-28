@@ -20,7 +20,7 @@
 - 📄 文章 [OpenAI Cookbook - 实战示例集](https://cookbook.openai.com/)
 - 🛠 工具 [uv - 极速 Python 包管理](https://github.com/astral-sh/uv)
 
-## Demo 练习：FDE 能力雷达 + 环境自检脚本
+## Demo 练习：FDE 能力雷达图 + 环境自检脚本
 
 低门槛：3分钟跑出图。生成你自己的 FDE 能力雷达，对照 6 个真实 JD 找短板——这份图面试时能直接拿出来讲。
 
@@ -113,5 +113,5 @@ FDE 不是纯开发岗，交付场景里客户环境千差万别。养成"环境
 
 ## 明日预告
 
-**Day 2：LLM 原理：Transformer 与 Token 工程**
+**Day 2：理解 LLM：Attention 与 Token 计费**
 > 🔵 FDE 工程基础与 LLM 原理 · 第 1 周

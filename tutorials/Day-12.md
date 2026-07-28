@@ -1,4 +1,4 @@
-# Day 12：LangChain 框架与 Function Calling 工具开发
+# Day 12：LangChain 与 Function Calling
 
 > 🟣 Agent 开发与 MCP 集成 · 第 3 周
 
@@ -23,7 +23,7 @@
 - 📚 文档 [OpenAI Function Calling 指南](https://platform.openai.com/docs/guides/function-calling)
 - 🎓 课程 [DeepLearning.AI - LangChain for LLM Apps](https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/)
 
-## Demo 练习：用框架范式构建 Tool Calling Agent + Function Calling 工具开发与安全执行
+## Demo 练习：Tool Calling Agent + 安全工具开发
 
 LangChain 是 4/6 岗位点名要求的框架。用 Function Calling 让模型调用你写的工具，跑通'查天气/查订单'的真实场景。
 

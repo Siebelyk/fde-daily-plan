@@ -1,4 +1,4 @@
-# Day 15：意图路由与多 Agent 工作流编排
+# Day 15：意图路由与多 Agent 实战
 
 > 🟣 Agent 开发与 MCP 集成 · 第 3 周
 
@@ -22,7 +22,7 @@
 - 📄 文章 [Semantic Router 教程](https://github.com/aurelio-labs/semantic-router)
 - 📚 文档 [LangGraph 多 Agent](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/multi-agent-collaboration/)
 
-## Demo 练习：意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流
+## Demo 练习：意图路由器 + 检索-写作-审核工作流
 
 意图路由决定系统好不好用。对比关键词/向量/LLM 三种路由，再做三 Agent 协同工作流——客户场景里90%是路由问题。
 
@@ -153,5 +153,5 @@ workflow("企业 RAG 落地")
 
 ## 明日预告
 
-**Day 16：推理引擎：vLLM/SGLang 部署**
+**Day 16：推理引擎部署：vLLM 与 SGLang**
 > 🟠 部署交付与生产化 · 第 4 周

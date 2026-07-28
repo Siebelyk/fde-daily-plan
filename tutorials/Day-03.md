@@ -25,7 +25,7 @@
 - 📚 文档 [智谱 GLM API 文档](https://open.bigmodel.cn/dev/api)
 - 📚 文档 [Ollama - 本地跑大模型](https://ollama.com/)
 
-## Demo 练习：多 Provider 统一封装 + 模型选型对比 + Prompt 模板库 + 技法效果对比
+## Demo 练习：多厂商 API 封装 + Prompt 模板库
 
 一套多 Provider 封装代码，换 API key 就能切换厂商。Prompt 模板库直接复用——日常交付高频用的轮子，能写进简历。
 
@@ -192,5 +192,5 @@ Prompt 模板会进入生产，注意：用户输入通过 $text 注入模板，
 
 ## 明日预告
 
-**Day 4：Context Engineering：上下文窗口管理**
+**Day 4：Context Engineering：上下文管理**
 > 🔵 FDE 工程基础与 LLM 原理 · 第 1 周

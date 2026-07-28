@@ -1,4 +1,4 @@
-# Day 9：RAG 评测与安全检查点
+# Day 9：RAG 评测与安全检查
 
 > 🟢 RAG 构建与交付 · 第 2 周
 
@@ -23,7 +23,7 @@
 - 📄 文章 [OpenAI - 评估 LLM 应用](https://cookbook.openai.com/examples/evaluation/getting_started_with_openai_evals)
 - 📄 文章 [OWASP LLM Top 10 安全风险](https://owasp.org/www-project-top-10-for-llm-applications/)
 
-## Demo 练习：RAG 评测 pipeline：召回率+忠实度+引用正确率 + RAG 安全检查点：间接注入复现与防御
+## Demo 练习：RAG 评测 Pipeline + 间接注入防御
 
 不能只跑通，还要证明有效。用 Ragas 量化召回率/忠实度/引用正确率——交付时客户要的是评测报告，不是'我觉得效果好'。
 

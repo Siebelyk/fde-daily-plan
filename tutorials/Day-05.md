@@ -1,4 +1,4 @@
-# Day 5：第一周实战：构建第一个可演示的 LLM 应用
+# Day 5：第一周实战：搭一个能演示的 LLM 助手
 
 > 🔵 FDE 工程基础与 LLM 原理 · 第 1 周
 
@@ -10,8 +10,8 @@
 
 ## 学习目标
 
-1. 整合本周所学:API调用+Prompt+Context工程,构建一个能多轮对话、能引用资料的助手
-2. 用 Gradio 一键搭出可演示界面,3 分钟从代码到能用的小程序
+1. 整合本周所学:API调用+Prompt+Context工程，构建一个能多轮对话、能引用资料的助手
+2. 用 Gradio 一键搭出可演示界面，3 分钟从代码到能用的小程序
 3. 设计能让客户/面试官'哇'的演示话术:讲清解决了什么问题、效果如何
 4. 积累第一个能写进简历的可演示项目
 
@@ -20,7 +20,7 @@
 - 🗺️ 指南 [Gradio LLM 演示教程](https://www.gradio.app/guides/creating-a-chatbot-fast)
 - 📚 文档 [LangChain LLM Chain 教程](https://python.langchain.com/docs/tutorials/llm_chain/)
 
-## Demo 练习：端到端多轮问答助手（可演示原型）
+## Demo 练习：Gradio 多轮对话助手（可写简历的项目）
 
 第一周收尾:用 Gradio 搭一个带界面的多轮问答助手,3分钟出原型。直接能演示给客户/面试官看——这是你第一个能写简历的项目。
 
@@ -126,5 +126,5 @@ except ImportError:
 
 ## 明日预告
 
-**Day 6：RAG 基础与架构**
+**Day 6：RAG 入门：30 行跑通检索增强**
 > 🟢 RAG 构建与交付 · 第 2 周

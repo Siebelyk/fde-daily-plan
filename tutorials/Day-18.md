@@ -19,7 +19,7 @@
 - 📚 文档 [Dockerfile 最佳实践](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - 🛠 工具 [Miniconda Python 环境](https://docs.conda.io/en/latest/miniconda.html)
 
-## Demo 练习：容器化交付：从 Dockerfile 到镜像分发
+## Demo 练习：Dockerfile 打包 + 镜像分发
 
 容器化是交付的硬要求。写 Dockerfile 打包 LLM 服务镜像，4/6 岗位要求 Docker——能交付镜像才算'落地'。
 

@@ -1,4 +1,4 @@
-# Day 24：Agent 注入攻防与红队实战
+# Day 24：Agent 注入与红队实战
 
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周
 
@@ -22,7 +22,7 @@
 - 🛠 工具 [Promptfoo 测试框架](https://www.promptfoo.dev/)
 - 📚 文档 [Microsoft AI 红队指南](https://www.microsoft.com/en-us/security/business/ai-red-teaming)
 
-## Demo 练习：Agent 注入攻防靶场：从劫持到横向移动到防御 + 红队实战：用 Garak + PyRIT 做 LLM 安全评估
+## Demo 练习：Agent 注入靶场 + Garak/PyRIT 红队
 
 Agent 注入是当前研究热点。用 Garak+PyRIT 做红队测试——把攻防作为差异化卖点，面试加分项。
 
@@ -291,5 +291,5 @@ class LLMSecurityAssessment:
 
 ## 明日预告
 
-**Day 25：多层防御与安全 LLM 网关**
+**Day 25：多层防御与安全网关**
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周

@@ -1,4 +1,4 @@
-# Day 22：Prompt Injection 与 API 安全攻防
+# Day 22：Prompt Injection 与 API 安全
 
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周
 
@@ -22,7 +22,7 @@
 - 🛠 工具 [PyRIT 红队框架](https://github.com/Azure/PyRIT)
 - 📄 文章 [Prompt Injection 防御指南](https://github.com/leondz/garak/blob/main/README.md)
 
-## Demo 练习：Prompt Injection 攻击库：从经典到现代 + API 安全攻防：Key 泄露到 SSRF
+## Demo 练习：Injection 攻击库 + API 安全加固
 
 安全是 FDE 差异化能力。复现经典 Prompt Injection + API Key 泄露/SSRF——这些是客户安全团队会问的，能答上就拉开差距。
 
@@ -257,5 +257,5 @@ API 安全要点：Key 走 KMS 不入库 + 速率限制防刷 + SSRF 黑名单 +
 
 ## 明日预告
 
-**Day 23：RAG 安全全链路：投毒与防御**
+**Day 23：RAG 安全：投毒与防御**
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周

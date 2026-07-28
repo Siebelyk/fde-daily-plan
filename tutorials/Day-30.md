@@ -19,7 +19,7 @@
 - 🎓 课程 [DeepLearning.AI 短课程](https://www.deeplearning.ai/short-courses/)
 - 📚 文档 [LangChain 面试题集](https://python.langchain.com/docs/concepts/)
 
-## Demo 练习：FDE 面试准备：知识图谱与模拟面试
+## Demo 练习：FDE 知识图谱 + 模拟面试演练
 
 面试冲刺：生成知识图谱+模拟面试。把 30 天学的串成可讲的项目链——这才是能拿 offer 的临门一脚。
 

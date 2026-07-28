@@ -1,4 +1,4 @@
-# Day 21：第四周实战：生产级 LLM 服务部署
+# Day 21：第四周实战：生产级 LLM 服务
 
 > 🟠 部署交付与生产化 · 第 4 周
 
@@ -19,7 +19,7 @@
 - 📚 文档 [Uvicorn 部署](https://www.uvicorn.org/deployment/)
 - 🛠 工具 [Pydantic 数据校验](https://docs.pydantic.dev/)
 
-## Demo 练习：生产级 LLM 服务骨架（FastAPI+流式+缓存+监控）
+## Demo 练习：FastAPI+流式+缓存+监控 骨架
 
 第四周收尾：一套生产级 LLM 服务骨架(FastAPI+流式+缓存+监控)。这是你能直接交付、面试演示的完整后端。
 
@@ -126,5 +126,5 @@ services:
 
 ## 明日预告
 
-**Day 22：Prompt Injection 与 API 安全攻防**
+**Day 22：Prompt Injection 与 API 安全**
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周

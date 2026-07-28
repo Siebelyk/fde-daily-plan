@@ -27,7 +27,7 @@
       }
     ],
     "demo": {
-      "title": "FDE 能力雷达 + 环境自检脚本",
+      "title": "FDE 能力雷达图 + 环境自检脚本",
       "description": "低门槛：3分钟跑出图。生成你自己的 FDE 能力雷达，对照 6 个真实 JD 找短板——这份图面试时能直接拿出来讲。",
       "difficulty": "入门",
       "time": "2h",
@@ -48,7 +48,7 @@
   {
     "week": 1,
     "phase": "FDE 工程基础与 LLM 原理",
-    "title": "LLM 原理：Transformer 与 Token 工程",
+    "title": "理解 LLM：Attention 与 Token 计费",
     "objectives": [
       "理解 Self-Attention 的 Q/K/V 计算流程，为后续理解模型推理打基础",
       "理解 Transformer 为何取代 RNN，掌握 LLM 推理的底层机制",
@@ -80,7 +80,7 @@
       }
     ],
     "demo": {
-      "title": "Attention 权重可视化：理解模型如何'看'你的 prompt + Token 计数与边界分析：成本与效果的双重视角",
+      "title": "Attention 可视化 + Token 成本分析",
       "description": "看懂 Transformer 不靠背公式。可视化 Attention 权重，直观看到模型如何'看'你的 prompt——面试高频考点，3行代码出图。",
       "difficulty": "入门",
       "time": "约 3h",
@@ -147,7 +147,7 @@
       }
     ],
     "demo": {
-      "title": "多 Provider 统一封装 + 模型选型对比 + Prompt 模板库 + 技法效果对比",
+      "title": "多厂商 API 封装 + Prompt 模板库",
       "description": "一套多 Provider 封装代码，换 API key 就能切换厂商。Prompt 模板库直接复用——日常交付高频用的轮子，能写进简历。",
       "difficulty": "入门",
       "time": "约 4h",
@@ -176,7 +176,7 @@
     "day": 4,
     "phase": "FDE 工程基础与 LLM 原理",
     "week": 1,
-    "title": "Context Engineering：上下文窗口管理",
+    "title": "Context Engineering：上下文管理",
     "objectives": [
       "理解 Context Engineering：在有限上下文窗口内最优分配 token 预算",
       "掌握长文本处理策略：截断、滑动窗口、摘要压缩、检索注入",
@@ -195,7 +195,7 @@
       }
     ],
     "demo": {
-      "title": "上下文管理器：预算分配 + 记忆策略",
+      "title": "上下文预算管理器 + 多轮记忆策略",
       "description": "上下文管理是交付核心。实现预算分配+记忆策略，跑一个不爆 token 的多轮助手——客户现场最常踩的坑就是上下文溢出。",
       "difficulty": "基础",
       "time": "2h",
@@ -217,10 +217,10 @@
     "day": 5,
     "phase": "FDE 工程基础与 LLM 原理",
     "week": 1,
-    "title": "第一周实战：构建第一个可演示的 LLM 应用",
+    "title": "第一周实战：搭一个能演示的 LLM 助手",
     "objectives": [
-      "整合本周所学:API调用+Prompt+Context工程,构建一个能多轮对话、能引用资料的助手",
-      "用 Gradio 一键搭出可演示界面,3 分钟从代码到能用的小程序",
+      "整合本周所学:API调用+Prompt+Context工程，构建一个能多轮对话、能引用资料的助手",
+      "用 Gradio 一键搭出可演示界面，3 分钟从代码到能用的小程序",
       "设计能让客户/面试官'哇'的演示话术:讲清解决了什么问题、效果如何",
       "积累第一个能写进简历的可演示项目"
     ],
@@ -237,7 +237,7 @@
       }
     ],
     "demo": {
-      "title": "端到端多轮问答助手（可演示原型）",
+      "title": "Gradio 多轮对话助手（可写简历的项目）",
       "description": "第一周收尾:用 Gradio 搭一个带界面的多轮问答助手,3分钟出原型。直接能演示给客户/面试官看——这是你第一个能写简历的项目。",
       "difficulty": "基础",
       "time": "3h",
@@ -260,12 +260,12 @@
     "day": 6,
     "phase": "RAG 构建与交付",
     "week": 2,
-    "title": "RAG 基础与架构",
+    "title": "RAG 入门：30 行跑通检索增强",
     "objectives": [
       "理解 RAG 为什么是大模型落地的首选:解决幻觉+知识更新+私有数据三大痛点",
-      "30 行代码跑通 RAG 全闭环:文档→分块→向量→检索→生成,亲眼看效果",
-      "对比 RAG vs 微调:什么场景该用 RAG,什么场景该微调(JD 高频面试题)",
-      "理解 RAG 的核心组件,为本周深入分块/向量/重排打基础"
+      "30 行代码跑通 RAG 全闭环:文档→分块→向量→检索→生成，亲眼看效果",
+      "对比 RAG vs 微调:什么场景该用 RAG，什么场景该微调(JD 高频面试题)",
+      "理解 RAG 的核心组件，为本周深入分块/向量/重排打基础"
     ],
     "resources": [
       {
@@ -285,7 +285,7 @@
       }
     ],
     "demo": {
-      "title": "最简 RAG：从零跑通检索增强生成闭环",
+      "title": "最简 RAG 闭环 + RAG vs 微调决策",
       "description": "RAG 是 6/6 岗位必考题。30 行代码从零跑通检索增强生成闭环,亲眼看模型用外部知识回答——这是 FDE 的核心交付能力,面试第一个就会问。",
       "difficulty": "入门",
       "time": "2h",
@@ -307,7 +307,7 @@
   {
     "week": 2,
     "phase": "RAG 构建与交付",
-    "title": "分块策略与向量数据库构建",
+    "title": "分块策略与向量库构建",
     "objectives": [
       "掌握文档分块的核心策略：固定长度、语义分块、重叠窗口",
       "理解分块质量对 RAG 检索效果的决定性影响",
@@ -339,7 +339,7 @@
       }
     ],
     "demo": {
-      "title": "分块策略对比实验：不同策略对检索质量的影响 + Embedding + 向量数据库：构建可交付的检索能力",
+      "title": "分块策略对比 + Embedding 向量库",
       "description": "分块策略决定检索质量。对比固定/递归/语义分块对召回的影响，选对策略——交付 RAG 时客户第一个问的就是'你分块怎么做'。",
       "difficulty": "基础",
       "time": "约 4h",
@@ -370,12 +370,12 @@
     "day": 8,
     "phase": "RAG 构建与交付",
     "week": 2,
-    "title": "检索与重排：混合检索 + Cross-Encoder 重排",
+    "title": "混合检索 + 重排 + 引用回溯",
     "objectives": [
-      "理解检索-重排两阶段架构:先召回(快,多)再精排(慢,准),兼顾效率与质量",
-      "实现混合检索:BM25(关键词)+ 向量(语义)融合,互补短板",
-      "用 Cross-Encoder 重排,把最相关的提到最前(生产 RAG 标配)",
-      "实现引用回溯:答案标注来源,满足合规与可信要求(JD 高频要求)"
+      "理解检索-重排两阶段架构:先召回(快，多)再精排(慢，准)，兼顾效率与质量",
+      "实现混合检索:BM25(关键词)+ 向量(语义)融合，互补短板",
+      "用 Cross-Encoder 重排，把最相关的提到最前(生产 RAG 标配)",
+      "实现引用回溯:答案标注来源，满足合规与可信要求(JD 高频要求)"
     ],
     "resources": [
       {
@@ -395,7 +395,7 @@
       }
     ],
     "demo": {
-      "title": "混合检索 + 重排 + 引用回溯",
+      "title": "BM25+向量混合检索 + Cross-Encoder 重排",
       "description": "混合检索+重排是生产 RAG 的标配。BM25+向量召回再用 Cross-Encoder 精排,带引用回溯——这套是可交付级检索的核心,客户问'你检索怎么做'就答这个。",
       "difficulty": "进阶",
       "time": "2h",
@@ -417,7 +417,7 @@
   {
     "week": 2,
     "phase": "RAG 构建与交付",
-    "title": "RAG 评测与安全检查点",
+    "title": "RAG 评测与安全检查",
     "objectives": [
       "掌握 RAG 可交付标准：答案必须带引用、可溯源、可校验",
       "实现 RAG 效果评测：召回率、准确率、引用正确率、忠实度",
@@ -444,7 +444,7 @@
       }
     ],
     "demo": {
-      "title": "RAG 评测 pipeline：召回率+忠实度+引用正确率 + RAG 安全检查点：间接注入复现与防御",
+      "title": "RAG 评测 Pipeline + 间接注入防御",
       "description": "不能只跑通，还要证明有效。用 Ragas 量化召回率/忠实度/引用正确率——交付时客户要的是评测报告，不是'我觉得效果好'。",
       "difficulty": "进阶",
       "time": "约 4h",
@@ -493,7 +493,7 @@
       }
     ],
     "demo": {
-      "title": "交付级 RAG 知识库：企业级可演示产品",
+      "title": "企业级 RAG 知识库（可演示产品）",
       "description": "第二周项目交付：FastAPI 后端+文档管理+向量入库+引用回溯+审计。这是你能写进简历、面试演示的完整 RAG 产品。",
       "difficulty": "项目",
       "time": "3.5h",
@@ -518,7 +518,7 @@
     "day": 11,
     "phase": "Agent 开发与 MCP 集成",
     "week": 3,
-    "title": "Agent 基础与 ReAct 范式",
+    "title": "Agent 入门：ReAct 范式",
     "objectives": [
       "理解 ReAct Agent 的工作原理（Reason + Act 循环）",
       "掌握 Agent 的构建方法，理解其执行能力",
@@ -537,7 +537,7 @@
       }
     ],
     "demo": {
-      "title": "ReAct Agent 构建与风险认知",
+      "title": "ReAct Agent 构建 + 攻击面认知",
       "description": "用 ReAct 范式从零搭一个会推理+会调工具的 Agent。这是 Agent 开发的祖师爷模式，面试必问——理解它再看 LangChain 就通了。",
       "difficulty": "基础",
       "time": "2.5h",
@@ -559,7 +559,7 @@
   {
     "week": 3,
     "phase": "Agent 开发与 MCP 集成",
-    "title": "LangChain 框架与 Function Calling 工具开发",
+    "title": "LangChain 与 Function Calling",
     "objectives": [
       "掌握 LangChain 核心抽象：Chain、Prompt、LLM、Memory、Output Parser",
       "理解 LlamaIndex 在 RAG 场景的定位与用法",
@@ -586,7 +586,7 @@
       }
     ],
     "demo": {
-      "title": "用框架范式构建 Tool Calling Agent + Function Calling 工具开发与安全执行",
+      "title": "Tool Calling Agent + 安全工具开发",
       "description": "LangChain 是 4/6 岗位点名要求的框架。用 Function Calling 让模型调用你写的工具，跑通'查天气/查订单'的真实场景。",
       "difficulty": "基础",
       "time": "约 4.5h",
@@ -635,7 +635,7 @@
       }
     ],
     "demo": {
-      "title": "多 Agent 协同编排：构建业务工作流",
+      "title": "LangGraph 多 Agent 业务工作流",
       "description": "多 Agent 协同是交付复杂业务的关键。用 LangGraph 编排'检索-写作-审核'三 Agent 工作流——这是真实业务里最常见的编排模式。",
       "difficulty": "进阶",
       "time": "2.5h",
@@ -682,7 +682,7 @@
       }
     ],
     "demo": {
-      "title": "MCP 系统集成：打通 CRM/ERP/OA",
+      "title": "MCP 打通 CRM/ERP/OA 集成",
       "description": "MCP 是 4/6 岗位要求的新协议。用 MCP 让 LLM 打通 CRM/ERP/OA，跑通一个'查客户档案'的集成 demo——这是当前最热的集成方向。",
       "difficulty": "进阶",
       "time": "2h",
@@ -704,7 +704,7 @@
   {
     "week": 3,
     "phase": "Agent 开发与 MCP 集成",
-    "title": "意图路由与多 Agent 工作流编排",
+    "title": "意图路由与多 Agent 实战",
     "objectives": [
       "理解意图识别在多 Agent 系统的作用：把用户请求路由到正确的处理链",
       "掌握三种意图识别方法：关键词/向量分类/LLM 路由",
@@ -726,7 +726,7 @@
       }
     ],
     "demo": {
-      "title": "意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流",
+      "title": "意图路由器 + 检索-写作-审核工作流",
       "description": "意图路由决定系统好不好用。对比关键词/向量/LLM 三种路由，再做三 Agent 协同工作流——客户场景里90%是路由问题。",
       "difficulty": "进阶",
       "time": "约 5h",
@@ -755,7 +755,7 @@
     "day": 16,
     "phase": "部署交付与生产化",
     "week": 4,
-    "title": "推理引擎：vLLM/SGLang 部署",
+    "title": "推理引擎部署：vLLM 与 SGLang",
     "objectives": [
       "理解 vLLM/SGLang 推理引擎的工作原理与部署架构",
       "掌握 LLM 服务部署：从零搭建可交付的推理 API",
@@ -779,7 +779,7 @@
       }
     ],
     "demo": {
-      "title": "vLLM 部署实战：从零搭建推理服务",
+      "title": "vLLM 服务搭建 + SGLang 对比",
       "description": "vLLM 是推理部署的事实标准。从零起一个 vLLM 服务，对比 SGLang——JD 明确要求 vLLM/SGLang，部署岗必考。",
       "difficulty": "进阶",
       "time": "2h",
@@ -802,7 +802,7 @@
     "day": 17,
     "phase": "部署交付与生产化",
     "week": 4,
-    "title": "流式输出：SSE/WebSocket 实现",
+    "title": "流式输出：SSE 实时返回",
     "objectives": [
       "掌握 SSE/WebSocket 流式输出技术",
       "理解流式输出对用户体验的关键作用",
@@ -821,7 +821,7 @@
       }
     ],
     "demo": {
-      "title": "流式输出实现：SSE 实时返回",
+      "title": "SSE 流式接口实现",
       "description": "流式输出是 LLM 应用的体验关键。用 SSE 实时逐字返回，对比非流式体验——带流式的 demo 客户感知差别巨大。",
       "difficulty": "基础",
       "time": "1.5h",
@@ -863,7 +863,7 @@
       }
     ],
     "demo": {
-      "title": "容器化交付：从 Dockerfile 到镜像分发",
+      "title": "Dockerfile 打包 + 镜像分发",
       "description": "容器化是交付的硬要求。写 Dockerfile 打包 LLM 服务镜像，4/6 岗位要求 Docker——能交付镜像才算'落地'。",
       "difficulty": "基础",
       "time": "2h",
@@ -917,7 +917,7 @@
       }
     ],
     "demo": {
-      "title": "生成 K8s 部署 YAML + 私有化交付清单 + LLM 服务监控：指标导出 + 用量统计 + 成本告警",
+      "title": "K8s 部署 YAML + Prometheus 监控",
       "description": "K8s 部署+监控是生产级标配。生成部署 YAML+Prometheus 采集指标+Grafana 看板——这套是私有化交付的标准件。",
       "difficulty": "进阶",
       "time": "约 4.5h",
@@ -948,10 +948,10 @@
     "week": 4,
     "title": "性能与成本优化",
     "objectives": [
-      "理解 LLM 服务三大成本来源:token 消耗、推理算力、调用量,掌握优化杠杆",
-      "实现语义缓存:重复问题命中缓存,降低 40-60% 调用成本(真实数据)",
-      "实现批处理与模型路由:简单问题走小模型,复杂问题走大模型,成本砍半",
-      "输出一份成本优化报告,面试时能讲清'怎么帮客户省钱'"
+      "理解 LLM 服务三大成本来源:token 消耗、推理算力、调用量，掌握优化杠杆",
+      "实现语义缓存:重复问题命中缓存，降低 40-60% 调用成本(真实数据)",
+      "实现批处理与模型路由:简单问题走小模型，复杂问题走大模型，成本砍半",
+      "输出一份成本优化报告，面试时能讲清'怎么帮客户省钱'"
     ],
     "resources": [
       {
@@ -966,7 +966,7 @@
       }
     ],
     "demo": {
-      "title": "语义缓存 + 批处理 + 模型路由",
+      "title": "语义缓存 + 模型路由 + 成本报告",
       "description": "上线后客户最关心'用起来贵不贵'。实现语义缓存+批处理+模型路由三招,跑出成本优化数据——这是运维交付的核心价值,面试讲这个很加分。",
       "difficulty": "进阶",
       "time": "2h",
@@ -989,7 +989,7 @@
     "day": 21,
     "phase": "部署交付与生产化",
     "week": 4,
-    "title": "第四周实战：生产级 LLM 服务部署",
+    "title": "第四周实战：生产级 LLM 服务",
     "objectives": [
       "整合本周所学：部署+流式+容器+K8s+监控+优化，交付生产级服务",
       "构建一个可交付的 LLM 服务骨架（FastAPI+流式+缓存+监控）",
@@ -1008,7 +1008,7 @@
       }
     ],
     "demo": {
-      "title": "生产级 LLM 服务骨架（FastAPI+流式+缓存+监控）",
+      "title": "FastAPI+流式+缓存+监控 骨架",
       "description": "第四周收尾：一套生产级 LLM 服务骨架(FastAPI+流式+缓存+监控)。这是你能直接交付、面试演示的完整后端。",
       "difficulty": "项目",
       "time": "3h",
@@ -1029,7 +1029,7 @@
   {
     "week": 5,
     "phase": "AI 安全攻防（差异化能力）",
-    "title": "Prompt Injection 与 API 安全攻防",
+    "title": "Prompt Injection 与 API 安全",
     "objectives": [
       "系统掌握 Prompt Injection 从经典到现代的攻击手法",
       "掌握 Jailbreak 越狱技术与防御分析",
@@ -1051,7 +1051,7 @@
       }
     ],
     "demo": {
-      "title": "Prompt Injection 攻击库：从经典到现代 + API 安全攻防：Key 泄露到 SSRF",
+      "title": "Injection 攻击库 + API 安全加固",
       "description": "安全是 FDE 差异化能力。复现经典 Prompt Injection + API Key 泄露/SSRF——这些是客户安全团队会问的，能答上就拉开差距。",
       "difficulty": "进阶",
       "time": "约 4h",
@@ -1082,7 +1082,7 @@
     "day": 23,
     "phase": "AI 安全攻防（差异化能力）",
     "week": 5,
-    "title": "RAG 安全全链路：投毒与防御",
+    "title": "RAG 安全：投毒与防御",
     "objectives": [
       "系统掌握 RAG 全链路攻击：文档投毒、向量投毒、检索操纵",
       "实现投毒检测与防御",
@@ -1101,7 +1101,7 @@
       }
     ],
     "demo": {
-      "title": "RAG 安全全链路：从投毒到防御",
+      "title": "文档投毒复现 + 检索链路防御",
       "description": "RAG 安全是交付必查项。复现文档投毒+间接注入，再做防御——政企/金融客户的安全审查会专门考这个。",
       "difficulty": "进阶",
       "time": "2h",
@@ -1123,7 +1123,7 @@
   {
     "week": 5,
     "phase": "AI 安全攻防（差异化能力）",
-    "title": "Agent 注入攻防与红队实战",
+    "title": "Agent 注入与红队实战",
     "objectives": [
       "理解 Agent 注入攻击面：拥有工具执行权，被劫持危害远超对话",
       "掌握多 Agent 横向移动与记忆投毒攻防",
@@ -1145,7 +1145,7 @@
       }
     ],
     "demo": {
-      "title": "Agent 注入攻防靶场：从劫持到横向移动到防御 + 红队实战：用 Garak + PyRIT 做 LLM 安全评估",
+      "title": "Agent 注入靶场 + Garak/PyRIT 红队",
       "description": "Agent 注入是当前研究热点。用 Garak+PyRIT 做红队测试——把攻防作为差异化卖点，面试加分项。",
       "difficulty": "进阶",
       "time": "约 5h",
@@ -1175,7 +1175,7 @@
   {
     "week": 5,
     "phase": "AI 安全攻防（差异化能力）",
-    "title": "多层防御与安全 LLM 网关",
+    "title": "多层防御与安全网关",
     "objectives": [
       "掌握输入过滤、输出检查、Guardrails 多层防御",
       "实现从规则到语义的完整防护链",
@@ -1202,7 +1202,7 @@
       }
     ],
     "demo": {
-      "title": "多层防御工程：从规则到语义的防护链 + 安全 LLM 网关：生产级防护",
+      "title": "输入过滤 + 输出审查 + 护栏网关",
       "description": "整合多层防御做一个安全网关：输入过滤+输出审查+护栏。这是能交付的安全组件，不只是理论。",
       "difficulty": "项目",
       "time": "约 5.5h",
@@ -1234,7 +1234,7 @@
   {
     "week": 6,
     "phase": "客户落地实战与面试",
-    "title": "FDE 交付流程与行业方案模板",
+    "title": "FDE 交付流程与行业方案",
     "objectives": [
       "掌握 FDE 交付全流程：需求拆解→POC→方案设计→开发集成→上线护航→运维迭代",
       "理解每个交付阶段的产出物与验收标准",
@@ -1256,7 +1256,7 @@
       }
     ],
     "demo": {
-      "title": "FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器",
+      "title": "交付清单 + 政企/金融/制造方案模板",
       "description": "交付方法论+行业方案模板：政企/金融/制造三套现成方案。进客户现场前先备好话术和选型清单——客户沟通的弹药库。",
       "difficulty": "基础",
       "time": "约 4h",
@@ -1305,7 +1305,7 @@
       }
     ],
     "demo": {
-      "title": "技术方案→业务价值翻译器",
+      "title": "SPIN 需求挖掘 + 价值翻译 + 异议处理",
       "description": "FDE 面试必考'你怎么跟客户沟通'。实现需求挖掘+价值翻译+异议处理三件套，输出可直接拿去面试演示的客户沟通脚本。",
       "difficulty": "基础",
       "time": "2h",
@@ -1328,11 +1328,11 @@
     "day": 28,
     "phase": "客户落地实战与面试",
     "week": 6,
-    "title": "飞书/企微生态集成",
+    "title": "企微/飞书生态集成",
     "objectives": [
-      "理解 FDE 集成客户已有系统的价值:能接生态才是真'落地',不是孤立 demo",
+      "理解 FDE 集成客户已有系统的价值:能接生态才是真'落地'，不是孤立 demo",
       "实现企业微信机器人推送:向群聊发送 markdown 消息(真实可用代码)",
-      "实现飞书多维表格写入:把 LLM 输出存进客户的多维表格,打通工作流",
+      "实现飞书多维表格写入:把 LLM 输出存进客户的多维表格，打通工作流",
       "掌握 OAuth + Webhook 两种集成模式的适用场景与安全要点"
     ],
     "resources": [
@@ -1353,7 +1353,7 @@
       }
     ],
     "demo": {
-      "title": "企微推送 + 飞书多维表格集成",
+      "title": "企微机器人推送 + 飞书多维表格写入",
       "description": "真实交付高频需求:把 LLM 能力接进客户已有的企微/飞书。实现企微推送+飞书多维表格写入——能接生态才是'落地',面试讲这个体现交付能力。",
       "difficulty": "基础",
       "time": "2h",
@@ -1375,7 +1375,7 @@
   {
     "week": 6,
     "phase": "客户落地实战与面试",
-    "title": "模型微调：SFT 数据与 LoRA 配置",
+    "title": "模型微调：SFT 与 LoRA",
     "objectives": [
       "理解 Post-Training 全景：CPT 预训练、SFT 指令微调、RL 对齐",
       "掌握 SFT 数据构建与 LoRA 高效微调流程",
@@ -1402,7 +1402,7 @@
       }
     ],
     "demo": {
-      "title": "SFT 数据准备 + LoRA 配置 + 微调流程演示 + 语料处理 pipeline + 标注格式转换",
+      "title": "LLaMA-Factory SFT + 语料处理",
       "description": "微调是 1/6 岗位要求。用 LLaMA-Factory 跑 SFT+LoRA，处理语料——虽非主线但了解流程面试能加分。",
       "difficulty": "进阶",
       "time": "约 4.5h",
@@ -1450,7 +1450,7 @@
       }
     ],
     "demo": {
-      "title": "FDE 面试准备：知识图谱与模拟面试",
+      "title": "FDE 知识图谱 + 模拟面试演练",
       "description": "面试冲刺：生成知识图谱+模拟面试。把 30 天学的串成可讲的项目链——这才是能拿 offer 的临门一脚。",
       "difficulty": "基础",
       "time": "2.5h",

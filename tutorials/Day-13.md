@@ -19,7 +19,7 @@
 - 🧩 框架 [LangGraph Studio 调试](https://github.com/langchain-ai/langgraph-studio)
 - 📚 文档 [AutoGen Agent 教程](https://microsoft.github.io/autogen/docs/Getting-Started/)
 
-## Demo 练习：多 Agent 协同编排：构建业务工作流
+## Demo 练习：LangGraph 多 Agent 业务工作流
 
 多 Agent 协同是交付复杂业务的关键。用 LangGraph 编排'检索-写作-审核'三 Agent 工作流——这是真实业务里最常见的编排模式。
 

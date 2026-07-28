@@ -24,7 +24,7 @@
 - 📚 文档 [Prometheus 监控文档](https://prometheus.io/docs/)
 - 📚 文档 [Grafana 可视化文档](https://grafana.com/docs/)
 
-## Demo 练习：生成 K8s 部署 YAML + 私有化交付清单 + LLM 服务监控：指标导出 + 用量统计 + 成本告警
+## Demo 练习：K8s 部署 YAML + Prometheus 监控
 
 K8s 部署+监控是生产级标配。生成部署 YAML+Prometheus 采集指标+Grafana 看板——这套是私有化交付的标准件。
 

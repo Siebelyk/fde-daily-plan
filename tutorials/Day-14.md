@@ -20,7 +20,7 @@
 - 🗺️ 指南 [MCP 快速开始](https://modelcontextprotocol.io/quickstart/server)
 - 🛠 工具 [MCP Server 示例库](https://github.com/modelcontextprotocol/servers)
 
-## Demo 练习：MCP 系统集成：打通 CRM/ERP/OA
+## Demo 练习：MCP 打通 CRM/ERP/OA 集成
 
 MCP 是 4/6 岗位要求的新协议。用 MCP 让 LLM 打通 CRM/ERP/OA，跑通一个'查客户档案'的集成 demo——这是当前最热的集成方向。
 
@@ -191,5 +191,5 @@ MCP 是 Agent 生态集成入口，防御要点：工具描述审计 + 返回值
 
 ## 明日预告
 
-**Day 15：意图路由与多 Agent 工作流编排**
+**Day 15：意图路由与多 Agent 实战**
 > 🟣 Agent 开发与 MCP 集成 · 第 3 周

@@ -1,4 +1,4 @@
-# Day 25：多层防御与安全 LLM 网关
+# Day 25：多层防御与安全网关
 
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周
 
@@ -23,7 +23,7 @@
 - 🛠 工具 [Guardrails AI](https://www.guardrailsai.com/)
 - 📚 文档 [FastAPI 中间件](https://fastapi.tiangolo.com/tutorial/middleware/)
 
-## Demo 练习：多层防御工程：从规则到语义的防护链 + 安全 LLM 网关：生产级防护
+## Demo 练习：输入过滤 + 输出审查 + 护栏网关
 
 整合多层防御做一个安全网关：输入过滤+输出审查+护栏。这是能交付的安全组件，不只是理论。
 
@@ -377,5 +377,5 @@ print(f"Audit entries: {len(r.json())}")
 
 ## 明日预告
 
-**Day 26：FDE 交付流程与行业方案模板**
+**Day 26：FDE 交付流程与行业方案**
 > 🟡 客户落地实战与面试 · 第 6 周

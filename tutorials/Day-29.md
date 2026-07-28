@@ -1,4 +1,4 @@
-# Day 29：模型微调：SFT 数据与 LoRA 配置
+# Day 29：模型微调：SFT 与 LoRA
 
 > 🟡 客户落地实战与面试 · 第 6 周
 
@@ -23,7 +23,7 @@
 - 🛠 工具 [Data-Juicer 语料处理](https://github.com/modelscope/data-juicer)
 - 📝 论文 [LoRA - 低秩微调](https://arxiv.org/abs/2106.09685)
 
-## Demo 练习：SFT 数据准备 + LoRA 配置 + 微调流程演示 + 语料处理 pipeline + 标注格式转换
+## Demo 练习：LLaMA-Factory SFT + 语料处理
 
 微调是 1/6 岗位要求。用 LLaMA-Factory 跑 SFT+LoRA，处理语料——虽非主线但了解流程面试能加分。
 

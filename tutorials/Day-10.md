@@ -19,7 +19,7 @@
 - 📚 文档 [FastAPI 部署指南](https://fastapi.tiangolo.com/deployment/)
 - 📚 文档 [Uvicorn ASGI 服务器](https://www.uvicorn.org/)
 
-## Demo 练习：交付级 RAG 知识库：企业级可演示产品
+## Demo 练习：企业级 RAG 知识库（可演示产品）
 
 第二周项目交付：FastAPI 后端+文档管理+向量入库+引用回溯+审计。这是你能写进简历、面试演示的完整 RAG 产品。
 
@@ -194,5 +194,5 @@ curl 'localhost:8000/audit?token=token-alice'
 
 ## 明日预告
 
-**Day 11：Agent 基础与 ReAct 范式**
+**Day 11：Agent 入门：ReAct 范式**
 > 🟣 Agent 开发与 MCP 集成 · 第 3 周

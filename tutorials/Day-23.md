@@ -1,4 +1,4 @@
-# Day 23：RAG 安全全链路：投毒与防御
+# Day 23：RAG 安全：投毒与防御
 
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周
 
@@ -19,7 +19,7 @@
 - 📚 文档 [FAISS 安全检索](https://github.com/facebookresearch/faiss/wiki)
 - 📄 文章 [向量数据库对比](https://www.pinecone.io/learn/vector-database/)
 
-## Demo 练习：RAG 安全全链路：从投毒到防御
+## Demo 练习：文档投毒复现 + 检索链路防御
 
 RAG 安全是交付必查项。复现文档投毒+间接注入，再做防御——政企/金融客户的安全审查会专门考这个。
 
@@ -158,5 +158,5 @@ RAG 安全全链路防御：入库扫描 + 异常相似度检测 + 内容隔离 
 
 ## 明日预告
 
-**Day 24：Agent 注入攻防与红队实战**
+**Day 24：Agent 注入与红队实战**
 > 🔴 AI 安全攻防（差异化能力） · 第 5 周

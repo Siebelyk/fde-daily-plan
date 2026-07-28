@@ -1,4 +1,4 @@
-# Day 11：Agent 基础与 ReAct 范式
+# Day 11：Agent 入门：ReAct 范式
 
 > 🟣 Agent 开发与 MCP 集成 · 第 3 周
 
@@ -19,7 +19,7 @@
 - 🎓 课程 [DeepLearning.AI - Functions/Tools/Agents](https://www.deeplearning.ai/short-courses/functions-tools-and-agents/)
 - 📄 文章 [LangChain Agent 概念](https://python.langchain.com/docs/concepts/agents/)
 
-## Demo 练习：ReAct Agent 构建与风险认知
+## Demo 练习：ReAct Agent 构建 + 攻击面认知
 
 用 ReAct 范式从零搭一个会推理+会调工具的 Agent。这是 Agent 开发的祖师爷模式，面试必问——理解它再看 LangChain 就通了。
 
@@ -200,5 +200,5 @@ Agent 拥有执行能力，被劫持后果严重。构建时即要带：observat
 
 ## 明日预告
 
-**Day 12：LangChain 框架与 Function Calling 工具开发**
+**Day 12：LangChain 与 Function Calling**
 > 🟣 Agent 开发与 MCP 集成 · 第 3 周

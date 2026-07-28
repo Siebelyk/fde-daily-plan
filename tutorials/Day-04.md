@@ -1,4 +1,4 @@
-# Day 4：Context Engineering：上下文窗口管理
+# Day 4：Context Engineering：上下文管理
 
 > 🔵 FDE 工程基础与 LLM 原理 · 第 1 周
 
@@ -19,7 +19,7 @@
 - 📄 文章 [Lilian Weng - Prompt Engineering 综述](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/)
 - 🛠 工具 [LangChain Memory 模块](https://python.langchain.com/docs/modules/memory/)
 
-## Demo 练习：上下文管理器：预算分配 + 记忆策略
+## Demo 练习：上下文预算管理器 + 多轮记忆策略
 
 上下文管理是交付核心。实现预算分配+记忆策略，跑一个不爆 token 的多轮助手——客户现场最常踩的坑就是上下文溢出。
 
@@ -105,5 +105,5 @@ for strat in ["full", "summary", "vector"]:
 
 ## 明日预告
 
-**Day 5：第一周实战：构建第一个可演示的 LLM 应用**
+**Day 5：第一周实战：搭一个能演示的 LLM 助手**
 > 🔵 FDE 工程基础与 LLM 原理 · 第 1 周

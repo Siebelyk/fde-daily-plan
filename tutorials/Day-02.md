@@ -1,4 +1,4 @@
-# Day 2：LLM 原理：Transformer 与 Token 工程
+# Day 2：理解 LLM：Attention 与 Token 计费
 
 > 🔵 FDE 工程基础与 LLM 原理 · 第 1 周
 
@@ -24,7 +24,7 @@
 - 📄 文章 [Jay Alammar - 图解 Transformer](https://jalammar.github.io/illustrated-transformer/)
 - 🛠 工具 [tiktoken - OpenAI 分词器](https://github.com/openai/tiktoken)
 
-## Demo 练习：Attention 权重可视化：理解模型如何'看'你的 prompt + Token 计数与边界分析：成本与效果的双重视角
+## Demo 练习：Attention 可视化 + Token 成本分析
 
 看懂 Transformer 不靠背公式。可视化 Attention 权重，直观看到模型如何'看'你的 prompt——面试高频考点，3行代码出图。
 
