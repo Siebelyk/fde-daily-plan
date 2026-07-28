@@ -36,7 +36,79 @@
 4. 设计自定义攻击策略
 5. 生成安全评估报告
 
-## 保姆教程
+## 推荐练习方式：🔧 工具实操
+
+## 推荐练习方式：从 CLI 实际运行 Garak 和 PyRIT
+
+> Garak 和 PyRIT 是 CLI 工具，正确用法是装好直接从命令行跑，不是写 Python wrapper。
+
+### 步骤
+
+1. **安装 Garak**：
+   ```bash
+   pip install garak
+   # 确认安装
+   garak --version
+   ```
+
+2. **用 Garak 扫描一个 LLM 端点**：
+   ```bash
+   # 扫描 OpenAI API
+   garak --model_type openai \
+     --model_name gpt-4o \
+     --probes promptinject,jailbreak,leakage \
+     --generator_name openai
+
+   # 如果有本地 vLLM（Day 25 部署的）
+   garak --model_type openai \
+     --model_name meta-llama/Llama-3.2-1B-Instruct \
+     --generator_name openai \
+     --generator_options api_base=http://localhost:8000/v1
+   ```
+
+3. **分析 Garak 报告**：
+   ```bash
+   # 报告在 ~/.garak/logs/ 目录
+   ls ~/.garak/logs/
+   # 打开最新的 JSON 报告
+   cat ~/.garak/logs/garak_results_*.json | python3 -m json.tool | head -100
+   ```
+   记录：
+   - 总共跑了多少 probe？
+   - 通过率 vs 失败率？
+   - 哪类 probe 失败最多？
+
+4. **安装 PyRIT 并运行**：
+   ```bash
+   pip install pyrit
+   # PyRIT 需要 OpenAI API key
+   export OPENAI_API_KEY=your-key
+
+   # 运行一个简单的攻击场景
+   pyrit run --scenario prompt_injection --target gpt-4o
+   ```
+
+5. **对比两个工具**：
+   | 维度 | Garak | PyRIT |
+   |-----|-------|-------|
+   | 安装难度 | ? | ? |
+   | probe 覆盖面 | ? | ? |
+   | 报告质量 | ? | ? |
+   | 易用性 | ? | ? |
+   | 适合场景 | ? | ? |
+
+6. **思考**：如果你的公司要上线一个 LLM 服务，你会选哪个工具做安全测试？为什么？
+
+### 为什么不写代码？
+Garak 和 PyRIT 本身就是**现成的安全工具**，直接从 CLI 跑才是正确的使用方式。
+写 Python 包装它们反而增加了不必要的抽象层，而且会错过工具本身的报告和可视化功能。
+代码版本作为附录保留。
+
+---
+
+## 附录：代码参考
+
+> 以下为 Python 代码实现，作为推荐练习方式的补充参考。
 
 ## 环境准备
 ```bash

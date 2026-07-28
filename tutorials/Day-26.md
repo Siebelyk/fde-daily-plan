@@ -35,7 +35,121 @@
 3. 实现容器镜像安全扫描
 4. 验证安全配置
 
-## 保姆教程
+## 推荐练习方式：🐳 DevOps 实操
+
+## 推荐练习方式：手写 Dockerfile + K8s + Trivy 扫描
+
+> 容器安全是基础设施安全，正确的方式是手写 Dockerfile 和 YAML，用工具扫描，不是写 Python。
+
+### 步骤
+
+1. **手写安全 Dockerfile**：
+   ```dockerfile
+   # 你的任务：从头写一个安全的 LLM 服务镜像
+   FROM python:3.11-slim
+
+   # 创建非 root 用户
+   RUN useradd -m -s /bin/bash llmuser
+
+   # 只复制必要文件
+   COPY --chown=llmuser:llmuser app/ /app/
+   WORKDIR /app
+
+   # 安装依赖（固定版本）
+   RUN pip install --no-cache-dir fastapi==0.104.1 uvicorn==0.24.0
+
+   # 切换非 root 用户
+   USER llmuser
+
+   # 只暴露必要端口
+   EXPOSE 8000
+
+   # 健康检查
+   HEALTHCHECK --interval=30s --timeout=3s \
+     CMD curl -f http://localhost:8000/health || exit 1
+
+   CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+   ```
+
+2. **手写 docker-compose.yml**：
+   ```yaml
+   version: "3.9"
+   services:
+     llm-api:
+       build: .
+       ports: ["8000:8000"]
+       read_only: true           # 只读文件系统
+       cap_drop: [ALL]           # 删除所有 Linux capabilities
+       cap_add: [NET_BIND_SERVICE]
+       security_opt: [no-new-privileges:true]
+       mem_limit: 512m
+       cpus: "1.0"
+       networks: [llm-net]
+   networks:
+     llm-net:
+       driver: bridge
+   ```
+
+3. **手写 K8s 安全 Deployment**：
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: llm-service
+   spec:
+     template:
+       spec:
+         containers:
+         - name: llm-api
+           image: your-registry/llm-api:latest
+           securityContext:
+             runAsNonRoot: true
+             runAsUser: 1000
+             readOnlyRootFilesystem: true
+             allowPrivilegeEscalation: false
+             capabilities:
+               drop: ["ALL"]
+           resources:
+             limits:
+               memory: "512Mi"
+               cpu: "1000m"
+         podSecurityContext:
+           seccompProfile:
+             type: RuntimeDefault
+   ```
+
+4. **用 Trivy 扫描镜像漏洞**：
+   ```bash
+   # 安装 Trivy
+   brew install trivy
+
+   # 扫描你写的 Dockerfile
+   trivy config Dockerfile
+
+   # 构建并扫描镜像
+   docker build -t llm-api:secure .
+   trivy image llm-api:secure
+
+   # 记录发现的漏洞和修复建议
+   ```
+
+5. **检查清单**：
+   - [ ] 非 root 用户运行
+   - [ ] 只读文件系统
+   - [ ] 最小化 capabilities
+   - [ ] 资源限制
+   - [ ] 健康检查
+   - [ ] Trivy 扫描无 HIGH/CRITICAL 漏洞
+
+### 为什么不写代码？
+容器安全的核心技能是**写好 Dockerfile 和 K8s manifest**，以及用工具扫描。
+这些是 YAML 和 Dockerfile 的世界，不是 Python。代码版本作为附录保留。
+
+---
+
+## 附录：代码参考
+
+> 以下为 Python 代码实现，作为推荐练习方式的补充参考。
 
 ## 环境准备
 ```bash

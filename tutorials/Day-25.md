@@ -35,7 +35,75 @@
 3. 配置模型访问控制和输出过滤
 4. 实现日志审计和监控
 
-## 保姆教程
+## 推荐练习方式：🐳 DevOps 实操
+
+## 推荐练习方式：用 Docker 实际部署 vLLM 并加固
+
+> vLLM 是推理引擎，学习它的安全应该是实际部署和配置，不是写 Python wrapper。
+
+### 步骤
+
+1. **用 Docker 部署 vLLM**（需要 GPU 或 CPU-only 模式）：
+   ```bash
+   # GPU 模式
+   docker run --gpus all -p 8000:8000 \
+     vllm/vllm-openai:latest \
+     --model meta-llama/Llama-3.2-1B-Instruct \
+     --trust-remote-code
+
+   # CPU 模式（无 GPU 也能学）
+   docker run -p 8000:8000 \
+     vllm/vllm-openai:latest \
+     --model meta-llama/Llama-3.2-1B-Instruct \
+     --device cpu
+   ```
+
+2. **测试默认配置的安全性**：
+   ```bash
+   # 测试 1: 是否需要认证？
+   curl http://localhost:8000/v1/chat/completions \
+     -H "Content-Type: application/json" \
+     -d '{"model":"meta-llama/Llama-3.2-1B-Instruct","messages":[{"role":"user","content":"hi"}]}'
+   # 如果直接返回结果 → 无认证！
+
+   # 测试 2: 是否有速率限制？
+   for i in $(seq 1 100); do curl -s http://localhost:8000/v1/models; done
+   # 如果全部成功 → 无限流！
+
+   # 测试 3: 是否泄露模型信息？
+   curl http://localhost:8000/v1/models
+   ```
+
+3. **逐步加固配置**：
+   ```bash
+   # 加固 1: 添加 API Key 认证
+   docker run -p 8000:8000 \
+     -e VLLM_API_KEY=your-secret-key \
+     vllm/vllm-openai:latest \
+     --model meta-llama/Llama-3.2-1B-Instruct \
+     --api-key your-secret-key
+
+   # 加固 2: 限制最大 token 数
+   --max-num-seqs 4 --max-model-len 2048
+
+   # 加固 3: 禁用前缀缓存（防止缓存投毒）
+   --no-enable-prefix-caching
+   ```
+
+4. **加固后重测**：
+   - 认证是否生效？（无 key 请求应被拒绝）
+   - 限流是否生效？（连续请求应被 429）
+   - 记录加固前后的安全对比表
+
+### 为什么不写代码？
+vLLM 安全的核心是**配置和部署**，不是编程。实际用 Docker 跑一遍、改参数、
+测效果，比看 Python 模拟脚本更贴近真实工作场景。代码版本作为附录保留。
+
+---
+
+## 附录：代码参考
+
+> 以下为 Python 代码实现，作为推荐练习方式的补充参考。
 
 ## 环境准备
 ```bash
