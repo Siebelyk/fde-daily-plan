@@ -138,6 +138,10 @@ def check_security_config():
 ```
 
 ## 安全分析
+
+
+## 真实案例
+真实案例：某 FDE 给客户部署 LLM 服务,先用 HuggingFace TGI 跑,发现并发一上来就排队。换 vLLM 后用 PagedAttention,QPS 从 5 提到 40。**推理引擎选型直接影响服务能扛多少并发,是部署岗必考**。
 vLLM 部署交付要点：API 认证 + 速率限制 + 输出过滤 + 日志审计 + 资源隔离，生产加反向代理做 TLS。
 
 ## 进阶挑战

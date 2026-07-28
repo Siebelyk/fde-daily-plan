@@ -188,6 +188,10 @@ print("Secure agent would block poisoned observation and continue original goal"
 ```
 
 ## 安全分析
+
+
+## 真实案例
+真实案例：某候选人面试被问'你搭过 Agent 吗',只会说 LangChain 怎么用。面试官追问'Agent 底层怎么决策'答不上。其实 ReAct 就是 Reason+Act 循环,理解了它再看 LangChain 就通了。**懂底层原理的人比只会调包的人面试强**。
 Agent 拥有执行能力，被劫持后果严重。构建时即要带：observation 检查 + 工具白名单 + 执行沙箱。
 
 ## 进阶挑战

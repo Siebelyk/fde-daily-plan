@@ -179,6 +179,10 @@ Prompt 模板会进入生产，注意：用户输入通过 $text 注入模板，
 用户可注入"忽略以上指令"实施 Prompt Injection。工程上要对 $text 做隔离（如放入 XML 标签）
 并在 System Prompt 里固化角色，Day 29 会专门攻防。
 
+## 真实案例
+真实案例：某 FDE 给客户做项目时只用 OpenAI,结果客户要私有化部署没法用。他提前做了多厂商封装,一行配置切到智谱 GLM + 本地 Ollama,3 小时完成适配。**多厂商封装不是过度设计,是 FDE 应对客户环境的刚需**。
+
+
 ## 进阶挑战
 
 1. 接入真实智谱 GLM API（base_url=open.bigmodel.cn），跑通一次真实调用

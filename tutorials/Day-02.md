@@ -176,6 +176,10 @@ for n, a in zip(toks_n, toks_a):
 ## 安全分析
 token 边界影响计费与检索效果，交付时需精确估算 token 成本，并注意分词差异对过滤策略的影响。
 
+## 真实案例
+真实案例：某 FDE 在客户现场调 prompt 一直效果差,直到他用 Attention 可视化看到模型把注意力放在了无关词上。把 prompt 里的干扰词删掉后准确率从 70% 升到 88%。**理解模型怎么'看'你的 prompt,调优才有方向,不是瞎试**。
+
+
 ## 进阶挑战
 
 1. 尝试用真实 BERT tokenizer 获取 embedding，看 attention 分布是否不同

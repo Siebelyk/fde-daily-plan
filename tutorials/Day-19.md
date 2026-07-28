@@ -176,6 +176,10 @@ print(cost_alert(m.usage_by_user, daily_budget=0.0001))
 日志中可能含用户 prompt 与模型输出（敏感数据），日志收集与留存要合规：
 PII 脱敏、访问审计、保留期控制。监控指标本身也应不含明文 prompt，只统计量级。
 
+## 真实案例
+真实案例：某 FDE 给政企客户部署,单机跑挂了就停服。上了 K8s+Prometheus 后,Pod 自动重启,监控告警提前发现问题。客户运维说'这个比我们原系统还省心'。**K8s+监控是生产级标配,政企客户的基本要求**。
+
+
 ## 进阶挑战
 
 1. 用 Helm 把上面的 YAML 模板化，参数化 image/replicas/gpu

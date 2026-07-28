@@ -219,6 +219,10 @@ print(f"Sanitized: {clean}")
 ## 安全分析
 工具开发要点：参数校验防注入、返回清洗防间接注入、白名单防未授权工具、最小权限防滥用。
 
+## 真实案例
+真实案例：某 FDE 用 Function Calling 做了查天气+查订单两个工具,Agent 自动判断该调哪个。客户看到'问天气自动调天气工具,问订单自动调订单工具'觉得很智能。**Function Calling 是让 Agent 真正'能用'的关键,不是只会聊天**。
+
+
 ## 进阶挑战
 
 1. 安装真实 langchain，用 LangChain AgentExecutor 跑通同一个多工具 Agent

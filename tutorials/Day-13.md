@@ -175,6 +175,10 @@ print(f"SafeAnalyze memory: {safe_analyze.long_term} (should be empty)")
 ```
 
 ## 安全分析
+
+
+## 真实案例
+真实案例：某 FDE 给内容团队做工作流:检索 Agent 找资料→写作 Agent 写初稿→审核 Agent 查合规。三 Agent 协同后,内容产出效率提升 3 倍。**多 Agent 不是炫技,是把复杂任务拆成可控环节的工程方法**。
 多 Agent 协同要记忆隔离防横向移动，关键节点加人工卡点，全链路审计。
 
 ## 进阶挑战
