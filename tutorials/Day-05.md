@@ -16,7 +16,7 @@
 
 ## 推荐资料
 
-- 📌 教程 [Gradio LLM 演示教程](https://www.gradio.app/guides/creating-a-chatbot-fast)
+- 🗺️ 指南 [Gradio LLM 演示教程](https://www.gradio.app/guides/creating-a-chatbot-fast)
 - 📚 文档 [LangChain LLM Chain 教程](https://python.langchain.com/docs/tutorials/llm_chain/)
 
 ## Demo 练习：端到端多轮问答助手（可演示原型）

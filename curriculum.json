@@ -225,7 +225,7 @@
     ],
     "resources": [
       {
-        "type": "教程",
+        "type": "指南",
         "title": "Gradio LLM 演示教程",
         "url": "https://www.gradio.app/guides/creating-a-chatbot-fast"
       },
