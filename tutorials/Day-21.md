@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [FastAPI 官方文档](https://fastapi.tiangolo.com/)
-- 📚 文档 [Docker Compose 部署](https://docs.docker.com/compose/)
-- 📄 文章 [LangChain 生产部署指南](https://python.langchain.com/docs/tutorials/rag/)
+- 📚 文档 [Uvicorn 部署](https://www.uvicorn.org/deployment/)
+- 🛠 工具 [Pydantic 数据校验](https://docs.pydantic.dev/)
 
 ## Demo 练习：生产级 LLM 服务骨架（FastAPI+流式+缓存+监控）
 

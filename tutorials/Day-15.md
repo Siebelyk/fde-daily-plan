@@ -19,9 +19,8 @@
 
 ## 推荐资料
 
-- 🧩 框架 [LangGraph 工作流编排](https://langchain-ai.github.io/langgraph/)
-- 🛠 工具 [Semantic Router - 语义路由](https://github.com/aurelio-labs/semantic-router)
-- 📄 文章 [Anthropic - 构建有效 Agent 工作流](https://www.anthropic.com/engineering/building-effective-agents)
+- 📄 文章 [Semantic Router 教程](https://github.com/aurelio-labs/semantic-router)
+- 📚 文档 [LangGraph 多 Agent](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/multi-agent-collaboration/)
 
 ## Demo 练习：意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流
 

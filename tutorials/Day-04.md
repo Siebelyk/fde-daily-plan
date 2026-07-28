@@ -16,10 +16,8 @@
 
 ## 推荐资料
 
-- 📄 文章 [Anthropic - 上下文工程最佳实践](https://www.anthropic.com/engineering/building-effective-agents)
-- 📚 文档 [OpenAI - 文本生成与上下文管理](https://platform.openai.com/docs/guides/text-generation)
-- 📝 论文 [Lost in the Middle - 长上下文衰减](https://arxiv.org/abs/2307.03172)
-- 🛠 工具 [mem0 - LLM 记忆层框架](https://github.com/mem0ai/mem0)
+- 📄 文章 [Lilian Weng - Prompt Engineering 综述](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/)
+- 🛠 工具 [LangChain Memory 模块](https://python.langchain.com/docs/modules/memory/)
 
 ## Demo 练习：上下文管理器：预算分配 + 记忆策略
 

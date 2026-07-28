@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 🧩 框架 [LangGraph - 状态化多 Agent 编排](https://langchain-ai.github.io/langgraph/)
-- 🧩 框架 [AutoGen - 微软多 Agent 框架](https://microsoft.github.io/autogen/)
-- 📄 文章 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
+- 🧩 框架 [LangGraph Studio 调试](https://github.com/langchain-ai/langgraph-studio)
+- 📚 文档 [AutoGen Agent 教程](https://microsoft.github.io/autogen/docs/Getting-Started/)
 
 ## Demo 练习：多 Agent 协同编排：构建业务工作流
 

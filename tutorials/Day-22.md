@@ -19,10 +19,8 @@
 
 ## 推荐资料
 
-- 📄 文章 [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-llm-applications/)
-- 📝 论文 [Prompt Injection 综述](https://arxiv.org/abs/2306.05485)
-- 📚 文档 [OpenAI 安全最佳实践](https://platform.openai.com/docs/guides/safety-best-practices)
-- 🛠 工具 [Garak - LLM 漏洞扫描器](https://github.com/leondz/garak)
+- 🛠 工具 [PyRIT 红队框架](https://github.com/Azure/PyRIT)
+- 📄 文章 [Prompt Injection 防御指南](https://github.com/leondz/garak/blob/main/README.md)
 
 ## Demo 练习：Prompt Injection 攻击库：从经典到现代 + API 安全攻防：Key 泄露到 SSRF
 

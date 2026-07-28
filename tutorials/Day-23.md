@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [Chroma 向量库安全](https://docs.trychroma.com/)
-- 🛠 工具 [FAISS 向量检索](https://github.com/facebookresearch/faiss)
-- 📄 文章 [Pinecone - RAG 安全实践](https://www.pinecone.io/learn/)
+- 📚 文档 [FAISS 安全检索](https://github.com/facebookresearch/faiss/wiki)
+- 📄 文章 [向量数据库对比](https://www.pinecone.io/learn/vector-database/)
 
 ## Demo 练习：RAG 安全全链路：从投毒到防御
 

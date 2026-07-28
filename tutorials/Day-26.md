@@ -19,9 +19,8 @@
 
 ## 推荐资料
 
-- 📄 文章 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
-- 📚 文档 [AWS 参考架构](https://aws.amazon.com/architecture/)
-- 📄 文章 [Martin Fowler - 企业架构](https://martinfowler.com/)
+- 📚 文档 [企业 AI 落地架构](https://aws.amazon.com/architecture/)
+- 📄 文章 [微服务架构模式](https://martinfowler.com/microservices/)
 
 ## Demo 练习：FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器
 

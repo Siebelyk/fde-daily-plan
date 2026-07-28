@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [vLLM 性能优化](https://docs.vllm.ai/)
-- 🛠 工具 [GPTCache 语义缓存](https://github.com/zilliztech/GPTCache)
-- 📄 文章 [OpenAI - 降低 LLM 成本技巧](https://cookbook.openai.com/)
+- 📚 文档 [GPTCache 使用文档](https://github.com/zilliztech/GPTCache)
+- 📄 文章 [推理优化技术综述](https://lilianweng.github.io/posts/2023-01-10-inference-optimization/)
 
 ## Demo 练习：语义缓存 + 批处理 + 模型路由
 

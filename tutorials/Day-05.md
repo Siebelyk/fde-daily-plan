@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [OpenAI Cookbook - 构建应用示例](https://cookbook.openai.com/)
-- 📚 文档 [LangChain 快速开始](https://python.langchain.com/docs/tutorials/llm_chain/)
-- 🛠 工具 [Gradio - 快速搭 LLM 演示界面](https://www.gradio.app/)
+- 📌 教程 [Gradio LLM 演示教程](https://www.gradio.app/guides/creating-a-chatbot-fast)
+- 📚 文档 [LangChain LLM Chain 教程](https://python.langchain.com/docs/tutorials/llm_chain/)
 
 ## Demo 练习：端到端多轮问答助手（可演示原型）
 

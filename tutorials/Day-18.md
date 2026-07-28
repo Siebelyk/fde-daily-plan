@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [Docker 官方文档](https://docs.docker.com/)
-- 🗺️ 指南 [Docker 构建 Python 镜像最佳实践](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-- 🛠 工具 [Docker Compose 文档](https://docs.docker.com/compose/)
+- 📚 文档 [Dockerfile 最佳实践](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+- 🛠 工具 [Miniconda Python 环境](https://docs.conda.io/en/latest/miniconda.html)
 
 ## Demo 练习：容器化交付：从 Dockerfile 到镜像分发
 

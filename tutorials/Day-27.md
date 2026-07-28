@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📄 文章 [Anthropic - 客户落地与 Agent](https://www.anthropic.com/engineering/building-effective-agents)
-- 📚 文档 [OpenAI Cookbook - 应用案例](https://cookbook.openai.com/)
-- 📄 文章 [HBR - 需求沟通方法](https://hbr.org/2022/01/the-right-way-to-onboard-new-customers)
+- 📄 文章 [SPIN 销售法-需求挖掘](https://hbr.org/2022/01/the-right-way-to-onboard-new-customers)
+- 📚 文档 [产品需求文档模板](https://www.productplan.com/learn/prd/)
 
 ## Demo 练习：技术方案→业务价值翻译器
 

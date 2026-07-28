@@ -185,23 +185,13 @@
     "resources": [
       {
         "type": "文章",
-        "title": "Anthropic - 上下文工程最佳实践",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
-      },
-      {
-        "type": "文档",
-        "title": "OpenAI - 文本生成与上下文管理",
-        "url": "https://platform.openai.com/docs/guides/text-generation"
-      },
-      {
-        "type": "论文",
-        "title": "Lost in the Middle - 长上下文衰减",
-        "url": "https://arxiv.org/abs/2307.03172"
+        "title": "Lilian Weng - Prompt Engineering 综述",
+        "url": "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/"
       },
       {
         "type": "工具",
-        "title": "mem0 - LLM 记忆层框架",
-        "url": "https://github.com/mem0ai/mem0"
+        "title": "LangChain Memory 模块",
+        "url": "https://python.langchain.com/docs/modules/memory/"
       }
     ],
     "demo": {
@@ -235,19 +225,14 @@
     ],
     "resources": [
       {
-        "type": "文档",
-        "title": "OpenAI Cookbook - 构建应用示例",
-        "url": "https://cookbook.openai.com/"
+        "type": "教程",
+        "title": "Gradio LLM 演示教程",
+        "url": "https://www.gradio.app/guides/creating-a-chatbot-fast"
       },
       {
         "type": "文档",
-        "title": "LangChain 快速开始",
+        "title": "LangChain LLM Chain 教程",
         "url": "https://python.langchain.com/docs/tutorials/llm_chain/"
-      },
-      {
-        "type": "工具",
-        "title": "Gradio - 快速搭 LLM 演示界面",
-        "url": "https://www.gradio.app/"
       }
     ],
     "demo": {
@@ -492,18 +477,13 @@
     "resources": [
       {
         "type": "文档",
-        "title": "FastAPI 官方教程",
-        "url": "https://fastapi.tiangolo.com/"
+        "title": "FastAPI 部署指南",
+        "url": "https://fastapi.tiangolo.com/deployment/"
       },
       {
         "type": "文档",
-        "title": "LangChain + FastAPI 部署",
-        "url": "https://python.langchain.com/docs/tutorials/rag/"
-      },
-      {
-        "type": "文档",
-        "title": "Docker Compose 文档",
-        "url": "https://docs.docker.com/compose/"
+        "title": "Uvicorn ASGI 服务器",
+        "url": "https://www.uvicorn.org/"
       }
     ],
     "demo": {
@@ -540,19 +520,14 @@
     ],
     "resources": [
       {
-        "type": "论文",
-        "title": "ReAct: 推理+行动 (Yao et al.)",
-        "url": "https://arxiv.org/abs/2210.03629"
+        "type": "课程",
+        "title": "DeepLearning.AI - Functions/Tools/Agents",
+        "url": "https://www.deeplearning.ai/short-courses/functions-tools-and-agents/"
       },
       {
         "type": "文章",
-        "title": "Anthropic - 构建有效 Agent",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
-      },
-      {
-        "type": "课程",
-        "title": "DeepLearning.AI - Functions, Tools and Agents",
-        "url": "https://www.deeplearning.ai/short-courses/functions-tools-and-agents/"
+        "title": "LangChain Agent 概念",
+        "url": "https://python.langchain.com/docs/concepts/agents/"
       }
     ],
     "demo": {
@@ -644,18 +619,13 @@
     "resources": [
       {
         "type": "框架",
-        "title": "LangGraph - 状态化多 Agent 编排",
-        "url": "https://langchain-ai.github.io/langgraph/"
+        "title": "LangGraph Studio 调试",
+        "url": "https://github.com/langchain-ai/langgraph-studio"
       },
       {
-        "type": "框架",
-        "title": "AutoGen - 微软多 Agent 框架",
-        "url": "https://microsoft.github.io/autogen/"
-      },
-      {
-        "type": "文章",
-        "title": "Anthropic - 构建有效 Agent",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
+        "type": "文档",
+        "title": "AutoGen Agent 教程",
+        "url": "https://microsoft.github.io/autogen/docs/Getting-Started/"
       }
     ],
     "demo": {
@@ -739,19 +709,14 @@
     ],
     "resources": [
       {
-        "type": "框架",
-        "title": "LangGraph 工作流编排",
-        "url": "https://langchain-ai.github.io/langgraph/"
-      },
-      {
-        "type": "工具",
-        "title": "Semantic Router - 语义路由",
+        "type": "文章",
+        "title": "Semantic Router 教程",
         "url": "https://github.com/aurelio-labs/semantic-router"
       },
       {
-        "type": "文章",
-        "title": "Anthropic - 构建有效 Agent 工作流",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
+        "type": "文档",
+        "title": "LangGraph 多 Agent",
+        "url": "https://langchain-ai.github.io/langgraph/tutorials/multi_agent/multi-agent-collaboration/"
       }
     ],
     "demo": {
@@ -840,18 +805,13 @@
     "resources": [
       {
         "type": "文档",
-        "title": "OpenAI 流式输出 API",
-        "url": "https://platform.openai.com/docs/api-reference/streaming"
-      },
-      {
-        "type": "文档",
-        "title": "FastAPI 流式响应",
+        "title": "SSE 响应式流式",
         "url": "https://fastapi.tiangolo.com/advanced/custom-response/"
       },
       {
         "type": "文章",
-        "title": "Anthropic - 流式与工具使用",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
+        "title": "OpenAI 流式最佳实践",
+        "url": "https://cookbook.openai.com/examples/how_to_stream_completions"
       }
     ],
     "demo": {
@@ -887,18 +847,13 @@
     "resources": [
       {
         "type": "文档",
-        "title": "Docker 官方文档",
-        "url": "https://docs.docker.com/"
-      },
-      {
-        "type": "指南",
-        "title": "Docker 构建 Python 镜像最佳实践",
+        "title": "Dockerfile 最佳实践",
         "url": "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/"
       },
       {
         "type": "工具",
-        "title": "Docker Compose 文档",
-        "url": "https://docs.docker.com/compose/"
+        "title": "Miniconda Python 环境",
+        "url": "https://docs.conda.io/en/latest/miniconda.html"
       }
     ],
     "demo": {
@@ -994,18 +949,13 @@
     "resources": [
       {
         "type": "文档",
-        "title": "vLLM 性能优化",
-        "url": "https://docs.vllm.ai/"
-      },
-      {
-        "type": "工具",
-        "title": "GPTCache 语义缓存",
+        "title": "GPTCache 使用文档",
         "url": "https://github.com/zilliztech/GPTCache"
       },
       {
         "type": "文章",
-        "title": "OpenAI - 降低 LLM 成本技巧",
-        "url": "https://cookbook.openai.com/"
+        "title": "推理优化技术综述",
+        "url": "https://lilianweng.github.io/posts/2023-01-10-inference-optimization/"
       }
     ],
     "demo": {
@@ -1040,18 +990,13 @@
     "resources": [
       {
         "type": "文档",
-        "title": "FastAPI 官方文档",
-        "url": "https://fastapi.tiangolo.com/"
+        "title": "Uvicorn 部署",
+        "url": "https://www.uvicorn.org/deployment/"
       },
       {
-        "type": "文档",
-        "title": "Docker Compose 部署",
-        "url": "https://docs.docker.com/compose/"
-      },
-      {
-        "type": "文章",
-        "title": "LangChain 生产部署指南",
-        "url": "https://python.langchain.com/docs/tutorials/rag/"
+        "type": "工具",
+        "title": "Pydantic 数据校验",
+        "url": "https://docs.pydantic.dev/"
       }
     ],
     "demo": {
@@ -1087,24 +1032,14 @@
     ],
     "resources": [
       {
-        "type": "文章",
-        "title": "OWASP LLM Top 10",
-        "url": "https://owasp.org/www-project-top-10-for-llm-applications/"
-      },
-      {
-        "type": "论文",
-        "title": "Prompt Injection 综述",
-        "url": "https://arxiv.org/abs/2306.05485"
-      },
-      {
-        "type": "文档",
-        "title": "OpenAI 安全最佳实践",
-        "url": "https://platform.openai.com/docs/guides/safety-best-practices"
-      },
-      {
         "type": "工具",
-        "title": "Garak - LLM 漏洞扫描器",
-        "url": "https://github.com/leondz/garak"
+        "title": "PyRIT 红队框架",
+        "url": "https://github.com/Azure/PyRIT"
+      },
+      {
+        "type": "文章",
+        "title": "Prompt Injection 防御指南",
+        "url": "https://github.com/leondz/garak/blob/main/README.md"
       }
     ],
     "demo": {
@@ -1148,18 +1083,13 @@
     "resources": [
       {
         "type": "文档",
-        "title": "Chroma 向量库安全",
-        "url": "https://docs.trychroma.com/"
-      },
-      {
-        "type": "工具",
-        "title": "FAISS 向量检索",
-        "url": "https://github.com/facebookresearch/faiss"
+        "title": "FAISS 安全检索",
+        "url": "https://github.com/facebookresearch/faiss/wiki"
       },
       {
         "type": "文章",
-        "title": "Pinecone - RAG 安全实践",
-        "url": "https://www.pinecone.io/learn/"
+        "title": "向量数据库对比",
+        "url": "https://www.pinecone.io/learn/vector-database/"
       }
     ],
     "demo": {
@@ -1197,18 +1127,13 @@
     "resources": [
       {
         "type": "工具",
-        "title": "Garak - LLM 红队工具",
-        "url": "https://github.com/leondz/garak"
+        "title": "Promptfoo 测试框架",
+        "url": "https://www.promptfoo.dev/"
       },
       {
-        "type": "工具",
-        "title": "PyRIT - 微软 AI 红队",
-        "url": "https://github.com/Azure/PyRIT"
-      },
-      {
-        "type": "文章",
-        "title": "OWASP LLM Top 10",
-        "url": "https://owasp.org/www-project-top-10-for-llm-applications/"
+        "type": "文档",
+        "title": "Microsoft AI 红队指南",
+        "url": "https://www.microsoft.com/en-us/security/business/ai-red-teaming"
       }
     ],
     "demo": {
@@ -1312,19 +1237,14 @@
     ],
     "resources": [
       {
-        "type": "文章",
-        "title": "Anthropic - 构建有效 Agent",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
-      },
-      {
         "type": "文档",
-        "title": "AWS 参考架构",
+        "title": "企业 AI 落地架构",
         "url": "https://aws.amazon.com/architecture/"
       },
       {
         "type": "文章",
-        "title": "Martin Fowler - 企业架构",
-        "url": "https://martinfowler.com/"
+        "title": "微服务架构模式",
+        "url": "https://martinfowler.com/microservices/"
       }
     ],
     "demo": {
@@ -1366,18 +1286,13 @@
     "resources": [
       {
         "type": "文章",
-        "title": "Anthropic - 客户落地与 Agent",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
+        "title": "SPIN 销售法-需求挖掘",
+        "url": "https://hbr.org/2022/01/the-right-way-to-onboard-new-customers"
       },
       {
         "type": "文档",
-        "title": "OpenAI Cookbook - 应用案例",
-        "url": "https://cookbook.openai.com/"
-      },
-      {
-        "type": "文章",
-        "title": "HBR - 需求沟通方法",
-        "url": "https://hbr.org/2022/01/the-right-way-to-onboard-new-customers"
+        "title": "产品需求文档模板",
+        "url": "https://www.productplan.com/learn/prd/"
       }
     ],
     "demo": {
@@ -1512,19 +1427,14 @@
     ],
     "resources": [
       {
-        "type": "文档",
-        "title": "Anthropic - 构建有效 Agent",
-        "url": "https://www.anthropic.com/engineering/building-effective-agents"
-      },
-      {
-        "type": "文档",
-        "title": "OpenAI Cookbook",
-        "url": "https://cookbook.openai.com/"
-      },
-      {
         "type": "课程",
-        "title": "DeepLearning.AI 短课程全集",
+        "title": "DeepLearning.AI 短课程",
         "url": "https://www.deeplearning.ai/short-courses/"
+      },
+      {
+        "type": "文档",
+        "title": "LangChain 面试题集",
+        "url": "https://python.langchain.com/docs/concepts/"
       }
     ],
     "demo": {

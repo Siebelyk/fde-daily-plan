@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [OpenAI 流式输出 API](https://platform.openai.com/docs/api-reference/streaming)
-- 📚 文档 [FastAPI 流式响应](https://fastapi.tiangolo.com/advanced/custom-response/)
-- 📄 文章 [Anthropic - 流式与工具使用](https://www.anthropic.com/engineering/building-effective-agents)
+- 📚 文档 [SSE 响应式流式](https://fastapi.tiangolo.com/advanced/custom-response/)
+- 📄 文章 [OpenAI 流式最佳实践](https://cookbook.openai.com/examples/how_to_stream_completions)
 
 ## Demo 练习：流式输出实现：SSE 实时返回
 

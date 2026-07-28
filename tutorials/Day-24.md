@@ -19,9 +19,8 @@
 
 ## 推荐资料
 
-- 🛠 工具 [Garak - LLM 红队工具](https://github.com/leondz/garak)
-- 🛠 工具 [PyRIT - 微软 AI 红队](https://github.com/Azure/PyRIT)
-- 📄 文章 [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-llm-applications/)
+- 🛠 工具 [Promptfoo 测试框架](https://www.promptfoo.dev/)
+- 📚 文档 [Microsoft AI 红队指南](https://www.microsoft.com/en-us/security/business/ai-red-teaming)
 
 ## Demo 练习：Agent 注入攻防靶场：从劫持到横向移动到防御 + 红队实战：用 Garak + PyRIT 做 LLM 安全评估
 

@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [FastAPI 官方教程](https://fastapi.tiangolo.com/)
-- 📚 文档 [LangChain + FastAPI 部署](https://python.langchain.com/docs/tutorials/rag/)
-- 📚 文档 [Docker Compose 文档](https://docs.docker.com/compose/)
+- 📚 文档 [FastAPI 部署指南](https://fastapi.tiangolo.com/deployment/)
+- 📚 文档 [Uvicorn ASGI 服务器](https://www.uvicorn.org/)
 
 ## Demo 练习：交付级 RAG 知识库：企业级可演示产品
 

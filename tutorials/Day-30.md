@@ -16,9 +16,8 @@
 
 ## 推荐资料
 
-- 📚 文档 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
-- 📚 文档 [OpenAI Cookbook](https://cookbook.openai.com/)
-- 🎓 课程 [DeepLearning.AI 短课程全集](https://www.deeplearning.ai/short-courses/)
+- 🎓 课程 [DeepLearning.AI 短课程](https://www.deeplearning.ai/short-courses/)
+- 📚 文档 [LangChain 面试题集](https://python.langchain.com/docs/concepts/)
 
 ## Demo 练习：FDE 面试准备：知识图谱与模拟面试
 
