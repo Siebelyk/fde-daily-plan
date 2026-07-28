@@ -219,9 +219,51 @@ print(f"Sanitized: {clean}")
 ## 安全分析
 工具开发要点：参数校验防注入、返回清洗防间接注入、白名单防未授权工具、最小权限防滥用。
 
-## 真实案例
-真实案例：某 FDE 用 Function Calling 做了查天气+查订单两个工具,Agent 自动判断该调哪个。客户看到'问天气自动调天气工具,问订单自动调订单工具'觉得很智能。**Function Calling 是让 Agent 真正'能用'的关键,不是只会聊天**。
+## 真实案例：客服机器人只会说"请您去订单页查看"——加 Tool Calling 才像 AI
 
+**背景**：一个 FDE 做的客服机器人上线后被吐槽"只会聊天"。用户问"我订单到哪了"，它礼貌地回"建议您去订单页查看哦"——根本没有调订单系统的能力，用户觉得还不如直接查页面。
+
+**问题**：LLM 本身不能查实时数据，必须靠 Function Calling 接业务 API。早期只做了闲聊，没有工具调用，机器人就是个"复读机"。
+
+**定位过程**：他先确认订单数据有 API 可调（`/orders/{id}`），再设计工具 schema，让模型决定"何时调、传什么参数"，最后把 API 结果回灌模型生成自然语言答复。
+
+**做法**：定义工具 schema，用 Function Calling 接订单查询，并做参数校验防注入。
+```python
+import openai, json, requests
+client = openai.OpenAI()
+TOOL_SCHEMA = [{
+  "type":"function","function":{
+    "name":"query_order","description":"查询订单状态",
+    "parameters":{"type":"object","properties":{
+      "order_id":{"type":"string","pattern":"^[A-Z0-9]{4,12}$"}  # 防注入
+    },"required":["order_id"]}}}]
+def call_tool(name, args):
+    if name=="query_order":
+        # 参数校验后调内部API
+        r = requests.get(f"https://erp.in/orders/{args['order_id']}",timeout=3)
+        return r.json()
+def chat(query):
+    msgs=[{"role":"user","content":query}]
+    r=client.chat.completions.create(model="gpt-4o-mini",messages=msgs,
+        tools=TOOL_SCHEMA,tool_choice="auto")
+    msg=r.choices[0].message
+    if msg.tool_calls:                       # 模型决定调工具
+        tc=msg.tool_calls[0]
+        args=json.loads(tc.function.arguments)
+        obs=call_tool(tc.function.name,args) # 执行
+        msgs+= [msg, {"role":"tool","tool_call_id":tc.id,
+                      "content":json.dumps(obs,ensure_ascii=False)}]
+        r=client.chat.completions.create(model="gpt-4o-mini",messages=msgs)
+        return r.choices[0].message.content
+    return msg.content                        # 无需工具，直接答
+print(chat("订单A123到哪了"))
+```
+
+**结果**：机器人能查实时订单并回复"您的订单 A123 已发货，预计明日送达"，不再是"请去页面看"。客服解决率从 30% 提到 65%，重复咨询量明显下降。
+
+**踩坑**：第一版没做参数校验，用户输入"order_id=' OR 1=1 --"差点被拼进 URL。他在 schema 加正则白名单 `^[A-Z0-9]{4,12}$` 才堵住——**工具参数是攻击面，必须当外部输入校验**。另外模型偶尔把不存在的订单号当成"真实"去调，他加了"订单不存在时返回空、模型据此回答"的兜底。
+
+**可复用经验**：客服机器人从"复读机"变"真 AI"的关键就是 Function Calling 接业务 API。但工具参数是外部输入，必须正则校验+白名单，防注入。这是 Day22 安全意识在 Agent 上的预演——**工具越强大，攻击面越大，校验越要做**。
 
 ## 面试高频问答
 问:Function Calling 和 ReAct Agent 区别?

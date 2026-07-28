@@ -190,8 +190,48 @@ print("Secure agent would block poisoned observation and continue original goal"
 ## 安全分析
 
 
-## 真实案例
-真实案例：某候选人面试被问'你搭过 Agent 吗',只会说 LangChain 怎么用。面试官追问'Agent 底层怎么决策'答不上。其实 ReAct 就是 Reason+Act 循环,理解了它再看 LangChain 就通了。**懂底层原理的人比只会调包的人面试强**。
+## 真实案例：只会调包不懂 ReAct，面试被一句"你的 Agent 决策链路是什么"问穿
+
+**背景**：一个候选人简历写"用 LangChain 搭过 Agent"，面试官只问了一句"不依赖框架，你的 Agent 决策链路是怎么走的？"他答得磕磕巴巴——因为一直调 `agent.run()`，从没想过内部循环长什么样。
+
+**问题**：Agent 面试最常被问"底层链路"，只会调包等于没真懂。ReAct（Reason+Act）是 Agent 最基础的范式，面试官用它区分"会用框架"和"懂原理"的人。
+
+**定位过程**：他意识到要"手写一遍 ReAct 不用框架"，于是关掉 LangChain，用纯 Python 把 Thought-Action-Observation 循环写出来，强迫自己看清每一步。
+
+**做法**：手写 ReAct 循环——模型先想（Thought）、决定动作（Action）、拿到观察（Observation）、再循环，直到给出最终答案。
+```python
+import openai, json, re
+client = openai.OpenAI()
+TOOLS = {
+  "search_order": lambda args: f"订单{args['order_id']}状态：已发货，预计明日送达",
+  "calc_refund":  lambda args: f"退款金额={args['amount']}元，已提交财务",
+}
+def react(query, max_steps=4):
+    memory = f"问题：{query}\n"
+    for step in range(max_steps):
+        # 1) Thought + Action：让模型推理并决定动作
+        prompt = (f"{memory}\n请按格式输出：Thought: <推理>\n"
+                  f"Action: <工具名>|<json参数>\n若已能回答，Action: FINISH|<最终答案>")
+        out = client.chat.completions.create(
+            model="gpt-4o-mini", temperature=0,
+            messages=[{"role":"user","content":prompt}]).choices[0].message.content
+        action = re.search(r"Action:\s*(.+)", out).group(1)
+        if action.startswith("FINISH"):
+            return action.split("|",1)[1]              # 最终答案
+        name, args = action.split("|",1)
+        # 2) Observation：执行工具，结果回灌记忆
+        obs = TOOLS[name](json.loads(args))
+        memory += f"Thought:{out}\nObservation:{obs}\n"
+    return "达到最大步数，未完成"
+print(react("我的订单A123什么时候到？帮我看看"))
+```
+他边写边理解：Agent 的本质就是"LLM 当大脑决定调哪个工具、循环到问题解决"，框架只是把这个循环封装了。
+
+**结果**：二面再被问"你的 Agent 怎么决策"，他白板画出了 Thought-Action-Observation 循环，并说清"哪一步可能出错、怎么兜底"，当场被说"这个理解到位"。拿到 offer。
+
+**踩坑**：第一版他没限 `max_steps`，模型陷入"一直查一直查"的死循环把 token 烧光。加了步数上限和 FINISH 判定才收敛。还有模型偶尔把 Action 格式写歪（少竖线），他加了正则容错和"格式不对就要求重写"的兜底。
+
+**可复用经验**：学 Agent 第一步手写一遍 ReAct，别直接上 LangChain。能白板画出"Thought→Action→Observation→循环→FINISH"并说出每步的坑，才是 FDE 面试要的"懂原理会用框架"。框架是脚手架，原理是地基。
 Agent 拥有执行能力，被劫持后果严重。构建时即要带：observation 检查 + 工具白名单 + 执行沙箱。
 
 ## 进阶挑战

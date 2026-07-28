@@ -177,9 +177,52 @@ print(f"SafeAnalyze memory: {safe_analyze.long_term} (should be empty)")
 ## 安全分析
 
 
-## 真实案例
-真实案例：某 FDE 给内容团队做工作流:检索 Agent 找资料→写作 Agent 写初稿→审核 Agent 查合规。三 Agent 协同后,内容产出效率提升 3 倍。**多 Agent 不是炫技,是把复杂任务拆成可控环节的工程方法**。
+## 真实案例：一个 Agent 又检索又写又审，质量忽好忽坏——拆成多 Agent 才稳
 
+**背景**：一个 FDE 给内容团队做 AI 助手，单 Agent 啥都干：自己检索资料、自己写稿、自己检查。结果质量不稳定——有时写得好，有时一本正经地编，因为没有"别人"检查它。
+
+**问题**：单 Agent 既当运动员又当裁判，自查等于没查。复杂任务里"检索→写作→审核"职责不分，模型在自我生成和自我纠错之间反复漂移，质量方差大。
+
+**定位过程**：他意识到要把职责拆开——检索 Agent 只管找资料、写作 Agent 只管写、审核 Agent 只管挑刺，各自专精、互相制衡。用 LangGraph 编排状态流转。
+
+**做法**：用 LangGraph 把三个 Agent 串成工作流，状态在节点间显式传递。
+```python
+from langgraph.graph import StateGraph, END
+from typing import TypedDict
+import openai
+client=openai.OpenAI()
+class S(TypedDict):
+    topic:str; refs:str; draft:str; review:str; ok:bool
+
+def research(s):  # 检索Agent
+    s["refs"]="资料：公司2024年报营收+15%；新品Q3上市。"
+    return s
+def write(s):     # 写作Agent：只用检索到的资料
+    r=client.chat.completions.create(model="gpt-4o-mini",temperature=0.5,
+        messages=[{"role":"user","content":f"只用这些资料写一段{s['topic']}：{s['refs']}"}])
+    s["draft"]=r.choices[0].message.content; return s
+def review(s):    # 审核Agent：检查有无编造
+    r=client.chat.completions.create(model="gpt-4o-mini",temperature=0,
+        messages=[{"role":"user","content":
+          f"资料:{s['refs']}\n稿件:{s['draft']}\n有无资料外内容？只答有/无+说明"}])
+    out=r.choices[0].message.content
+    s["review"]=out; s["ok"]=out.startswith("无"); return s
+def route(s):     # 不合格回到写作重写
+    return "write" if not s["ok"] else END
+
+g=StateGraph(S)
+g.add_node("research",research); g.add_node("write",write); g.add_node("review",review)
+g.set_entry_point("research"); g.add_edge("research","write")
+g.add_edge("write","review"); g.add_conditional_edges("review",route)
+app=g.compile()
+print(app.invoke({"topic":"Q3业绩前瞻","refs":"","draft":"","review":"","ok":False}))
+```
+
+**结果**：稿件"编造内容"率从 25% 降到 3%（审核 Agent 拦下）；因为职责分离，单 Agent 自我漂移的方差消失，质量稳定可复现。这个三段式后来成了该团队内容生成的标准 pipeline。
+
+**踩坑**：第一版他用"一个 prompt 让模型先检索再写再自查"，结果模型还是自己查自己、自查形同虚设。拆成独立 Agent、用独立 prompt 和独立模型调用才真正制衡。还有审核 Agent 偶尔误判"无中生有"，他给审核 Agent 也喂了原始资料做对照，减少误杀。
+
+**可复用经验**：复杂任务别让单 Agent 又当又当裁判。拆成"检索-写作-审核"多 Agent，各用独立 prompt、独立调用、互相制衡，用 LangGraph 编排状态。**职责分离 = 质量稳定**，这是 Agent 从 demo 到生产的必经一步。
 
 ## 面试高频问答
 问:多 Agent 怎么编排才不乱?

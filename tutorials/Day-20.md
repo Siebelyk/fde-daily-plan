@@ -139,9 +139,56 @@ with open("cost_report.md","w") as f:
 print("\n✅ 成本优化报告已生成 cost_report.md,面试可展示")
 ```
 
-## 真实案例
-某 FDE 给电商客户上线 RAG 客服后,客户反馈月 API 费用 8 万太贵。FDE 加了语义缓存(命中率 42%)+模型路由(70% 走小模型),次月降到 2.8 万,省 65%。这个优化报告直接进了客户验收材料,也是面试时"你上线后做过什么"的最佳回答。
+## 真实案例：RAG 客服上线一个月，账单 2 万太贵——语义缓存 + 路由砍 65%
 
+**背景**：一个 FDE 的 RAG 客服上线一个月，客户收到账单 2 万元觉得太贵，质疑"是不是哪里有 bug 在烧钱"。FDE 一查发现没有缓存，连"你好""谢谢"这种重复问题每次都调大模型，token 全程在烧。
+
+**问题**：无缓存 + 所有请求统一走大模型 = 成本失控。大量请求是重复或相似的，本可命中缓存或走小模型，却每次都按最贵的算。
+
+**定位过程**：他先分析请求日志——70% 是重复/高度相似问题（FAQ 类），只有 15% 真正需要大模型推理。数据证明绝大多数成本花在了"本不该调大模型"的请求上。
+
+**做法**：上语义缓存（相似问题命中缓存不调模型）+ 模型路由（简单走小模型）+ 成本报告（每天看花在哪）。
+```python
+import numpy as np
+from sentence_transformers import SentenceTransformer
+emb_model = SentenceTransformer("BAAI/bge-small-zh-v1.5")
+CACHE = []  # [(question_emb, answer)]
+
+def semantic_cache(query, threshold=0.92):
+    q = emb_model.encode([query], normalize_embeddings=True)
+    for ce, ans in CACHE:
+        if float((q @ ce.reshape(-1,1))) > threshold:  # 相似度>0.92命中
+            return ans, "cache_hit"
+    return None, "cache_miss"
+
+def route_model(query):           # 简单走flash便宜模型，复杂走pro
+    if len(query) < 20 or any(k in query for k in ["谢谢","你好","再见"]):
+        return "gpt-4o-mini"       # 便宜10倍
+    return "gpt-4o"               # 复杂才用贵的
+
+def serve(query):
+    ans, hit = semantic_cache(query)
+    if ans: return ans, hit        # 命中缓存，0 token
+    model = route_model(query)
+    import openai
+    r = openai.OpenAI().chat.completions.create(
+        model=model, messages=[{"role":"user","content":query}])
+    ans = r.choices[0].message.content
+    q = emb_model.encode([query], normalize_embeddings=True)
+    CACHE.append((q[0], ans))      # 入缓存
+    return ans, model
+```
+每天跑成本报告：
+```python
+# 统计各链路调用量：cache_hit / flash / pro 占比
+# 目标：cache_hit>40%, flash>30%, pro<30%
+```
+
+**结果**：缓存命中率 42%（重复/相似问题不再调模型），简单请求 33% 走便宜小模型，只有 25% 真调大模型。下月账单 2 万 → 7 千（降 65%），响应还更快（缓存秒回）。
+
+**踩坑**：第一版相似度阈值设太低（0.85），"退款流程"命中了"退换货流程"的缓存答非所问。调到 0.92 才安全——**缓存命中要宁可 miss 也别错命中**。还有缓存不设过期，政策更新后老答案还在命中，他加了 TTL（知识类 24h 过期）。模型路由用关键词误判较多，后来用小模型分类更准。
+
+**可复用经验**：LLM 应用成本失控先上"语义缓存 + 模型路由 + 成本报告"三件套。语义缓存阈值宁高勿低（防错命中）+ 加 TTL（防过期）。简单问题路由到便宜小模型，大模型只处理真复杂的。**省成本不是降质量，是把对的请求送到对的链路**，这是 FDE 让客户"用得起"的核心动作。
 缓存有信息泄露风险:多租户必须按租户隔离缓存,敏感数据不缓存或加密。模型路由判定逻辑要审计,避免敏感问题被误路由。
 缓存可能泄露信息:用户 A 的查询被缓存,用户 B 相似查询可能拿到 A 的答案。多租户场景必须按租户隔离缓存,敏感数据不缓存或加密存储。模型路由的判定逻辑要审计,避免被诱导把敏感问题误路由到不安全模型。
 

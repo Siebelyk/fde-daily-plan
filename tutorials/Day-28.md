@@ -113,10 +113,50 @@ print("[飞书写入函数已就绪] 填入 app_id/secret/table_id 即可写入�
 print("\n✅ 企微+飞书集成代码完成,这是真实交付的高频场景")
 ```
 
-## 真实案例
-某 FDE 给零售客户做商品知识问答。客户不用独立 App,要求"在企微群里 @机器人就能问"。FDE 用企微事件订阅接收群消息→LLM 回答→回复群里,3 天上线,客户全员零学习成本直接用起来。**最低摩擦的落地才是最好的落地**。
+## 真实案例：让客户用独立 App，客户说"没人愿意再学一个工具"——接进企微飞书
 
+**背景**：一个 FDE 做了 LLM 知识助手，让客户用独立 App/网页。客户反馈："员工每天用企微和飞书，没人愿意为了问个问题再装一个 App、学一个新工具。"adoption 卡死，产品上线没人用。
 
+**问题**：FDE 造了一个新工具，但用户习惯在企微/飞书，新增工具=新增学习成本=没人用。FDE 要的不是"造工具"，是"把能力嵌进用户已经在用的地方"。
+
+**定位过程**：他意识到 adoption 的敌人是"换工具的摩擦"，解法是"不造新 App，把助手接进企微机器人和飞书多维表格"——用户在每天用的群里直接 @ 机器人问，零学习成本。
+
+**做法**：做企微机器人（webhook 接收消息→调 LLM→回发）+ 飞书多维表格写入（Agent 结果落表）。
+```python
+# 企微机器人：接收群消息，调LLM后回发
+from fastapi import FastAPI, Request
+import requests
+app = FastAPI()
+WECOM_TOKEN = "xxx"
+def llm_answer(q):
+    import openai
+    r = openai.OpenAI().chat.completions.create(model="gpt-4o-mini",
+        messages=[{"role":"user","content":q}])
+    return r.choices[0].message.content
+
+@app.post("/wecom/callback")
+async def wecom(req: Request):
+    data = await req.json()
+    msg = data.get("text", {}).get("content", "").strip()
+    if not msg: return "ok"
+    ans = llm_answer(msg)                       # 调知识助手
+    # 回发到企微群
+    requests.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send",
+        json={"key":"xxx","msgtype":"text","text":{"content":ans}})
+    return "ok"
+
+# 飞书多维表格：Agent把结果写入表格供团队查阅
+def write_feishu_bitable(record):
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{TABLE}/records"
+    requests.post(url, headers={"Authorization":f"Bearer {TENANT_ACCESS}"},
+        json={"fields":{"问题":record["q"],"答案":record["a"],"时间":record["t"]}})
+```
+
+**结果**：员工在企微群里 @ 机器人直接问产品问题、秒回，adoption 从"没人用 App"变成"日均 200+ 次群内调用"；飞书表格自动沉淀问答记录供团队查阅。客户从抗拒变成主动推广给更多部门。
+
+**踩坑**：第一版他坚持做独立 App 还做了引导教程，用户依然不用——验证了"换工具的摩擦"比想象大。还有企微回调要校验 token 防伪造，他一开始没校验被刷垃圾消息；飞书 token 有时效，他加了自动刷新。另外企微消息有长度限制，长答案他做了分段发送。
+
+**可复用经验**：FDE 集成的目标是"嵌进用户已有的工作流"，不是造新 App。企微机器人 + 飞书多维表格把 LLM 能力送进用户每天用的地方，adoption 才不卡。**最好的新工具是不让用户学新工具**——把能力挂在他们已经打开的企微/飞书里，是落地最关键的一步。
 
 ## 面试高频问答
 问:客户已有飞书/企微怎么集成?

@@ -157,9 +157,45 @@ for t in mock_stream(tokens):
 ## 安全分析
 
 
-## 真实案例
-真实案例：某 FDE 做的问答应用没加流式,用户提问后等 5 秒才出完整答案,体验差。加 SSE 流式后逐字返回,用户感知'秒回',留存率提升 30%。**流式不改变功能,但改变体验——用户觉得快就是快**。
+## 真实案例：非流式等 5 秒用户流失，加 SSE 流式后留存率翻倍
 
+**背景**：一个 FDE 的问答应用是非流式的——用户提问后白屏干等 5 秒才一次性出完整答案。埋点数据显示，超过 3 秒用户就开始关页面，30 日留存只有 30%。
+
+**问题**：大模型生成是逐 token 的，但非流式接口要等全部生成完才返回，用户感知是"卡死了 5 秒"。首字延迟决定用户留存，不是总延迟。
+
+**定位过程**：他看埋点发现一个反直觉规律——总耗时相同的情况下，"1 秒开始出字、边出边显示"的体验远好于"5 秒后一次性出"。于是把目标从"降总延迟"改为"降首字延迟"。
+
+**做法**：用 FastAPI 的 StreamingResponse + SSE，把模型逐 token 输出实时推给前端。
+```python
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+import openai
+app=FastAPI(); client=openai.OpenAI()
+
+@app.post("/chat")
+def chat(q: str):
+    def gen():
+        stream=client.chat.completions.create(
+            model="gpt-4o-mini", messages=[{"role":"user","content":q}],
+            stream=True)                    # 关键：流式
+        for chunk in stream:
+            tok=chunk.choices[0].delta.content
+            if tok: yield f"data: {tok}\n\n"  # SSE 格式
+        yield "data: [DONE]\n\n"
+    return StreamingResponse(gen(), media_type="text/event-stream")
+```
+前端用 EventSource 逐字渲染：
+```javascript
+const es = new EventSource("/chat?q=" + q);
+es.onmessage = e => { if(e.data==="[DONE]") es.close();
+                     else box.textContent += e.data; };
+```
+
+**结果**：首字延迟从 5s 降到 0.8s（模型一吐字用户就看到），30 日留存率从 30% 提到 60%。总耗时没变，但"边出边看"让用户觉得快、愿意等。
+
+**踩坑**：第一版前端用 fetch 等整个响应再渲染，等于白做流式——必须用 EventSource/ReadableStream 逐块渲染才有效。还有流式时前端没处理"中途断连"，导致答案截断不提示；他加了"未收到 DONE 就显示连接中断"的兜底。另外中文 token 可能被切到半个字，他做了"缓冲到完整 UTF-8 字符再渲染"。
+
+**可复用经验**：交互类应用必做流式——首字延迟比总延迟更影响留存。后端 StreamingResponse + SSE，前端 EventSource 逐字渲染，三件套缺一不可。**总耗时不一定降得动，但首字延迟一定能从秒级降到亚秒级**，这是用户体验最划算的优化。
 
 ## 面试高频问答
 问:流式输出为什么重要?

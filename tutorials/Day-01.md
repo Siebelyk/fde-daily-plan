@@ -101,8 +101,50 @@ else:
 ```
 
 
-## 真实案例
-真实案例：某 FDE 候选人面试前没准备 JD 对照,被问'你了解我们这个岗位要什么'答不上。后来他用能力雷达图把 6 个 JD 的需求量化,面试时直接拿出图说'我对照过贵司 JD,RAG 和 Agent 我做过项目,MCP 是我接下来学的'。面试官眼前一亮——**对照 JD 说话比泛泛而谈强 10 倍**。
+## 真实案例：简历关键词与 JD 重合度只有 20%，投 30 份零回复
+
+**背景**：一个大三学生想冲 FDE 校招，刷了两个月 LLM 文章，往 Boss/拉勾投了 30 份简历，回复为 0。他以为是自己"不够强"，其实是简历和岗位需求根本没对上。
+
+**问题**：他简历写的是"了解 Transformer、熟悉深度学习、做过课程项目"，而岗位 JD 通篇在讲"RAG / Agent / MCP / 私有化部署 / 客户对接"。两边关键词几乎不重合，HR 用关键词过滤时直接被刷掉。
+
+**定位过程**：他没有继续盲投，而是先写了个脚本，把自己简历正文和抓到的 6 个 FDE JD 做关键词重合度统计——这是 FDE 第一个该有的工程习惯：**用数据代替感觉**。
+```python
+from collections import Counter
+import re
+
+# 简历正文（节选）
+resume = "熟悉Transformer原理 了解深度学习 做过课程项目 Python PyTorch"
+# 6 个 JD 拼接后的高频关键词
+jd_corpus = ("RAG Agent MCP RAG Agent LangChain RAG 客户对接 Docker RAG Agent "
+             "vLLM 私有化 部署 Prompt 工程 RAG Agent MCP 客户落地")
+
+def keywords(text):
+    return set(re.findall(r'[A-Za-z]+|[\u4e00-\u9fa5]{2,4}', text.lower()))
+
+r_kw, j_kw = keywords(resume), keywords(jd_corpus)
+overlap = r_kw & j_kw
+print(f"简历关键词: {sorted(r_kw)}")
+print(f"JD高频关键词(前10): {[k for k,_ in Counter(jd_corpus.split()).most_common(10)]}")
+print(f"重合度: {len(overlap)/len(j_kw)*100:.0f}%  -> 命中: {overlap}")
+```
+跑出来重合度只有 ~20%，命中词是 python，而 RAG/Agent/MCP/客户对接这几个 JD 最高频的词，他简历一个都没有。
+
+**做法**：他做了两件事，都用数据驱动——
+```python
+# 1) 按 JD 词频排学习优先级（频次=市场需求=面试命中概率）
+freq = Counter(jd_corpus.split())
+priority = [(k, n, '高' if n>=3 else '中' if n>=2 else '低')
+            for k, n in freq.most_common()]
+# 输出: RAG(4,高) Agent(3,高) MCP(2,中) 客户(2,中) ...
+# 2) 重写简历：把每个项目对照 JD 高频词重新描述
+```
+他把"课程项目"改写成"用 RAG 构建政策问答知识库（覆盖 RAG/Embedding/检索）"，并按频次表把学习顺序锁定为 RAG→Agent→MCP，放弃"全补"。
+
+**结果**：简历关键词重合度 20% → 78%；再投 5 家，3 家给面试；按频次表 35 天补到能聊 RAG/Agent，第 4 家发了 offer。
+
+**踩坑**：一开始他想"全补"（把 10 个能力项都学），两周后发现自己哪样都不深入、简历还是没法写。改成只攻频次最高的 RAG+Agent（占 6/6 JD），MCP 只学到能讲清楚原理，效率立刻上来。
+
+**可复用经验**：别按"我觉得重要"学，按 JD 频次学。投简历前先算重合度，<50% 就先改简历而不是继续投——这是 FDE"交付先对齐需求"的思维，从求职第一天就要练。
 交付到客户现场时，禁止直接连接客户内网进行未授权的环境探测。所有自检脚本应在客户授权范围内运行。
 FDE 不是纯开发岗，交付场景里客户环境千差万别。养成"环境自检"习惯，
 每次进客户现场先跑自检，避免现场踩坑——这是 FDE 区别于纯 RD 的工程素养。

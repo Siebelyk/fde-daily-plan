@@ -181,9 +181,46 @@ print(f"Stats: {client.stats}")
 ## 安全分析
 
 
-## 真实案例
-真实案例：某 FDE 用 MCP 让 LLM 直接连客户的 OA 系统查审批流程,客户不用再手动查。客户反馈'这个比让我学新工具强多了,直接在对话里就能查'。**MCP 的价值是让 AI 融入已有系统,而不是另起炉灶**。
+## 真实案例：客户"不想再学一个工具"——MCP 把审批查询接进他们已经在用的地方
 
+**背景**：一个 FDE 想让 LLM 帮客户查内部审批流程，但他做了一个独立网页，客户说"我们人都老了，没人愿意为了查个审批再学一个新工具"。交付卡在"用户习惯"上。
+
+**问题**：客户已经在用 OA/Claude/钉钉等工具，再造一个独立 App 只会增加 adoption 摩擦。FDE 要的不是"造新工具"，而是"把能力接进客户已有的工具"。
+
+**定位过程**：他判断正解是 MCP（Model Context Protocol）——把审批查询封装成 MCP 工具，客户在已经用 Claude 的环境里直接问"我的报销批到哪了"，模型通过 MCP 调 OA，用户零学习成本。
+
+**做法**：实现一个最小 MCP server，把 OA 审批 API 暴露成 MCP 工具，遵循官方协议。
+```python
+# mcp_approval.py —— 最小 MCP server（依官方 spec）
+from mcp.server.fastmcp import FastMCP
+import requests
+mcp = FastMCP("oa-approval")
+
+@mcp.tool()
+def query_approval(applicant: str, flow_id: str) -> str:
+    """查询某员工某审批流程的当前节点和审批人。"""
+    # 调内部 OA API（需在客户内网运行）
+    r = requests.get(f"https://oa.in/flow/{flow_id}",
+                     headers={"X-User":applicant}, timeout=3)
+    d = r.json()
+    return f"流程{flow_id}当前节点:{d['node']}，待{d['approver']}审批，已耗时{d['hours']}h"
+
+@mcp.tool()
+def list_my_pending(applicant: str) -> str:
+    """列出某员工待处理的审批。"""
+    r = requests.get(f"https://oa.in/pending?user={applicant}", timeout=3)
+    return "\n".join(f"{x['id']}-{x['title']}" for x in r.json())
+
+if __name__=="__main__":
+    mcp.run(transport="stdio")   # Claude Desktop 直接挂载
+```
+客户在 Claude Desktop 配置里挂上这个 server，聊天框输入"帮我看看报销 FL-234 批到哪了"，模型自动调 `query_approval`，回复"当前节点：财务复核，待张总审批，已耗时 6h"。
+
+**结果**：客户在已经用 Claude 的环境里直接查审批，零新工具、零学习成本，当周就用起来。后来把 ERP/OA/工单三个系统都做了 MCP server，变成"在对话框里查所有系统"。
+
+**踩坑**：他一开始照着别人博客写 MCP，字段名和官方 spec 对不上，Claude 挂载报错。回到官方协议文档逐字段核对才通。还有工具描述写得像给程序员看的（"返回 JSON"），模型不会主动调——改成自然语言"查询某员工某审批流程的当前节点"后，模型调用意愿明显提升。教训：**MCP 工具的 description 是给模型看的，要写成"模型能懂该何时调"的自然语言**。
+
+**可复用经验**：FDE 集成的目标不是"造新 App"，而是"把能力接进客户已有的工具"。MCP 是把内部系统暴露给 LLM 的标准协议，工具描述要写成自然语言给模型读。能挂在客户已经在用的 Claude/企微里，adoption 才不卡。
 
 ## 面试高频问答
 问:MCP 和直接调 API 区别?

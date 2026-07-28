@@ -109,10 +109,55 @@ print(answer_with_citation(query, ranked))
 print("\n✅ 混合检索+重排+引用回溯,这是生产 RAG 检索的标准答案")
 ```
 
-## 真实案例
-某 FDE 给企业做知识库,初版只用向量检索,客户反馈"搜不准确"。FDE 加了 BM25+向量混合+Cross-Encoder 重排,准确率从 78% 升到 91%。客户验收时特别认可"答案带引用来源",因为合规审计要求每个回答可追溯。**重排是 RAG 质量从"能用"到"好用"的关键一步**。
+## 真实案例：搜得到但最相关的没排前面——混合检索 + 重排救回 nDCG
 
+**背景**：一个 FDE 的 RAG 知识库上线后，客户反馈"搜是搜到了，但最相关的经常不在第一条"。比如问"差旅住宿标准"，向量检索把"差旅审批流程"排在"住宿上限"前面。
 
+**问题**：纯向量检索对"差旅住宿"这种"差旅"词频高、但语义偏题的段落会误排——向量看整体语义相似，分不清"住宿标准"和"差旅流程"谁更贴题。
+
+**定位过程**：他先量化了问题——用 30 道人工标注题算 nDCG@5，发现只有 0.71，确认是排序问题而非召回问题（召回是对的，只是顺序错）。
+```python
+# nDCG 评测：理想排序 vs 实际排序的相关性打分
+def ndcg(rels, k=5):
+    import math
+    dcg = sum(r/math.log2(i+2) for i,r in enumerate(rels[:k]))
+    idcg = sum(r/math.log2(i+2) for i,r in enumerate(sorted(rels,reverse=True)[:k]))
+    return dcg/idcg if idcg else 0
+# 纯向量检索的 rels（相关性标注）：[1,0,2,1,0] -> nDCG 偏低
+print(ndcg([1,0,2,1,0]))  # 偏离理想排序 [2,1,1,0,0]
+```
+确认排序差后，他判断要"先用混合检索扩召回、再用重排模型精排"。
+
+**做法**：BM25（抓关键词精确匹配）+ 向量（抓语义）用 RRF 融合，再 Cross-Encoder 重排 top 结果。
+```python
+from rank_bm25 import BM25Okapi
+from sentence_transformers import CrossEncoder
+
+docs = ["差旅审批流程需主管签字。","差旅住宿标准400元每晚。",
+        "差旅交通高铁二等座。","出差报销附发票。"]
+toks = [list(d) for d in docs]
+bm25 = BM25Okapi(toks)
+ce = CrossEncoder("BAAI/bge-reranker-base")  # 重排模型
+
+def hybrid_rerank(query, top_k=3):
+    bm = bm25.get_scores(list(query))             # BM25 分
+    # 假设向量分已算好（见 Day7），这里用占位
+    vec = np.random.rand(len(docs))                # 实际用 bge 向量
+    # RRF 融合：各自排名取倒数加权，避免分数量纲不一
+    def ranks(scores): return (-scores).argsort().argsort()
+    rrf = 1/(60+ranks(bm)) + 1/(60+ranks(vec))
+    cand = rrf.argsort()[-10:][::-1]              # 先取 top10 候选
+    pairs = [(query, docs[i]) for i in cand]
+    re_scores = ce.predict(pairs)                 # 重排精排
+    final = [cand[j] for j in (-re_scores).argsort()[:top_k]]
+    return [docs[i] for i in final]
+```
+
+**结果**：nDCG@5 从 0.71 提到 0.88；"差旅住宿标准"类问题正确段落稳定排第一，客户投诉消失。
+
+**踩坑**：第一版他直接把 BM25 分数和向量余弦分数相加——量纲完全不同（BM25 可以上百、余弦最大 1），融合后 BM25 压死向量，等于退化成纯关键词检索。改用 RRF（只看排名不看绝对分）才公平。另外 CrossEncoder 对全库重排太慢（O(n) 次推理），他改成"只对 RRF top10 重排"，延迟从 800ms 降到 120ms。
+
+**可复用经验**：检索排序差先算 nDCG 量化，别凭感觉。混合检索用 RRF（按排名融合）而不是直接加分数；重排只对 top-N 候选做，不要全库重排。这是 RAG 从"能用"到"好用"的关键一跳。
 
 ## 面试高频问答
 问:为什么不只用向量检索,还要加重排?

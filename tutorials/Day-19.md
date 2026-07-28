@@ -176,9 +176,61 @@ print(cost_alert(m.usage_by_user, daily_budget=0.0001))
 日志中可能含用户 prompt 与模型输出（敏感数据），日志收集与留存要合规：
 PII 脱敏、访问审计、保留期控制。监控指标本身也应不含明文 prompt，只统计量级。
 
-## 真实案例
-真实案例：某 FDE 给政企客户部署,单机跑挂了就停服。上了 K8s+Prometheus 后,Pod 自动重启,监控告警提前发现问题。客户运维说'这个比我们原系统还省心'。**K8s+监控是生产级标配,政企客户的基本要求**。
+## 真实案例：政企客户要"稳定不能宕机"——单机扛不住，上 K8s + 监控
 
+**背景**：一个 FDE 给政企客户单机部署 LLM 服务，SLA 要求"可用率 99.5%、故障自动恢复"。但单机一旦 OOM 或进程挂了就全停，客户不认可"一台机器跑生产"。
+
+**问题**：单机没有冗余、没有自动恢复、没有可观测性，故障要靠人手动重启，达不到政企 SLA。生产服务必须有"自愈 + 可监控"。
+
+**定位过程**：客户问他"机器挂了多久能恢复"，他答不上来——因为单机部署根本没有监控，挂了都不知道。他判断必须上 K8s（自动重启 + 调度）+ Prometheus（监控告警），把"不可观测的故障"变成"自愈 + 告警"。
+
+**做法**：写 K8s 部署 YAML（带资源请求/限制 + GPU 调度 + 就绪探针）+ Prometheus 监控。
+```yaml
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: llm-api}
+spec:
+  replicas: 2                     # 多副本，单机挂了另一个还在
+  selector: {matchLabels: {app: llm-api}}
+  template:
+    metadata: {labels: {app: llm-api}}
+    spec:
+      nodeSelector: {nvidia.com/gpu.present: "true"}  # 调度到GPU节点
+      containers:
+      - name: llm-api
+        image: registry.in/fde-llm-api:1.0
+        resources:
+          requests: {nvidia.com/gpu: 1, memory: "16Gi"}  # 请求=调度依据
+          limits:   {nvidia.com/gpu: 1, memory: "24Gi"}   # 限制=防抢占
+        readinessProbe:           # 就绪探针：没就绪不接流量
+          httpGet: {path: /health, port: 8000}
+          periodSeconds: 10
+        livenessProbe:             # 存活探针：挂了自动重启
+          httpGet: {path: /health, port: 8000}
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata: {name: llm-api}
+spec:
+  selector: {app: llm-api}
+  ports: [{port: 8000, targetPort: 8000}]
+```
+Prometheus 监控 QPS、延迟、显存：
+```yaml
+# 监控 GPU/延迟指标，超阈值告警
+- alert: LLMHighLatency
+  expr: histogram_quantile(0.99, llm_request_duration_seconds_bucket) > 3
+  for: 2m
+  annotations: {summary: "p99延迟超3秒"}
+```
+
+**结果**：单 Pod OOM 后 K8s 10 秒内自动重启、流量切到另一副本，可用率到 99.6%；p99 延迟超阈值自动告警，运维"先于客户发现故障"。客户 SLA 验收通过。
+
+**踩坑**：他第一版没设 resources.requests/limits，两个副本抢同一张 GPU 显存爆掉。设了 GPU 请求=1、限制=1，明确每副本独占。readinessProbe 一开始设得太严（要求模型加载完才就绪，冷启动 2 分钟），导致升级时长时间无流量；改成"加载完前不就绪但设合理 initialDelaySeconds"。还有 nodeSelector 没写 GPU 标签，Pod 被调度到无 GPU 节点直接起不来。
+
+**可复用经验**：生产 LLM 服务上 K8s 三件套——多副本冗余、resources 请求/限制（GPU 要明确独占）、就绪+存活探针自动恢复。配 Prometheus 监控延迟/显存并告警。**单机不是生产，能自愈、可观测才算生产**——这是政企交付的及格线。
 
 ## 面试高频问答
 问:K8s 部署 LLM 服务要注意什么?

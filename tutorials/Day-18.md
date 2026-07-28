@@ -195,9 +195,51 @@ def check_container_security():
 ## 安全分析
 
 
-## 真实案例
-真实案例：某 FDE 给客户交付时只给源码,客户运维不会部署。后来打成 Docker 镜像,客户一条 docker run 就能起。客户说'这个我们能自己运维了'。**容器化是交付的最后一公里,不打包客户用不起来**。
+## 真实案例：只给源码和文档，客户运维装不起来——Docker 一条命令搞定
 
+**背景**：一个 FDE 交付时只给了源码包 + 一份 README，写的是"先装 Python3.10、再装 CUDA、再 pip install 20 个依赖、再改 4 个配置文件"。客户运维照做，报错"numpy 版本冲突"，又报"CUDA 找不到"，装了三天没跑起来。
+
+**问题**：源码交付把"环境一致性"全甩给了客户运维。依赖版本、系统环境、CUDA 版本任何一处不一致就装不起来——这是交付最容易翻车的地方。
+
+**定位过程**：客户运维打电话来报错时，他意识到问题不在"README 写得更详细"，而在"交付物不该是源码"——应该交付一个把环境打包好的镜像，运维只需 `docker run`。
+
+**做法**：用多阶段 Dockerfile 构建，把依赖装进镜像，最终镜像只留运行时，体积从 2.4G 压到 800M。
+```dockerfile
+# ---- 构建阶段：装依赖 ----
+FROM python:3.10-slim AS builder
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+COPY . .
+# ---- 运行阶段：只拷必要文件 ----
+FROM python:3.10-slim
+WORKDIR /app
+COPY --from=builder /root/.local /root/.local
+COPY --from=builder /app/app /app/app
+COPY --from=builder /app/config.yaml .
+ENV PATH=/root/.local/bin:$PATH
+EXPOSE 8000
+CMD ["uvicorn","app.main:app","--host","0.0.0.0","--port","8000"]
+```
+交付时给客户一个 `docker-compose.yml`，运维一条命令起服务：
+```yaml
+services:
+  llm-api:
+    image: registry.in/fde-llm-api:1.0
+    ports: ["8000:8000"]
+    environment:
+      - LLM_API_KEY=${LLM_API_KEY}
+    restart: unless-stopped
+```
+```bash
+docker compose up -d   # 客户运维一行搞定
+```
+
+**结果**：客户运维从"装三天"变成"一条命令 30 秒起服务"，环境不一致问题彻底消失。镜像分发到客户私有 registry，后续升级也只需 `docker pull` + 重启。这成了该项目所有客户的标准交付形态。
+
+**踩坑**：第一版他用单阶段构建，把构建工具链（gcc、pip 缓存）全打进镜像，体积 2.4G，客户内网拉镜像拉了 40 分钟。改多阶段构建只留运行时，压到 800M。还有 base 用了完整 `python:3.10`（1GB+），换 `python:3.10-slim` 又省一半。CUDA 依赖他单独做了一个带 GPU 的镜像标签，CPU 客户用 slim 镜像，避免无谓装 CUDA。
+
+**可复用经验**：交付生产应用别给源码，给 Docker 镜像 + compose。多阶段构建把体积压到最小（构建工具链不进运行镜像），用 slim 基础镜像，按客户有无 GPU 分标签。**一条 docker run 能起，才是合格的交付物**——这是 FDE 把"能跑在我机器上"变"能跑在客户机器上"的底线。
 
 ## 面试高频问答
 问:你交付给客户怎么打包?

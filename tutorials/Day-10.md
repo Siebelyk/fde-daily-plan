@@ -183,9 +183,52 @@ curl 'localhost:8000/audit?token=token-alice'
 ## 安全分析
 
 
-## 真实案例
-真实案例：某 FDE 给律所交付知识库,客户验收要求'答案必须能溯源到法条'。他实现了引用回溯+用户隔离+审计日志,通过律所安全审查,拿下续约。**企业级 RAG 不是跑通就行,可溯源和隔离是合规底线**。
+## 真实案例：律所验收要"答案能溯源到法条"——逼出企业级 RAG
 
+**背景**：一个 FDE 给律所做合同知识库，demo 跑通了，但律所验收提了硬要求："每个答案必须能点回具体法条原文，否则出了错我们担责。"
+
+**问题**：他的 demo 只返回答案文本，没有引用、没有出处、更没有"谁能看哪些数据"的隔离——律所里不同律师代理不同客户，绝不能让 A 律师查到 B 客户的文件。
+
+**定位过程**：律所 IT 提了三条验收红线：①可溯源到法条 ②按客户隔离数据 ③全程审计可追查。他逐条对照现有系统，发现 demo 三条全不满足——这是从"能跑的 demo"到"能过律所安全审查"的鸿沟。
+
+**做法**：给每段文档打元数据（法条编号、客户 ID、上传人），检索时按用户权限过滤，答案带可点击的引用回溯，并记录每次查询审计日志。
+```python
+from sentence_transformers import SentenceTransformer
+import numpy as np, json, time
+model = SentenceTransformer("BAAI/bge-small-zh-v1.5")
+
+# 文档带元数据：法条号、客户ID、可见范围
+DOCS = [
+ {"id":"L01","text":"合同法第8条：依法成立的合同受法律保护。","client":"C_A","law":"合同法§8"},
+ {"id":"L02","text":"合同法第60条：按约定全面履行义务。","client":"C_B","law":"合同法§60"},
+]
+EMB = model.encode([d["text"] for d in DOCS], normalize_embeddings=True)
+
+def rag(user, user_client, query, top_k=2):
+    # 1) 权限隔离：只检索该用户可见(同client或公开)的文档
+    visible = [i for i,d in enumerate(DOCS) if d["client"]==user_client or d["client"]=="PUBLIC"]
+    emb = EMB[visible]
+    q = model.encode([query], normalize_embeddings=True)
+    local = (emb @ q.T).ravel().argsort()[-top_k:][::-1]
+    picked = [DOCS[visible[j]] for j in local]
+    # 2) 答案带引用回溯
+    ctx = "\n".join(f"[{d['law']}] {d['text']}" for d in picked)
+    import openai
+    r = openai.OpenAI().chat.completions.create(model="gpt-4o-mini",temperature=0,
+        messages=[{"role":"system","content":"只依据材料回答，每个事实标注[法条号]"},
+                  {"role":"user","content":f"材料:\n{ctx}\n问:{query}"}]).choices[0].message.content
+    # 3) 审计日志
+    open("audit.log","a").write(json.dumps(
+        {"t":time.time(),"user":user,"client":user_client,"q":query,
+         "cites":[d["law"] for d in picked]},ensure_ascii=False)+"\n")
+    return r
+```
+
+**结果**：答案形如"依法成立的合同受法律保护 [合同法§8]"，点击编号能跳回原文；A 客户律师查不到 B 客户文件；每次查询落审计日志。三条验收红线全过，律所安全审查通过并续约。
+
+**踩坑**：早期他没做权限隔离，内测时 A 律师搜出了 B 客户的合同，律所 IT 当场叫停——这是合规事故级别的坑。还有引用回溯一开始只给"第8条"没给可点击链接，律师说"对不上哪份文件"，必须链回原文档 ID。教训：**企业级 RAG 的可溯源和隔离不是加分项，是合规底线，缺一个都过不了审**。
+
+**可复用经验**：给政企/律所/金融做 RAG，默认带三件套——引用回溯（答案→原文 ID）、数据隔离（按用户/客户过滤检索）、审计日志（谁查了什么）。这是 demo 和产品的分水岭，也是 FDE 在合规行业拿单的硬门槛。
 
 ## 面试高频问答
 问:企业级 RAG 和 demo 版区别在哪?
@@ -195,6 +238,7 @@ curl 'localhost:8000/audit?token=token-alice'
 - ❌ 弱表述:了解第二周实战
 - ✅ 强表述:构建企业级 RAG 知识库:用户隔离+文档管理+引用溯源+审计日志,通过政企/金融安全审查
 企业级 RAG 交付基线：用户隔离+文档扫描+三层防御+审计日志，这是 FDE 在 RAG 项目的最小安全基线。
+
 
 ## 进阶挑战
 

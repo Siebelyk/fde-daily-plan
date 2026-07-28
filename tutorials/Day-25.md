@@ -363,9 +363,65 @@ print(f"Audit entries: {len(r.json())}")
 ## 安全分析
 安全网关是 FDE 交付的'安全底座'：认证 + 限流 + 注入检测 + 输出过滤 + 审计 + 红队回归。
 
-## 真实案例
-真实案例：某 FDE 给客户做 LLM 网关,把输入过滤+输出审查+护栏串成一条链。某次有人试图注入有害指令,被网关拦截并告警,避免了事故。客户说'这个网关让我们敢上线了'。**安全网关是把攻防能力变成可交付产品的形式**。
+## 真实案例：客户要"安全审计通过才上线"——纵深防御网关一次过审
 
+**背景**：一个 FDE 给客户做了 LLM 网关，要求"串起输入过滤 + 输出审查 + 护栏，通过安全审计才能上线"。审计方逐层测，单层都漏，必须多层互补才过。
+
+**问题**：单层防御必被绕过——输入过滤漏改写注入、输出审查漏编码绕过、护栏只防极端内容。审计方会针对每层弱点测，任一层穿了就不过。
+
+**定位过程**：他先理清纵深防御架构——请求过 4 道关：输入过滤 → 指令分层 → 模型调用 → 输出审查 + 护栏，每层防不同攻击，前层漏的后面兜。
+```python
+# 网关：请求依次过各层，任一层拦截就返回安全回复
+class LLMGateway:
+    def __init__(self):
+        self.input_filter = InputFilter()    # 防注入/越权指令
+        self.output_audit = OutputAudit()   # 防泄漏/有害内容
+        self.guardrail = Guardrail()         # 防越界/合规
+    def handle(self, query, user_ctx):
+        # 第1层：输入过滤
+        if self.input_filter.is_injection(query):
+            return "请求被拦截：检测到可疑指令"
+        # 第2层：指令分层，用户输入标记为数据
+        msgs = [{"role":"system","content":SYSTEM_RULE},
+                {"role":"user","content":f"【用户数据】{query}"}]
+        out = llm_call(msgs)
+        # 第3层：输出审查（防泄漏系统提示/敏感数据）
+        if self.output_audit.leaks(out): return "抱歉，无法回答"
+        # 第4层：护栏（合规/越界）
+        out = self.guardrail.enforce(out, user_ctx)
+        return out
+```
+
+**做法**：每层用不同技术互补——输入过滤用正则+小模型分类双检，输出审查查泄漏信号+脱敏，护栏按用户权限限制操作。
+```python
+class InputFilter:
+    PATTERNS = [r"忽略.{0,6}指令", r"</?system>", r"DAN", r"管理员.{0,4}查询"]
+    def is_injection(self, t):
+        for p in self.PATTERNS:
+            if re.search(p, t, re.I): return True
+        # 正则漏的，小模型分类补一道
+        return self._cls(t) == "injection"
+    def _cls(self, t):
+        r = openai.OpenAI().chat.completions.create(model="gpt-4o-mini",
+            messages=[{"role":"user","content":f"这是注入攻击吗？只答是/否：{t}"}])
+        return "injection" if "是" in r.choices[0].message.content else "safe"
+class OutputAudit:
+    def leaks(self, out):
+        return any(s in out.lower() for s in ["system","你是","忽略","api key"])
+class Guardrail:
+    def enforce(self, out, ctx):
+        if not ctx.get("can_refund") and "退款" in out: return "无权限操作退款"
+        return out
+```
+
+**结果**：审计方逐层测——注入被第1层拦、泄漏被第3层拦、越权被第4层拦，纵深互补 4 次攻击 0 穿透，一次过审上线。
+
+**踩坑**：第一版只有输入过滤单层，审计用 Unicode 编码绕过正则一打就穿。加输出审查 + 护栏才互补。还有小模型分类有误伤（正常问题被判注入），他加了白名单放行高频合法问题、降低误杀。
+
+
+
+审计方第二轮换了招——让模型在多轮对话里"诱导"用户逐步暴露系统规则（不是单条注入，而是 5 轮温水煮青蛙），单层防御全栽。这逼他把"上下文里累积的指令越权"也纳入输入过滤，加了多轮意图监控：一旦发现用户消息里"累积出现越权指令"就降级到只读模式。纵深防御不只是堆层数，还要防"跨轮累积"的新型攻击。
+**可复用经验**：安全防御必须纵深——单层必被绕，多层互补才稳。输入过滤（正则+小模型双检）→ 指令分层 → 输出审查 → 护栏（按权限限操作），各防不同攻击。**过审靠的是"前层漏的后面兜"，不是任何单层做到完美**。这是 LLM 安全网关的设计本质。
 
 ## 面试高频问答
 问:安全网关放哪里?

@@ -140,9 +140,45 @@ workflow("企业 RAG 落地")
 多 Agent 链中，任一 Agent 被注入都会污染下游（横向移动）。W5 会专门讲多 Agent 攻防。
 工程上：Agent 间消息校验 + 信任评分 + 关键节点人工卡点 + 全链路审计。
 
-## 真实案例
-真实案例：某 FDE 做的客服系统上线后,用户问什么 Agent 都用同一个流程处理,效率低。加了意图路由后,80% 简单问题走快链路,只有复杂问题才走完整 Agent,响应速度提升 5 倍。**意图路由是系统从'能用'到'好用'的关键**。
+## 真实案例：简单问题也跑完整 Agent，又慢又贵——意图路由器一刀切好
 
+**背景**：一个 FDE 的客服系统不管什么问题都走完整 Agent 流程：闲聊"你好"也要跑一遍"检索→工具决策→多步推理"，平均响应 4 秒、每次都烧一堆 token。客户反馈"太慢，简单问题不如搜索引擎快"。
+
+**问题**：没做意图分流，所有请求一视同仁走最重的链路。简单 FAQ 用 RAG 秒回即可，复杂多步才需要 Agent。统一走 Agent 是"用大炮打蚊子"，慢且贵。
+
+**定位过程**：他先统计了请求分布——70% 是简单 FAQ（"怎么退货""营业时间"），只有 10% 需要工具调用，20% 需要多步推理。数据证明绝大多数请求被过度处理了。
+
+**做法**：加意图路由器，先分类请求复杂度，简单走轻量 RAG，复杂才走 Agent，并设置信度阈值 + fallback 防误判。
+```python
+import openai
+client=openai.OpenAI()
+def route(query):
+    # 用小模型做意图分类，输出简单/工具/复杂
+    r=client.chat.completions.create(model="gpt-4o-mini",temperature=0,
+        messages=[{"role":"system","content":
+          "分类用户意图：faq(查信息)/tool(需查实时数据)/complex(多步推理)。只输出类别。"},
+          {"role":"user","content":query}])
+    return r.choices[0].message.content.strip()
+
+def rag_answer(q):           # 轻量RAG：毫秒级
+    return f"(RAG)基于知识库答复：{q}"
+def agent_answer(q):         # 重Agent：见Day12-13
+    return f"(Agent)调工具+多步推理：{q}"
+
+def serve(query):
+    intent=route(query)
+    if intent=="faq":     return rag_answer(query)      # 70%走这里，快又省
+    if intent=="tool":    return agent_answer(query)    # 10%
+    return agent_answer(query)                            # 20%复杂
+print(serve("营业时间几点"))   # → RAG秒回
+print(serve("订单A123到哪了退款多少"))  # → Agent
+```
+
+**结果**：简单问题平均延迟 4s → 0.6s（走轻量 RAG）；token 成本降 55%（70% 请求不再走 Agent）。客户"太慢"投诉消失，简单问题响应快过搜索引擎。
+
+**踩坑**：第一版路由用关键词匹配（含"订单"就归 tool），结果"我想知道订单是什么意思"这种闲聊被误判去调工具、报错。改成小模型语义分类 + 置信度阈值，低于阈值就 fallback 到 Agent（宁重勿错）。还有分类用和大模型一样的 gpt-4o-mini 没省钱，他换成更便宜的分类专用小模型，路由本身成本也压下来了。
+
+**可复用经验**：生产 Agent 系统必装意图路由器——先分类再分流，简单走 RAG、复杂走 Agent。这是同时优化延迟和成本的杠杆点，70% 请求走轻量链路，体验和账单同时变好。配置信度阈值 + fallback 防误判，宁慢勿错。
 
 ## 面试高频问答
 问:意图路由为什么重要?

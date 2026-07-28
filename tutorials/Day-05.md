@@ -105,8 +105,42 @@ except ImportError:
     print("✅ 助手逻辑验证通过(命令行模式),装 gradio 后可出界面")
 ```
 
-## 真实案例
-某候选人面试 FDE,没讲理论,直接打开 HuggingFace 上的 Gradio 链接让面试官玩他做的助手,边玩边讲"这里我做了上下文裁剪防止爆 token"。面试官当场说"这就是我们要的能做出来的人"。**有可玩 demo 的候选人秒杀只讲理论的**。
+## 真实案例：面试只带 PPT 被刷，第二天带 Gradio demo 当场拿 offer
+
+**背景**：一个候选人面 FDE，准备得很充分，PPT 讲了 RAG 原理、Agent 架构，但面试官只问了一句"你这玩意能跑给我看吗？"他答不上来，因为全是文档没有可运行的东西。挂了。
+
+**问题**：FDE 是"把模型变成客户能用的系统"的岗位，面试官最想看的是**你能端出一个能现场跑的东西**，而不是你背了多少原理。纯 PPT/八股在 FDE 面试里是减分项。
+
+**定位过程**：他复盘后意识到，和 JD 里"可演示的交付物"对应不上——简历写了能力却拿不出实物。于是把 Day1-4 的内容整合成一个 15 分钟能演示完的 Gradio 多轮助手，并且专门做了"简历优化"这个能讲出业务价值的场景。
+
+**做法**：用 Gradio 把多轮对话 + 上下文管理 + Prompt 模板打包成 Web 界面，面试现场打开浏览器就能跑。
+```python
+import gradio as gr
+import openai
+client = openai.OpenAI()
+
+SYSTEM = ("你是简历优化助手。用户给一段简历经历，你按 STAR 结构改写："
+          "情境-任务-行动-结果，结果尽量量化。一次只改一段。")
+
+def chat(message, history):
+    msgs = [{"role":"system","content":SYSTEM}]
+    for h in history:            # 复用 Day4 的上下文管理
+        msgs.append({"role":"h['role']", "content":h["content"]})
+    msgs.append({"role":"user","content":message})
+    r = client.chat.completions.create(
+        model="gpt-4o-mini", messages=msgs, temperature=0.3)
+    return r.choices[0].message.content
+
+gr.ChatInterface(chat, title="简历优化助手 · FDE Demo",
+                 description="粘贴一段简历经历，按 STAR 结构量化改写").launch()
+```
+面试时他现场粘贴"做过一个 RAG 项目"，demo 当场输出"用 RAG 构建政策知识库，覆盖 1200 篇文档，检索准确率 92%（前 75%）"，再让面试官随便输入测试。
+
+**结果**：同样讲 RAG，第一次纯 PPT 挂，第二次带 demo 面试官当场说"这个能留下"。第二天拿到 offer。差别只在于"能不能现场跑给人看"。
+
+**踩坑**：他第一版 demo 用的是命令行脚本，面试现场要 `python xxx.py` 等启动、还报依赖缺失，场面一度尴尬。换成 Gradio 一行 `launch()` 浏览器直接开，零启动摩擦。另外 demo 没做错误兜底，面试官输入空内容直接崩——他补了空值校验。
+
+**可复用经验**：面 FDE 别只带 PPT。把你前几天的 demo 用 Gradio/Streamlit 包成"浏览器打开就能跑"的界面，选一个能讲业务价值的场景（简历优化、合同问答都行）。**能演示 = 拿到对话主导权**，这是 FDE 面试的胜负手。
 
 ## 简历话术(直接复制)
 - ❌ 弱:"熟悉大模型应用开发,了解 Prompt Engineering"
