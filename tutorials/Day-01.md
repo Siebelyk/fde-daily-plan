@@ -49,7 +49,7 @@ FDE 的核心不是"写模型"，而是"把模型变成客户能用的系统"。
 
 ## 代码
 ```python
-import subprocess, sys, shutil, importlib
+import subprocess, sys, shutil, importlib.util
 
 # 1. FDE 能力雷达（基于 6 个真实 JD 的关键词频次统计）
 labels = ["RAG构建", "Agent开发", "MCP集成", "Prompt/Context工程",

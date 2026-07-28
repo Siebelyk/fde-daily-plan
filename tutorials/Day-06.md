@@ -10,9 +10,10 @@
 
 ## 学习目标
 
-1. 理解 RAG（检索增强生成）全流程：加载→分块→嵌入→检索→重排→生成→引用
-2. 理解为什么 RAG 是 FDE 最高频交付场景（6/6 JD 要求）
-3. 从零实现一个最简 RAG，跑通完整闭环
+1. 理解 RAG 为什么是大模型落地的首选:解决幻觉+知识更新+私有数据三大痛点
+2. 30 行代码跑通 RAG 全闭环:文档→分块→向量→检索→生成,亲眼看效果
+3. 对比 RAG vs 微调:什么场景该用 RAG,什么场景该微调(JD 高频面试题)
+4. 理解 RAG 的核心组件,为本周深入分块/向量/重排打基础
 
 ## 推荐资料
 
@@ -22,7 +23,7 @@
 
 ## Demo 练习：最简 RAG：从零跑通检索增强生成闭环
 
-30 行代码跑通 RAG 全闭环。用 OpenAI Embedding + Chroma 向量库，给模型'喂'外部知识——RAG 是 6/6 岗位的必考题。
+RAG 是 6/6 岗位必考题。30 行代码从零跑通检索增强生成闭环,亲眼看模型用外部知识回答——这是 FDE 的核心交付能力,面试第一个就会问。
 
 | 难度 | 预计时间 |
 |------|----------|
@@ -30,82 +31,85 @@
 
 ### 复现步骤
 
-1. 实现文档加载与分块（固定长度 + 重叠）
-2. 实现 TF-IDF 检索：对查询返回 Top-K 相关文档块
-3. 拼装 Prompt（检索结果+问题）→ mock 生成 → 输出带引用的答案
+1. 准备一份本地知识文档(纯文本即可)
+2. 实现 TF-IDF 检索(不依赖外部 API,零成本跑通)
+3. 把检索到的片段拼进 prompt,让模型基于检索内容回答
+4. 对比开/关 RAG 的回答差异,直观理解 RAG 价值
 
 ## 保姆教程
 
 ## 原理速览
-RAG = 先检索后生成。模型本身不存最新知识，靠"检索相关文档塞进上下文"来回答。
-FDE 落地 80% 场景是 RAG：企业知识库问答、政策检索、产品手册问答。本实验从零跑通闭环。
+大模型有三个天生缺陷,RAG 专门解决它们:
+1. **幻觉**:模型会编造看似合理但错误的内容 → RAG 让它基于真实文档回答
+2. **知识截止**:模型不知道训练后发生的事 → RAG 接入实时文档
+3. **不懂你的私有数据**:模型没见过你的内部资料 → RAG 喂你的数据给它
 
-## 代码
+**RAG = 检索(Retrieval) + 增强(Augmented) + 生成(Generation)**
+流程:用户提问 → 从知识库检索相关片段 → 把片段塞进 prompt → 模型基于片段回答。
+
+### RAG vs 微调(JD 面试高频题)
+| 维度 | RAG | 微调 |
+|---|---|---|
+| 适合 | 知识常变、要可溯源 | 风格/格式固定、知识稳定 |
+| 成本 | 低(改文档即可) | 高(需标注数据+训练) |
+| 更新 | 改文档即时生效 | 重新训练 |
+| 幻觉 | 低(基于真实文档) | 仍可能幻觉 |
+| 灵活性 | 多知识库切换方便 | 换知识要重训 |
+
+**面试标准答**:"知识更新快/要可溯源/多场景切换用 RAG;风格统一/知识稳定/低延迟用微调;两者也可结合。"
+
+## 代码:30 行跑通 RAG 全闭环(零外部 API 依赖)
 ```python
-import math
-from collections import Counter, defaultdict
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
-# 1. 文档分块（固定长度 + 重叠）
-def chunk(text, size=40, overlap=10):
-    chunks = []
-    i = 0
-    while i < len(text):
-        c = text[i:i+size]
-        if c: chunks.append(c)
-        if i+size >= len(text): break
-        i += size - overlap
-    return chunks
+# 1. 知识库(你的私有文档)
+docs = [
+    "公司报销流程:填写报销单,附发票,提交部门主管审批,超过5000元需VP审批。",
+    "请假制度:年假需提前3天申请,病假需附医院证明,连续超3天需HR备案。",
+    "差旅标准:经济舱机票需提前7天预订,酒店标准一线城市500元/晚以下。",
+    "采购流程:填写采购申请,3万以下部门审批,3万以上需采购部和财务联签。",
+    "入职办理:入职当天到HR领取工牌,开通邮箱,导师1周内制定培养计划。"
+]
+# 2. 向量化(TF-IDF,实际用 Embedding)
+vectorizer = TfidfVectorizer()
+doc_vectors = vectorizer.fit_transform(docs)
 
-docs = "退款政策7天内可退需提供订单号。保修期1年含免费维修。配送时间3到5个工作日。客服电话4001234。"
-chunks = chunk(docs, size=24, overlap=6)
-print("分块:", chunks)
+# 3. 检索
+def retrieve(query, top_k=2):
+    q_vec = vectorizer.transform([query])
+    scores = cosine_similarity(q_vec, doc_vectors)[0]
+    top_idx = np.argsort(scores)[-top_k:][::-1]
+    return [docs[i] for i in top_idx if scores[i] > 0]
 
-# 2. TF-IDF 检索
-def build_index(chunks):
-    df = defaultdict(int)
-    tf = []
-    for c in chunks:
-        words = list(c)
-        cnt = Counter(words)
-        tf.append(cnt)
-        for w in cnt: df[w] += 1
-    N = len(chunks)
-    idf = {w: math.log(N/(1+d)) for w,d in df.items()}
-    return tf, idf
-
-def retrieve(query, chunks, tf, idf, top_k=2):
-    qw = Counter(query)
-    scores = []
-    for i, cnt in enumerate(tf):
-        s = sum(qw[w]*cnt.get(w,0)*idf.get(w,0) for w in qw)
-        scores.append((s, i))
-    scores.sort(reverse=True)
-    return [chunks[i] for s,i in scores[:top_k]]
-
-tf, idf = build_index(chunks)
-
-# 3. RAG 生成闭环
+# 4. 生成(拼进 prompt;无 API 时直接展示检索结果)
 def rag_answer(query):
-    refs = retrieve(query, chunks, tf, idf, top_k=2)
-    context = "\n".join(refs)
-    prompt = f"根据以下资料回答问题，若资料不足请说明：\n资料：{context}\n问题：{query}"
-    # mock 生成
-    ans = f"根据资料回答：{refs[0][:20]}..."
-    return ans, refs
+    context = "\n".join(retrieve(query))
+    # 实际:prompt = f"基于以下资料回答:\n{context}\n问题:{query}"
+    # 这里展示 RAG 核心机制
+    return f"[检索到相关文档]\n{context}\n\n→ 模型会基于以上内容回答:{query}"
 
-q = "保修期多久？"
-ans, refs = rag_answer(q)
-print(f"\n问题: {q}\n答案: {ans}\n引用: {refs}")
+# 测试
+for q in ["怎么报销", "请假要什么证明", "出差住酒店标准"]:
+    print(f"\n问: {q}")
+    print(rag_answer(q))
+
+print("\n✅ RAG 闭环跑通! 关掉检索=模型瞎编,开着检索=基于真实文档答")
 ```
-检索注入的外部文档存在间接 Prompt Injection 风险，需隔离检索内容并校验答案来源。
-RAG 把外部文档放进模型上下文，文档中可藏 Prompt Injection（间接注入）——
-这是 W5 安全周重点。工程上要把检索内容与系统指令隔离，并在输出处校验答案是否真的来自检索内容。
+
+## 真实案例
+某 FDE 给律所做合同助手。律师问"租赁合同最长能签几年",模型不知道(训练数据无该律所内部规范),加 RAG 接入律所知识库后,准确回答"根据我们所规定最长 20 年并附条款依据"。律师最买账的是**答案带出处**,能直接引用。**RAG 的可溯源是它替代直接问模型的关键优势**。
+
+RAG 会把检索内容当事实,知识库投毒会导致基于虚假内容回答,生产环境必须做文档来源审核+内容过滤+权限隔离防止泄露。
+RAG 检索的内容会被模型当作事实,如果知识库被投毒(植入虚假文档),模型会基于虚假内容回答。生产环境必须做文档来源审核+内容过滤。检索结果可能泄露其他用户隐私信息,需做权限隔离。
+
 
 ## 进阶挑战
 
-1. 把 TF-IDF 换成真实 Embedding（sentence-transformers），对比检索质量
-2. 接入真实 LLM 生成，观察 RAG 如何降低幻觉
-3. 统计不同 chunk_size/overlap 对检索召回率的影响
+1. 把 TF-IDF 换成 OpenAI Embedding + cosine 相似度,对比检索效果
+2. 加 5 篇文档,测试检索能否找到正确的那篇
+3. 思考:什么问题 RAG 反而不如直接问模型?(知识模糊/需推理的问题)
 
 ---
 

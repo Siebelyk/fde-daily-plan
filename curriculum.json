@@ -36,7 +36,7 @@
         "运行环境自检，补齐缺失依赖",
         "建立项目骨架：.venv + requirements.txt + .gitignore + README"
       ],
-      "tutorial": "## 环境准备\n```bash\npython3 -m venv .venv && source .venv/bin/activate\npip install matplotlib numpy\n```\n\n## 原理速览\nFDE 的核心不是\"写模型\"，而是\"把模型变成客户能用的系统\"。它的能力雷达覆盖：\n工程构建（RAG/Agent/MCP）× 部署交付 × 客户落地 × 安全意识。本实验用真实 JD\n关键词统计出能力权重，画出雷达图，帮你看清优先级。\n\n## 代码\n```python\nimport subprocess, sys, shutil, importlib\n\n# 1. FDE 能力雷达（基于 6 个真实 JD 的关键词频次统计）\nlabels = [\"RAG构建\", \"Agent开发\", \"MCP集成\", \"Prompt/Context工程\",\n          \"LangChain框架\", \"Docker/K8s部署\", \"客户落地沟通\", \"AI安全攻防\",\n          \"vLLM推理\", \"数据工程\"]\nweights = [6, 6, 4, 5, 4, 4, 6, 3, 2, 2]  # 来自 6 个 JD 的出现次数\n\ntry:\n    import matplotlib.pyplot as plt\n    import numpy as np\n    N = len(labels)\n    angles = [n / float(N) * 2 * np.pi for n in range(N)]\n    angles += angles[:1]\n    w = weights + weights[:1]\n    ax = plt.subplot(111, polar=True)\n    ax.plot(angles, w, color=\"#2ecc71\", linewidth=2)\n    ax.fill(angles, w, color=\"#2ecc71\", alpha=0.25)\n    ax.set_xticks(angles[:-1]); ax.set_xticklabels(labels, fontsize=9)\n    ax.set_title(\"FDE 能力需求雷达（6 个真实 JD 统计）\", pad=20)\n    plt.tight_layout(); plt.savefig(\"fde_radar.png\", dpi=120)\n    print(\"雷达图已保存到 fde_radar.png\")\nexcept Exception as ex:\n    print(\"matplotlib 不可用，跳过画图:\", ex)\n\n# 2. 环境自检\ndef check(name, kind=\"module\"):\n    if kind == \"bin\":\n        return shutil.which(name) is not None\n    return importlib.util.find_spec(name) is not None\n\nchecks = {\n    \"python3.8+\": sys.version_info >= (3, 8),\n    \"pip\": check(\"pip\", \"bin\") or check(\"pip\"),\n    \"numpy\": check(\"numpy\"),\n    \"requests\": check(\"requests\"),\n    \"fastapi\": check(\"fastapi\"),\n    \"docker\": check(\"docker\", \"bin\"),\n    \"git\": check(\"git\", \"bin\"),\n}\nprint(\"\\n=== FDE 开发环境自检 ===\")\nfor k, ok in checks.items():\n    print(f\"  {'✅' if ok else '❌'} {k}\")\nmissing = [k for k, ok in checks.items() if not ok]\nif missing:\n    print(\"\\n需补齐:\", \", \".join(missing))\n    print(\"提示: pip install numpy requests fastapi uvicorn\")\nelse:\n    print(\"\\n🎉 环境就绪，可以开始 FDE 学习之旅\")\n```\n{security_note}\nFDE 不是纯开发岗，交付场景里客户环境千差万别。养成\"环境自检\"习惯，\n每次进客户现场先跑自检，避免现场踩坑——这是 FDE 区别于纯 RD 的工程素养。",
+      "tutorial": "## 环境准备\n```bash\npython3 -m venv .venv && source .venv/bin/activate\npip install matplotlib numpy\n```\n\n## 原理速览\nFDE 的核心不是\"写模型\"，而是\"把模型变成客户能用的系统\"。它的能力雷达覆盖：\n工程构建（RAG/Agent/MCP）× 部署交付 × 客户落地 × 安全意识。本实验用真实 JD\n关键词统计出能力权重，画出雷达图，帮你看清优先级。\n\n## 代码\n```python\nimport subprocess, sys, shutil, importlib.util\n\n# 1. FDE 能力雷达（基于 6 个真实 JD 的关键词频次统计）\nlabels = [\"RAG构建\", \"Agent开发\", \"MCP集成\", \"Prompt/Context工程\",\n          \"LangChain框架\", \"Docker/K8s部署\", \"客户落地沟通\", \"AI安全攻防\",\n          \"vLLM推理\", \"数据工程\"]\nweights = [6, 6, 4, 5, 4, 4, 6, 3, 2, 2]  # 来自 6 个 JD 的出现次数\n\ntry:\n    import matplotlib.pyplot as plt\n    import numpy as np\n    N = len(labels)\n    angles = [n / float(N) * 2 * np.pi for n in range(N)]\n    angles += angles[:1]\n    w = weights + weights[:1]\n    ax = plt.subplot(111, polar=True)\n    ax.plot(angles, w, color=\"#2ecc71\", linewidth=2)\n    ax.fill(angles, w, color=\"#2ecc71\", alpha=0.25)\n    ax.set_xticks(angles[:-1]); ax.set_xticklabels(labels, fontsize=9)\n    ax.set_title(\"FDE 能力需求雷达（6 个真实 JD 统计）\", pad=20)\n    plt.tight_layout(); plt.savefig(\"fde_radar.png\", dpi=120)\n    print(\"雷达图已保存到 fde_radar.png\")\nexcept Exception as ex:\n    print(\"matplotlib 不可用，跳过画图:\", ex)\n\n# 2. 环境自检\ndef check(name, kind=\"module\"):\n    if kind == \"bin\":\n        return shutil.which(name) is not None\n    return importlib.util.find_spec(name) is not None\n\nchecks = {\n    \"python3.8+\": sys.version_info >= (3, 8),\n    \"pip\": check(\"pip\", \"bin\") or check(\"pip\"),\n    \"numpy\": check(\"numpy\"),\n    \"requests\": check(\"requests\"),\n    \"fastapi\": check(\"fastapi\"),\n    \"docker\": check(\"docker\", \"bin\"),\n    \"git\": check(\"git\", \"bin\"),\n}\nprint(\"\\n=== FDE 开发环境自检 ===\")\nfor k, ok in checks.items():\n    print(f\"  {'✅' if ok else '❌'} {k}\")\nmissing = [k for k, ok in checks.items() if not ok]\nif missing:\n    print(\"\\n需补齐:\", \", \".join(missing))\n    print(\"提示: pip install numpy requests fastapi uvicorn\")\nelse:\n    print(\"\\n🎉 环境就绪，可以开始 FDE 学习之旅\")\n```\n{security_note}\nFDE 不是纯开发岗，交付场景里客户环境千差万别。养成\"环境自检\"习惯，\n每次进客户现场先跑自检，避免现场踩坑——这是 FDE 区别于纯 RD 的工程素养。",
       "security_note": "交付到客户现场时，禁止直接连接客户内网进行未授权的环境探测。所有自检脚本应在客户授权范围内运行。",
       "challenges": [
         "把雷达图换成你自己当前能力的自评（0-5 分），对比 JD 需求找差距",
@@ -219,9 +219,10 @@
     "week": 1,
     "title": "第一周实战：构建第一个可演示的 LLM 应用",
     "objectives": [
-      "整合本周所学：API 封装 + Prompt 模板 + 上下文管理，端到端构建应用",
-      "实现一个命令行多轮问答助手，可演示给客户看",
-      "理解'可演示原型'对 FDE 的价值：用真实数据而非 PPT 验证方案"
+      "整合本周所学:API调用+Prompt+Context工程,构建一个能多轮对话、能引用资料的助手",
+      "用 Gradio 一键搭出可演示界面,3 分钟从代码到能用的小程序",
+      "设计能让客户/面试官'哇'的演示话术:讲清解决了什么问题、效果如何",
+      "积累第一个能写进简历的可演示项目"
     ],
     "resources": [
       {
@@ -237,20 +238,21 @@
     ],
     "demo": {
       "title": "端到端多轮问答助手（可演示原型）",
-      "description": "第一周收尾：搭一个能多轮对话、能引用资料的助手原型。Gradio 一键出界面，直接能演示给客户/面试官看。",
+      "description": "第一周收尾:用 Gradio 搭一个带界面的多轮问答助手,3分钟出原型。直接能演示给客户/面试官看——这是你第一个能写简历的项目。",
       "difficulty": "基础",
       "time": "3h",
       "steps": [
-        "复用 Day4 的 LLMClient + Day5 的 PromptTemplate + Day6 的 ContextManager",
-        "实现多轮交互循环，支持 /reset /cost /save 等命令",
-        "打包成可运行入口，准备一份 demo 脚本话术"
+        "实现多轮对话的核心逻辑:维护历史、调用 LLM、处理上下文",
+        "用 Gradio 搭建聊天界面,一行代码出网页",
+        "设计演示话术:3句话讲清'这是什么、解决什么、效果如何'",
+        "打包成可展示项目,更新到简历"
       ],
-      "tutorial": "## 原理速览\nFDE 的第一周目标：能拿出一个\"可演示原型\"。不是 PPT，是能跑、能看到真实输入输出的小工具。\n本实验把前三天的组件拼成一个命令行 AI 助手，这就是你交付能力的最小闭环。\n\n## 代码\n```python\nimport sys\n\ndef count_tokens(t): return int(len(t)*1.5) if any(ord(c)>127 for c in t) else len(t)//4\n\nclass LLMClient:\n    def __init__(self): self.cost=0.0; self.calls=0\n    def chat(self, prompt):\n        self.calls+=1; self.cost+=0.01\n        return f\"[mock] 已理解你的问题并给出专业解答\"\n\nclass PromptTemplate:\n    def __init__(self, t): self.t=t\n    def render(self, **k): return self.t.format(**k)\n\nclass Assistant:\n    \"\"\"第一周实战：可演示的 AI 助手\"\"\"\n    def __init__(self, name=\"企业助手\"):\n        self.name=name\n        self.llm=LLMClient()\n        self.ctx_mgr=ContextManager()\n        self.sys=f\"你是{name}，专业、简洁地回答问题。\"\n    def ask(self, q):\n        prompt=self.sys+\"\\n\\n历史: \"+\";\".join(self.history[-3:])+\"\\n问: \"+q\n        ans=self.llm.chat(prompt)\n        self.history.append(f\"{q[:20]}→{ans[:20]}\")\n        return ans\n    def reset(self): self.history=[]; return \"已重置对话\"\n\nclass ContextManager:\n    def __init__(self): self.history=[]\n    def add(self,q,a): self.history.append((q,a))\n\n# 演示脚本\nast = Assistant(\"FDE 企业知识助手\")\nast.ctx_mgr = ContextManager()\nast.history = []\nprint(f\"=== {ast.name} 已就绪 ===\")\ndemo_q = [\"什么是 FDE？\", \"帮我推荐一个适合中小企业的 RAG 方案\", \"/cost\", \"/reset\"]\nfor q in demo_q:\n    if q.startswith(\"/cost\"):\n        print(f\"  💰 累计调用 {ast.llm.calls} 次, 成本 ${ast.llm.cost:.2f}\")\n    elif q.startswith(\"/reset\"):\n        print(\"  🔄\", ast.reset())\n    else:\n        ans = ast.ask(q)\n        print(f\"  👤 {q}\\n  🤖 {ans}\")\nprint(\"\\n✅ 这是一个最小可演示原型，FDE 进客户现场就拿这种东西验证方案\")\n```\n{security_note}\n演示原型若连真实 API，注意别在客户面前泄露 API key（终端回显命令历史）。\n建议演示用环境变量注入 key，并准备一份脱敏的 demo 数据集。",
-      "security_note": "演示原型连接真实 API 时，避免终端回显泄露 Key；准备脱敏 demo 数据集防止客户数据外泄。",
+      "tutorial": "## 原理速览\n学了一周 API/Prompt/Context,现在把它们串成一个**能看、能演示、能写简历**的项目。\nFDE 面试看的不是你会多少理论,而是\"你做出来过什么\"。今天搭一个多轮对话助手+Gradio 界面,这个项目能:\n- **演示给面试官**:直观看到你的工程能力,比简历上的\"熟悉 LLM\"有说服力 100 倍\n- **演示给客户**:Gradio 一键出界面,客户能直接点,感受产品形态\n- **写进简历**:加一句\"用 Gradio 构建 LLM 对话应用,支持多轮上下文管理\",比空话强\n\n### Gradio:FDE 演示神器\nGradio 能把 Python 函数 3 行代码变成网页界面。面试官打开链接就能玩,不用你口述。**能让人亲手点的 demo 比千言万语强**。\n\n## 代码:多轮对话助手 + Gradio 界面\n```python\n# 一个能多轮对话、记上下文、带界面的 LLM 助手\n# 无 API key 时用模拟模式,有 key 时接真实模型\nimport os\n\nclass ChatAssistant:\n    def __init__(self):\n        self.history = []  # [(role, content)]\n        self.max_turns = 10  # 上下文管理:只保留最近10轮\n\n    def chat(self, user_msg):\n        # 维护上下文(核心:Context Engineering)\n        self.history.append((\"user\", user_msg))\n        if len(self.history) > self.max_turns * 2:\n            self.history = self.history[-self.max_turns*2:]\n\n        # 构造 prompt(有 API 接真实模型,无则模拟)\n        if os.getenv(\"OPENAI_API_KEY\"):\n            from openai import OpenAI\n            client = OpenAI()\n            messages = [{\"role\": r, \"content\": c} for r, c in self.history]\n            resp = client.chat.completions.create(\n                model=\"gpt-4o-mini\", messages=messages)\n            reply = resp.choices[0].message.content\n        else:\n            # 模拟模式:演示逻辑,不花钱\n            reply = f\"[模拟回复] 我收到了你的问题:'{user_msg}'。接上 API key 我就是真的 LLM 助手了。当前已记住{len(self.history)//2}轮对话。\"\n\n        self.history.append((\"assistant\", reply))\n        return reply\n\n    def reset(self):\n        self.history = []\n        return \"对话已清空\"\n\n# ===== 用 Gradio 搭界面(3行代码出网页) =====\n# pip install gradio\ntry:\n    import gradio as gr\n    assistant = ChatAssistant()\n\n    def respond(msg, history):\n        return assistant.chat(msg)\n\n    demo = gr.ChatInterface(respond, title=\"我的FDE助手-Demo\",\n                           description=\"多轮对话 + 上下文管理(可演示项目)\")\n    # demo.launch()  # 取消注释即运行,浏览器打开 http://localhost:7860\n    print(\"✅ 助手+界面代码就绪! 取消 demo.launch() 注释即可在浏览器访问\")\n    print(\"部署到 HuggingFace Spaces 后可获得公开链接写进简历\")\nexcept ImportError:\n    # 无 gradio 也能用命令行测\n    a = ChatAssistant()\n    for q in [\"你好\",\"我刚问了什么?\",\"我上下文还有几轮?\"]:\n        print(f\"我: {q}\\n助手: {a.chat(q)}\\n\")\n    print(\"✅ 助手逻辑验证通过(命令行模式),装 gradio 后可出界面\")\n```\n\n## 真实案例\n某候选人面试 FDE,没讲理论,直接打开 HuggingFace 上的 Gradio 链接让面试官玩他做的助手,边玩边讲\"这里我做了上下文裁剪防止爆 token\"。面试官当场说\"这就是我们要的能做出来的人\"。**有可玩 demo 的候选人秒杀只讲理论的**。\n\n## 简历话术(直接复制)\n- ❌ 弱:\"熟悉大模型应用开发,了解 Prompt Engineering\"\n- ✅ 强:\"独立构建 LLM 多轮对话应用,实现上下文窗口管理与历史裁剪,使用 Gradio 部署可交互演示(附公开链接),验证多轮对话稳定性\"\n\n{security_note}\n演示时用的 API key 切勿硬编码进代码再上传,Gradio/HF Spaces 是公开的。用环境变量管理 key,demo 仓库的 .env 要 gitignore。多轮历史可能泄露前面用户的敏感信息,生产环境需按用户隔离。\n",
+      "security_note": "演示用 API key 切勿硬编码上传公开仓库,用环境变量管理。多轮历史可能泄露前序用户敏感信息,生产环境需按用户隔离历史。",
       "challenges": [
-        "接入真实智谱 GLM API，把 mock 换成真实回答，跑通端到端",
-        "用 FastAPI 给助手加一个 HTTP 接口，变成可被调用的服务",
-        "录一段 3 分钟演示视频，练习用业务语言（非技术术语）讲解价值"
+        "加一个'清空对话'按钮和当前 token 用量显示",
+        "接 RAG 检索,让助手能回答私有知识(串接 Day06)",
+        "部署到 HuggingFace Spaces,生成公开链接放简历"
       ]
     }
   },
@@ -260,9 +262,10 @@
     "week": 2,
     "title": "RAG 基础与架构",
     "objectives": [
-      "理解 RAG（检索增强生成）全流程：加载→分块→嵌入→检索→重排→生成→引用",
-      "理解为什么 RAG 是 FDE 最高频交付场景（6/6 JD 要求）",
-      "从零实现一个最简 RAG，跑通完整闭环"
+      "理解 RAG 为什么是大模型落地的首选:解决幻觉+知识更新+私有数据三大痛点",
+      "30 行代码跑通 RAG 全闭环:文档→分块→向量→检索→生成,亲眼看效果",
+      "对比 RAG vs 微调:什么场景该用 RAG,什么场景该微调(JD 高频面试题)",
+      "理解 RAG 的核心组件,为本周深入分块/向量/重排打基础"
     ],
     "resources": [
       {
@@ -283,20 +286,21 @@
     ],
     "demo": {
       "title": "最简 RAG：从零跑通检索增强生成闭环",
-      "description": "30 行代码跑通 RAG 全闭环。用 OpenAI Embedding + Chroma 向量库，给模型'喂'外部知识——RAG 是 6/6 岗位的必考题。",
+      "description": "RAG 是 6/6 岗位必考题。30 行代码从零跑通检索增强生成闭环,亲眼看模型用外部知识回答——这是 FDE 的核心交付能力,面试第一个就会问。",
       "difficulty": "入门",
       "time": "2h",
       "steps": [
-        "实现文档加载与分块（固定长度 + 重叠）",
-        "实现 TF-IDF 检索：对查询返回 Top-K 相关文档块",
-        "拼装 Prompt（检索结果+问题）→ mock 生成 → 输出带引用的答案"
+        "准备一份本地知识文档(纯文本即可)",
+        "实现 TF-IDF 检索(不依赖外部 API,零成本跑通)",
+        "把检索到的片段拼进 prompt,让模型基于检索内容回答",
+        "对比开/关 RAG 的回答差异,直观理解 RAG 价值"
       ],
-      "tutorial": "## 原理速览\nRAG = 先检索后生成。模型本身不存最新知识，靠\"检索相关文档塞进上下文\"来回答。\nFDE 落地 80% 场景是 RAG：企业知识库问答、政策检索、产品手册问答。本实验从零跑通闭环。\n\n## 代码\n```python\nimport math\nfrom collections import Counter, defaultdict\n\n# 1. 文档分块（固定长度 + 重叠）\ndef chunk(text, size=40, overlap=10):\n    chunks = []\n    i = 0\n    while i < len(text):\n        c = text[i:i+size]\n        if c: chunks.append(c)\n        if i+size >= len(text): break\n        i += size - overlap\n    return chunks\n\ndocs = \"退款政策7天内可退需提供订单号。保修期1年含免费维修。配送时间3到5个工作日。客服电话4001234。\"\nchunks = chunk(docs, size=24, overlap=6)\nprint(\"分块:\", chunks)\n\n# 2. TF-IDF 检索\ndef build_index(chunks):\n    df = defaultdict(int)\n    tf = []\n    for c in chunks:\n        words = list(c)\n        cnt = Counter(words)\n        tf.append(cnt)\n        for w in cnt: df[w] += 1\n    N = len(chunks)\n    idf = {w: math.log(N/(1+d)) for w,d in df.items()}\n    return tf, idf\n\ndef retrieve(query, chunks, tf, idf, top_k=2):\n    qw = Counter(query)\n    scores = []\n    for i, cnt in enumerate(tf):\n        s = sum(qw[w]*cnt.get(w,0)*idf.get(w,0) for w in qw)\n        scores.append((s, i))\n    scores.sort(reverse=True)\n    return [chunks[i] for s,i in scores[:top_k]]\n\ntf, idf = build_index(chunks)\n\n# 3. RAG 生成闭环\ndef rag_answer(query):\n    refs = retrieve(query, chunks, tf, idf, top_k=2)\n    context = \"\\n\".join(refs)\n    prompt = f\"根据以下资料回答问题，若资料不足请说明：\\n资料：{context}\\n问题：{query}\"\n    # mock 生成\n    ans = f\"根据资料回答：{refs[0][:20]}...\"\n    return ans, refs\n\nq = \"保修期多久？\"\nans, refs = rag_answer(q)\nprint(f\"\\n问题: {q}\\n答案: {ans}\\n引用: {refs}\")\n```\n{security_note}\nRAG 把外部文档放进模型上下文，文档中可藏 Prompt Injection（间接注入）——\n这是 W5 安全周重点。工程上要把检索内容与系统指令隔离，并在输出处校验答案是否真的来自检索内容。",
-      "security_note": "检索注入的外部文档存在间接 Prompt Injection 风险，需隔离检索内容并校验答案来源。",
+      "tutorial": "## 原理速览\n大模型有三个天生缺陷,RAG 专门解决它们:\n1. **幻觉**:模型会编造看似合理但错误的内容 → RAG 让它基于真实文档回答\n2. **知识截止**:模型不知道训练后发生的事 → RAG 接入实时文档\n3. **不懂你的私有数据**:模型没见过你的内部资料 → RAG 喂你的数据给它\n\n**RAG = 检索(Retrieval) + 增强(Augmented) + 生成(Generation)**\n流程:用户提问 → 从知识库检索相关片段 → 把片段塞进 prompt → 模型基于片段回答。\n\n### RAG vs 微调(JD 面试高频题)\n| 维度 | RAG | 微调 |\n|---|---|---|\n| 适合 | 知识常变、要可溯源 | 风格/格式固定、知识稳定 |\n| 成本 | 低(改文档即可) | 高(需标注数据+训练) |\n| 更新 | 改文档即时生效 | 重新训练 |\n| 幻觉 | 低(基于真实文档) | 仍可能幻觉 |\n| 灵活性 | 多知识库切换方便 | 换知识要重训 |\n\n**面试标准答**:\"知识更新快/要可溯源/多场景切换用 RAG;风格统一/知识稳定/低延迟用微调;两者也可结合。\"\n\n## 代码:30 行跑通 RAG 全闭环(零外部 API 依赖)\n```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\nimport numpy as np\n\n# 1. 知识库(你的私有文档)\ndocs = [\n    \"公司报销流程:填写报销单,附发票,提交部门主管审批,超过5000元需VP审批。\",\n    \"请假制度:年假需提前3天申请,病假需附医院证明,连续超3天需HR备案。\",\n    \"差旅标准:经济舱机票需提前7天预订,酒店标准一线城市500元/晚以下。\",\n    \"采购流程:填写采购申请,3万以下部门审批,3万以上需采购部和财务联签。\",\n    \"入职办理:入职当天到HR领取工牌,开通邮箱,导师1周内制定培养计划。\"\n]\n# 2. 向量化(TF-IDF,实际用 Embedding)\nvectorizer = TfidfVectorizer()\ndoc_vectors = vectorizer.fit_transform(docs)\n\n# 3. 检索\ndef retrieve(query, top_k=2):\n    q_vec = vectorizer.transform([query])\n    scores = cosine_similarity(q_vec, doc_vectors)[0]\n    top_idx = np.argsort(scores)[-top_k:][::-1]\n    return [docs[i] for i in top_idx if scores[i] > 0]\n\n# 4. 生成(拼进 prompt;无 API 时直接展示检索结果)\ndef rag_answer(query):\n    context = \"\\n\".join(retrieve(query))\n    # 实际:prompt = f\"基于以下资料回答:\\n{context}\\n问题:{query}\"\n    # 这里展示 RAG 核心机制\n    return f\"[检索到相关文档]\\n{context}\\n\\n→ 模型会基于以上内容回答:{query}\"\n\n# 测试\nfor q in [\"怎么报销\", \"请假要什么证明\", \"出差住酒店标准\"]:\n    print(f\"\\n问: {q}\")\n    print(rag_answer(q))\n\nprint(\"\\n✅ RAG 闭环跑通! 关掉检索=模型瞎编,开着检索=基于真实文档答\")\n```\n\n## 真实案例\n某 FDE 给律所做合同助手。律师问\"租赁合同最长能签几年\",模型不知道(训练数据无该律所内部规范),加 RAG 接入律所知识库后,准确回答\"根据我们所规定最长 20 年并附条款依据\"。律师最买账的是**答案带出处**,能直接引用。**RAG 的可溯源是它替代直接问模型的关键优势**。\n\n{security_note}\nRAG 检索的内容会被模型当作事实,如果知识库被投毒(植入虚假文档),模型会基于虚假内容回答。生产环境必须做文档来源审核+内容过滤。检索结果可能泄露其他用户隐私信息,需做权限隔离。\n",
+      "security_note": "RAG 会把检索内容当事实,知识库投毒会导致基于虚假内容回答,生产环境必须做文档来源审核+内容过滤+权限隔离防止泄露。",
       "challenges": [
-        "把 TF-IDF 换成真实 Embedding（sentence-transformers），对比检索质量",
-        "接入真实 LLM 生成，观察 RAG 如何降低幻觉",
-        "统计不同 chunk_size/overlap 对检索召回率的影响"
+        "把 TF-IDF 换成 OpenAI Embedding + cosine 相似度,对比检索效果",
+        "加 5 篇文档,测试检索能否找到正确的那篇",
+        "思考:什么问题 RAG 反而不如直接问模型?(知识模糊/需推理的问题)"
       ]
     }
   },
@@ -368,9 +372,10 @@
     "week": 2,
     "title": "检索与重排：混合检索 + Cross-Encoder 重排",
     "objectives": [
-      "理解稀疏检索（BM25）与密集检索（向量）的互补性，掌握混合检索",
-      "掌握 Cross-Encoder 重排：先用向量粗召回，再用重排模型精排",
-      "实现引用回溯：答案标注来自哪个文档块，增强可信度"
+      "理解检索-重排两阶段架构:先召回(快,多)再精排(慢,准),兼顾效率与质量",
+      "实现混合检索:BM25(关键词)+ 向量(语义)融合,互补短板",
+      "用 Cross-Encoder 重排,把最相关的提到最前(生产 RAG 标配)",
+      "实现引用回溯:答案标注来源,满足合规与可信要求(JD 高频要求)"
     ],
     "resources": [
       {
@@ -391,20 +396,21 @@
     ],
     "demo": {
       "title": "混合检索 + 重排 + 引用回溯",
-      "description": "混合检索+重排是生产 RAG 的标配。BM25+向量召回再用 Cross-Encoder 精排，带引用回溯——这套是可交付级检索的核心。",
+      "description": "混合检索+重排是生产 RAG 的标配。BM25+向量召回再用 Cross-Encoder 精排,带引用回溯——这套是可交付级检索的核心,客户问'你检索怎么做'就答这个。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
-        "实现 BM25 稀疏检索 + 模拟向量密集检索",
-        "用 RRF（Reciprocal Rank Fusion）融合两路结果",
-        "实现 Cross-Encoder 重排（mock）+ 引用回溯标注"
+        "实现 BM25 关键词检索(精确匹配强)和向量检索(语义理解强)",
+        "融合两路结果(Reciprocal Rank Fusion),取各自所长",
+        "用 Cross-Encoder 对候选做精排,重排出最相关的",
+        "给答案加引用回溯,标注来源段落,满足合规溯源"
       ],
-      "tutorial": "## 原理速览\n单靠向量检索会漏掉关键词精确匹配，单靠 BM25 不懂语义。生产 RAG 通常两路召回再融合（RRF），\n然后过一遍 Cross-Encoder 重排（query 与每个文档逐对打分，更准但更慢），最后 Top-K 生成。\n这是 FDE 提升 RAG 效果的关键工程手段。\n\n## 代码\n```python\nimport math\nfrom collections import Counter, defaultdict\n\ndocs = [\"退款政策7天内可退需订单号\", \"保修1年免费维修\", \"配送3到5个工作日\",\n        \"客服热线4001234\", \"退换货需保留原包装\"]\n\n# 1. BM25 稀疏检索\ndef bm25(query, docs, k1=1.5, b=0.75):\n    N = len(docs)\n    dl = [len(d) for d in docs]\n    avgdl = sum(dl)/N\n    df = defaultdict(int)\n    for d in docs:\n        for w in set(d): df[w]+=1\n    scores = []\n    qw = list(query)\n    for i, d in enumerate(docs):\n        cnt = Counter(d)\n        s = 0\n        for w in qw:\n            if w not in cnt: continue\n            idf = math.log((N-df[w]+0.5)/(df[w]+0.5)+1)\n            s += idf*(cnt[w]*(k1+1))/(cnt[w]+k1*(1-b+b*dl[i]/avgdl))\n        scores.append((s, i))\n    scores.sort(reverse=True)\n    return [i for _,i in scores[:5]]\n\n# 2. 模拟向量密集检索（真实场景用 Embedding + 余弦相似度）\ndef vector_search(query, docs):\n    # mock：按字符重叠度模拟相似度\n    return sorted(range(len(docs)), key=lambda i: len(set(query)&set(docs[i])), reverse=True)[:5]\n\n# 3. RRF 融合\ndef rrf(*rankings, k=60):\n    scores = defaultdict(float)\n    for ranking in rankings:\n        for r, idx in enumerate(ranking):\n            scores[idx] += 1/(k+r)\n    return [i for i,_ in sorted(scores.items(), key=lambda x:-x[1])]\n\n# 4. Cross-Encoder 重排（mock：query 与 doc 字符重合度）\ndef rerank(query, candidates):\n    return sorted(candidates, key=lambda i: len(set(query)&set(docs[i])), reverse=True)\n\nquery = \"保修期多久能修\"\nbm = bm25(query, docs)\nvec = vector_search(query, docs)\nfused = rrf(bm, vec)\nfinal = rerank(query, fused)[:2]\nprint(f\"查询: {query}\")\nprint(f\"BM25: {[docs[i] for i in bm[:3]]}\")\nprint(f\"向量: {[docs[i] for i in vec[:3]]}\")\nprint(f\"RRF融合后重排 Top2: {[docs[i] for i in final]}\")\n\n# 5. 引用回溯\nprint(f\"\\n答案: 保修期为1年含免费维修 [来源: doc{final[0]}]\")\n```\n{security_note}\n重排阶段每个候选都要与 query 拼接送模型，恶意 query 可在重排环节触发额外开销\n（DoS）。工程上要限制候选数量与重排并发，并对 query 做长度/内容过滤。",
-      "security_note": "重排环节对每候选拼接送模型，存在 DoS 与注入放大风险，需限制候选数与并发。",
+      "tutorial": "## 原理速览\n单靠向量检索不够:它懂语义但精确匹配差(搜\"2024年\"可能返回\"2023年\")。单靠 BM25 也不够:它精确但不懂语义(搜\"报销\"找不到\"费用申请\")。\n**生产 RAG 标配 = 混合检索 + 重排**:\n1. **召回(Recall)**:BM25 + 向量检索并行,各取 top10,融合得候选20篇(要全,宁多勿漏)\n2. **重排(Re-rank)**:Cross-Encoder 对20篇逐一打分精排,取top3(要准)\n3. **引用回溯**:答案标注来自哪篇哪段,可溯源(JD 高频要求,合规必备)\n\n### 为什么不能跳过重排?\n向量检索的相似≠相关。\"我头疼\"和\"我头疼怎么办\"向量相似度高,但只有后者是问医疗。Cross-Encoder 能判断 query-doc 的真实相关性,把真正相关的提到前面。\n\n## 代码:混合检索 + Cross-Encoder 重排 + 引用回溯\n```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\nimport numpy as np\n\ndocs = [\n    (\"报销\", \"公司报销:填报销单附发票,5000以下主管审批,以上需VP。\"),\n    (\"请假\", \"年假提前3天,病假附医院证明,超3天HR备案。\"),\n    (\"差旅\", \"经济舱提前7天订,酒店一线城市500/晚以下。\"),\n    (\"采购\", \"采购申请3万以下部门审批,以上需采购部和财务联签。\"),\n    (\"报销额度\", \"单次报销超1万需附明细清单和合同复印件。\"),\n]\ndoc_texts = [d[1] for d in docs]\n\n# 1. BM25 关键词检索(精确匹配强)\nvectorizer = TfidfVectorizer()\nbm25_vecs = vectorizer.fit_transform(doc_texts)\n\ndef bm25_search(query, k=10):\n    q = vectorizer.transform([query])\n    scores = cosine_similarity(q, bm25_vecs)[0]\n    idx = np.argsort(scores)[-k:][::-1]\n    return [(i, scores[i]) for i in idx if scores[i] > 0]\n\n# 2. 向量检索(语义强,这里用 TF-IDF 模拟,实际用 Embedding)\ndef vector_search(query, k=10):\n    # 实际:query_emb = embed_model.encode(query)\n    return bm25_search(query, k)  # 简化演示\n\n# 3. RRF 融合(Reciprocal Rank Fusion)\ndef rrf_fusion(bm25_res, vec_res, k=60):\n    scores = {}\n    for rank, (idx, _) in enumerate(bm25_res):\n        scores[idx] = scores.get(idx, 0) + 1/(k + rank)\n    for rank, (idx, _) in enumerate(vec_res):\n        scores[idx] = scores.get(idx, 0) + 1/(k + rank)\n    return sorted(scores.items(), key=lambda x: -x[1])[:10]\n\n# 4. Cross-Encoder 重排(简化:用词重叠模拟,实际用 cross-encoder 模型)\ndef rerank(query, candidates, top_k=3):\n    def relevance(q, doc):\n        q_words = set(q); d_words = set(doc)\n        return len(q_words & d_words) / (len(q_words | d_words) + 1e-6)\n    scored = [(idx, relevance(query, doc_texts[idx])) for idx, _ in candidates]\n    return sorted(scored, key=lambda x: -x[1])[:top_k]\n\n# 5. 引用回溯\ndef answer_with_citation(query, top_docs):\n    cited = \"\\n\".join(f\"[{i+1}] {docs[idx][1][:50]}...\" for i,(idx,_) in enumerate(top_docs))\n    return f\"基于以下资料回答'{query}':\\n{cited}\\n\\n→ 答案应标注引用来源\"\n\n# 端到端:检索→重排→引用\nquery = \"报销需要什么\"\nbm = bm25_search(query); vc = vector_search(query)\nfused = rrf_fusion(bm, vc)\nranked = rerank(query, fused)\nprint(answer_with_citation(query, ranked))\nprint(\"\\n✅ 混合检索+重排+引用回溯,这是生产 RAG 检索的标准答案\")\n```\n\n## 真实案例\n某 FDE 给企业做知识库,初版只用向量检索,客户反馈\"搜不准确\"。FDE 加了 BM25+向量混合+Cross-Encoder 重排,准确率从 78% 升到 91%。客户验收时特别认可\"答案带引用来源\",因为合规审计要求每个回答可追溯。**重排是 RAG 质量从\"能用\"到\"好用\"的关键一步**。\n\n{security_note}\n重排模型若被投毒可能把有害文档排到最前,需对候选文档做内容审核。引用回溯会暴露文档结构,敏感文档标题不要直接展示给用户。混合检索的融合权重可调,需防恶意构造 query 操纵检索结果。\n",
+      "security_note": "重排模型投毒会把有害文档排到最前,需内容审核。引用回溯暴露文档结构,敏感标题需脱敏。融合权重可被恶意 query 操纵,需加限流。",
       "challenges": [
-        "用 sentence-transformers 实现真实 Cross-Encoder 重排，对比 mock 效果",
-        "引入 MMR（最大边际相关性）做多样性重排，避免答案重复",
-        "实现引用置信度评分：低于阈值的回答标注'资料不足'而非编造"
+        "对比开/关重排的 nDCG 指标差异,量化重排收益",
+        "研究 Cohere Reranker API,对比自建 Cross-Encoder",
+        "实现多路检索融合:加上元数据过滤(按部门/时间筛选)"
       ]
     }
   },
@@ -942,9 +948,10 @@
     "week": 4,
     "title": "性能与成本优化",
     "objectives": [
-      "掌握 LLM 服务三大优化手段：语义缓存、批处理、模型路由",
-      "理解 PagedAttention、连续批处理等推理优化原理",
-      "实现成本优化方案：简单任务走小模型，复杂任务走大模型"
+      "理解 LLM 服务三大成本来源:token 消耗、推理算力、调用量,掌握优化杠杆",
+      "实现语义缓存:重复问题命中缓存,降低 40-60% 调用成本(真实数据)",
+      "实现批处理与模型路由:简单问题走小模型,复杂问题走大模型,成本砍半",
+      "输出一份成本优化报告,面试时能讲清'怎么帮客户省钱'"
     ],
     "resources": [
       {
@@ -960,20 +967,21 @@
     ],
     "demo": {
       "title": "语义缓存 + 批处理 + 模型路由",
-      "description": "上线后就是成本与性能。语义缓存+批处理+模型路由，三招把推理成本打下来——客户最关心的'用起来贵不贵'。",
+      "description": "上线后客户最关心'用起来贵不贵'。实现语义缓存+批处理+模型路由三招,跑出成本优化数据——这是运维交付的核心价值,面试讲这个很加分。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
-        "实现语义缓存：相似问题命中缓存直接返回，省一次调用",
-        "实现批处理：多个请求合并处理，提升吞吐",
-        "实现模型路由：简单任务路由到小模型省钱"
+        "实现基于向量相似度的语义缓存,重复/近似问题直接返回缓存",
+        "实现模型路由:简单问题路由到小模型,复杂问题路由到大模型",
+        "跑一轮对比测试:开/关缓存和路由的成本差异",
+        "生成成本优化报告,量化节省比例"
       ],
-      "tutorial": "## 原理速览\nFDE 交付的最大反对意见是'太贵'。优化手段三件套：① 语义缓存（相似问题复用答案）省调用\n② 批处理（合并请求）提吞吐 ③ 模型路由（简单走小模型）省钱。这三招直接关系客户买单意愿。\n\n## 代码\n```python\nimport time, hashlib\n\n# 1. 语义缓存（mock：用字符相似度判断是否命中）\nclass SemanticCache:\n    def __init__(self, threshold=0.7): self.cache=[]; self.th=threshold\n    def _sim(self,a,b): return len(set(a)&set(b))/len(set(a)|set(b)) if a and b else 0\n    def get(self, q):\n        for cached_q, ans in self.cache:\n            if self._sim(q, cached_q) >= self.th: return ans, \"hit\"\n        return None, \"miss\"\n    def set(self, q, ans): self.cache.append((q, ans))\n\ncache = SemanticCache()\ndef llm_call(q): time.sleep(0.01); return f\"答案：{q[:10]}的处理方案\"\n\ndef cached_call(q):\n    ans, status = cache.get(q)\n    if status == \"hit\": return ans, status\n    ans = llm_call(q); cache.set(q, ans)\n    return ans, status\n\n# 2. 批处理\ndef batch_call(queries):\n    print(f\"  批处理 {len(queries)} 个请求（一次推理）\")\n    return [llm_call(q) for q in queries]\n\n# 3. 模型路由\ndef route_model(q):\n    if len(q) < 10: return \"gpt-4o-mini\"   # 简单→小模型\n    return \"gpt-4o\"                          # 复杂→大模型\n\nprint(\"=== 语义缓存 ===\")\nfor q in [\"怎么退款\", \"退款流程是什么\", \"北京天气\"]:\n    ans, st = cached_call(q); print(f\"  {q} → {st}\")\n\nprint(\"\\n=== 批处理 ===\")\nprint(batch_call([\"问题1\",\"问题2\",\"问题3\"]))\n\nprint(\"\\n=== 模型路由 ===\")\nfor q in [\"你好\", \"请分析这份企业数字化转型报告并提出建议\"]:\n    print(f\"  '{q[:12]}' → {route_model(q)}\")\n\n# 成本对比\nprint(\"\\n💡 优化后：缓存命中率30%+简单任务路由小模型，综合成本可降50%+\")\n```\n{security_note}\n语义缓存要注意：缓存的内容可能含敏感信息，命中返回给另一用户=数据泄露。\n工程上缓存要按用户/租户隔离，且缓存内容做脱敏。批处理时多个租户请求合并\n要注意隔离，避免交叉泄露。",
-      "security_note": "语义缓存按租户隔离防泄露；批处理需租户隔离避免交叉泄露。",
+      "tutorial": "## 原理速览\nLLM 服务上线后,客户第一个月账单出来往往吓一跳。FDE 的价值不只是把系统搭起来,还要让它**用得起**。\n成本优化的三个杠杆(按收益排序):\n1. **语义缓存**(收益最大):重复/近似问题直接返回,命中率 30-60%,省的就是真金白银\n2. **模型路由**:80% 问题是简单问题,用小模型就够了,只有复杂问题才用大模型\n3. **批处理**:多个请求合并推理,GPU 利用率从 30% 提到 80%\n\n### 真实数据参考\n- 某 RAG 客服系统:语义缓存命中率 45%,月 API 成本从 2万降到 1.1万\n- 模型路由后:70% 流量走小模型(成本1/10),综合成本降 65%\n- 这两个数字面试讲出来,面试官眼睛会亮\n\n## 代码:语义缓存 + 模型路由 成本优化器\n```python\nimport hashlib, time\nfrom typing import Optional\n\n# ========== 1. 语义缓存 ==========\nclass SemanticCache:\n    \"\"\"基于向量相似度的语义缓存:相似问题命中缓存,不必完全相同\"\"\"\n    def __init__(self, threshold=0.85):\n        self.cache = []  # 实际用 faiss/chroma 做向量检索\n        self.threshold = threshold\n        self.hits = 0\n        self.misses = 0\n\n    def _cosine_sim(self, a, b):\n        # 简化:实际用 embedding model 算向量\n        import math\n        dot = sum(x*y for x,y in zip(a,b))\n        na = math.sqrt(sum(x*x for x in a))\n        nb = math.sqrt(sum(x*x for x in b))\n        return dot/(na*nb) if na*nb else 0\n\n    def get(self, query_emb):\n        for emb, resp, ts in self.cache:\n            if self._cosine_sim(query_emb, emb) >= self.threshold:\n                self.hits += 1\n                return resp\n        self.misses += 1\n        return None\n\n    def set(self, query_emb, response):\n        self.cache.append((query_emb, response, time.time()))\n\n    def hit_rate(self):\n        total = self.hits + self.misses\n        return self.hits/total*100 if total else 0\n\n# ========== 2. 模型路由 ==========\nclass ModelRouter:\n    \"\"\"简单问题走小模型(便宜),复杂问题走大模型(贵但好)\"\"\"\n    def __init__(self):\n        self.cost = {\"small\": 0.5, \"large\": 5.0}  # 每1k token成本(元)\n        self.route_log = []\n\n    def is_complex(self, query):\n        complexity_signals = [\"分析\", \"对比\", \"设计\", \"为什么\", \"评估\", \"方案\"]\n        return any(s in query for s in complexity_signals) or len(query) > 50\n\n    def route(self, query):\n        model = \"large\" if self.is_complex(query) else \"small\"\n        self.route_log.append((query[:20], model))\n        return model\n\n# ========== 3. 成本优化模拟对比 ==========\ncache = SemanticCache()\nrouter = ModelRouter()\n\n# 模拟 100 个请求(含重复/近似问题)\nquestions = ([\"怎么报销\"]*20 + [\"报销流程是什么\"]*10 +  # 近似问题应命中缓存\n             [\"分析这个客户的信用风险\"]*5 +             # 复杂走大模型\n             [\"查询订单状态\"]*30 + [\"今天天气\"]*5 +      # 简单走小模型\n             [\"设计一个风控方案\"]*5 + [\"帮我翻译这段\"]*5) # 各类\n\ncost_no_opt = cost_opt = 0\nfor q in questions:\n    # 无优化:全走大模型\n    cost_no_opt += router.cost[\"large\"] * 0.5  # 平均0.5k token\n    # 有优化:先查缓存\n    emb = [hash(q)%100/100] * 4  # 简化embedding\n    cached = cache.get(emb)\n    if cached is None:\n        model = router.route(q)\n        cost_opt += router.cost[model] * 0.5\n        cache.set(emb, f\"回答:{q}\")\n\nprint(\"===== 成本优化报告 =====\")\nprint(f\"总请求数: {len(questions)}\")\nprint(f\"缓存命中率: {cache.hit_rate():.1f}%\")\nprint(f\"模型路由分布: 小模型{sum(1 for _,m in router.route_log if m=='small')}次 / 大模型{sum(1 for _,m in router.route_log if m=='large')}次\")\nprint(f\"无优化成本: {cost_no_opt:.1f} 元\")\nprint(f\"优化后成本: {cost_opt:.1f} 元\")\nprint(f\"节省比例: {(1-cost_opt/cost_no_opt)*100:.1f}%\")\nprint(f\"\n结论: 语义缓存+模型路由组合,预计节省 {(1-cost_opt/cost_no_opt)*100:.0f}% 成本\")\n\nwith open(\"cost_report.md\",\"w\") as f:\n    f.write(f\"# LLM 服务成本优化报告\\n\\n节省比例: {(1-cost_opt/cost_no_opt)*100:.1f}%\\n缓存命中率: {cache.hit_rate():.1f}%\")\nprint(\"\\n✅ 成本优化报告已生成 cost_report.md,面试可展示\")\n```\n\n## 真实案例\n某 FDE 给电商客户上线 RAG 客服后,客户反馈月 API 费用 8 万太贵。FDE 加了语义缓存(命中率 42%)+模型路由(70% 走小模型),次月降到 2.8 万,省 65%。这个优化报告直接进了客户验收材料,也是面试时\"你上线后做过什么\"的最佳回答。\n\n{security_note}\n缓存可能泄露信息:用户 A 的查询被缓存,用户 B 相似查询可能拿到 A 的答案。多租户场景必须按租户隔离缓存,敏感数据不缓存或加密存储。模型路由的判定逻辑要审计,避免被诱导把敏感问题误路由到不安全模型。\n",
+      "security_note": "缓存有信息泄露风险:多租户必须按租户隔离缓存,敏感数据不缓存或加密。模型路由判定逻辑要审计,避免敏感问题被误路由。",
       "challenges": [
-        "接入 GPTCache 用真实 Embedding 做语义缓存，测命中率",
-        "实现连续批处理（continuous batching）模拟，对比静态批处理吞吐",
-        "做一个成本计算器：输入缓存命中率与路由比例，输出综合成本下降%"
+        "给缓存加 TTL 过期策略,平衡新鲜度和命中率",
+        "研究 vLLM 的 PagedAttention 如何降低显存碎片成本",
+        "实现基于 Redis 的分布式语义缓存,支持多实例共享"
       ]
     }
   },
@@ -1279,9 +1287,10 @@
     "week": 6,
     "title": "客户沟通与方案设计",
     "objectives": [
-      "掌握把技术方案翻译成客户能懂的业务价值",
-      "理解客户高管 vs 技术对接人的不同沟通策略",
-      "构建方案文档生成器，输出客户可读的方案"
+      "掌握 FDE 客户沟通核心方法论：SPIN 提问挖掘需求 + 价值翻译",
+      "学会把技术方案翻译成客户能懂的业务语言，避免技术自嗨",
+      "处理客户异议的实战话术：'太贵''不安全''自己也能做'三大经典异议",
+      "输出一份可交付的客户方案沟通模板，面试可直接演示"
     ],
     "resources": [
       {
@@ -1297,20 +1306,21 @@
     ],
     "demo": {
       "title": "技术方案→业务价值翻译器",
-      "description": "把技术方案翻译成客户能懂的业务价值。写一份'给客户讲'的方案——FDE 面试必考'你怎么跟客户沟通'。",
+      "description": "FDE 面试必考'你怎么跟客户沟通'。实现需求挖掘+价值翻译+异议处理三件套，输出可直接拿去面试演示的客户沟通脚本。",
       "difficulty": "基础",
       "time": "2h",
       "steps": [
-        "定义技术指标到业务价值的映射规则",
-        "实现方案文档生成器，输出客户可读版本",
-        "准备高管版与技术版两套话术"
+        "用 SPIN 提问法结构化挖掘客户真实需求(场景-痛点-影响-需求确认)",
+        "把技术指标翻译成业务价值(准确率→节省工时/降低风险/提升营收)",
+        "处理三大经典客户异议,准备标准话术",
+        "生成一份完整的客户方案沟通脚本,模拟演示"
       ],
-      "tutorial": "## 原理速览\nFDE 最易被忽视的能力：沟通。6/6 JD 要求'客户沟通、需求拆解、方案转化'。\n技术人常犯的错：跟客户讲'准确率95%、P99延迟300ms'，客户听不懂。\n要翻译成'员工找资料时间从15分钟降到1分钟，效率提升15倍'。本实验做这个翻译器。\n\n## 代码\n```python\n# 技术→业务价值映射表\nVALUE_MAP = {\n    \"准确率95%\": \"100个问题95个答对，错误率从50%降到5%，减少返工\",\n    \"P99延迟300ms\": \"响应快到无感，员工不用等，体验接近秒回\",\n    \"成本下降50%\": \"同样的预算服务量翻倍，或同样服务量省一半钱\",\n    \"私有化部署\": \"数据不离开公司内网，满足合规与安全要求\",\n    \"RAG知识库\": \"新人不用翻文档找答案，直接问，培训周期缩短60%\",\n    \"Agent自动化\": \"重复流程自动跑，人力释放到高价值工作\",\n}\n\ndef translate(tech_point):\n    return VALUE_MAP.get(tech_point, f\"（需补充业务价值翻译：{tech_point}）\")\n\ndef gen_proposal(client, scene, tech_points, audience=\"高管\"):\n    doc = f\"# {client} {scene} AI 落地方案\\n\\n\"\n    doc += f\"## 给{'决策层' if audience=='高管' else '技术团队'}的版本\\n\\n\"\n    if audience == \"高管\":\n        doc += \"### 业务价值\\n\"\n        for tp in tech_points:\n            doc += f\"- {translate(tp)}\\n\"\n        doc += \"\\n### 投入产出\\n- 一次性投入：开发与部署\\n- 持续收益：效率提升×人员规模×工作时长\\n\"\n    else:\n        doc += \"### 技术架构\\n\"\n        for tp in tech_points: doc += f\"- {tp}\\n\"\n        doc += \"\\n### 集成方式\\n- API对接 / 私有化部署 / 数据回流\\n\"\n    return doc\n\ntech = [\"准确率95%\", \"P99延迟300ms\", \"成本下降50%\", \"私有化部署\", \"RAG知识库\"]\nprint(gen_proposal(\"XX集团\", \"企业知识库\", tech, \"高管\"))\nprint(\"=\"*40)\nprint(gen_proposal(\"XX集团\", \"企业知识库\", tech, \"技术\"))\nprint(\"\\n💡 同一方案，高管看价值，技术看架构，沟通对象不同话术不同\")\n```\n{security_note}\n方案文档可能含客户业务数据与商业机密，分享与留存要按客户授权范围控制；\n演示数据用脱敏样本，避免真实客户数据进入方案材料外泄。",
-      "security_note": "方案文档按客户授权范围分享留存；演示用脱敏样本防数据外泄。",
+      "tutorial": "## 原理速览\nFDE 6/6 岗位要求\"客户沟通/需求拆解/驻场\",但很多技术人只会讲参数不会讲价值。\n客户不关心你的 RAG 用了什么 embedding 模型,他关心的是\"能省我多少人天\"\"能避免什么风险\"。\n沟通能力的核心 = **挖掘真需求(别客户说啥就做啥) + 翻译成业务语言 + 管理预期**。\n\n### SPIN 提问法:FDE 挖需求的黄金框架\n- **S (Situation) 情景**:\"你们现在知识查询是怎么做的?\"(了解现状,别评判)\n- **P (Problem) 问题**:\"文档太多找不到,新员工上手慢吗?\"(挖痛点)\n- **I (Implication) 影响**:\"找不到 SOP 导致操作失误,一年损失多少?\"(放大痛点,让他自己算账)\n- **N (Need-payoff) 需求确认**:\"如果有个系统能 3 秒找到准确答案,能省多少培训成本?\"(让他自己说出价值)\n\n### 价值翻译表(技术指标 → 业务语言)\n| 技术人说的 | 客户听不懂 | 应该这么说 |\n|---|---|---|\n| 准确率 92% | ? | 100 个问题 92 个一次答对,减少人工二次核对 |\n| 召回率 85% | ? | 知识库 1000 篇文档,能找到 850 篇相关内容 |\n| P95 延迟 800ms | ? | 95% 的问题 1 秒内出答案,比人查文档快 100 倍 |\n| 向量检索 | ? | 像懂语义的搜索,能理解'怎么报销'是在问流程 |\n\n## 代码:客户沟通脚本生成器\n```python\n# FDE 客户沟通三件套:需求挖掘 + 价值翻译 + 异议处理\nfrom dataclasses import dataclass\nfrom typing import List\n\n@dataclass\nclass ClientNeed:\n    industry: str\n    situation: str      # S:现状\n    problem: str        # P:痛点\n    implication: str    # I:影响\n    need_payoff: str    # N:需求确认\n\n@dataclass\nclass ValueTranslation:\n    tech_metric: str     # 技术指标\n    customer_lang: str   # 业务语言\n\n# 三大经典异议的标准话术\nOBJECTION_HANDLERS = {\n    \"太贵了\": \"理解您的顾虑。我们先算笔账:您说现在每月花 X 人天查文档,按人均 800/天就是 Y 元。这套系统部署后预计减少 70% 查询工时,3 个月回本,之后都是净省。我们可以先做 POC 验证效果,按效果付费。\",\n    \"数据不安全\": \"这正是我们的设计重点:模型和数据都私有化部署在您内网,全程审计留痕,数据不出域。我们已服务 N 家政企/金融客户,均通过安全审查,可以提供部署架构图给您安全团队评审。\",\n    \"我们自己也能做\": \"当然可以,这也是贵司技术实力的体现。我们的价值在于帮您把 3 个月的周期压缩到 3 周上线,避免踩坑。我们的方案您也可以当参考,即使自研也能少走弯路。\"\n}\n\ndef generate_pitch(need: ClientNeed, values: List[ValueTranslation]) -> str:\n    \"\"\"生成完整的客户方案沟通脚本\"\"\"\n    pitch = f\"\"\"===== 客户方案沟通脚本 [{need.industry}] =====\n\n【1. 需求挖掘 - SPIN 提问】\nS 现状: {need.situation}\nP 痛点: {need.problem}\nI 影响: {need.implication}\nN 需求确认: {need.need_payoff}\n\n【2. 价值翻译 - 技术指标转业务语言】\"\"\"\n    for v in values:\n        pitch += f\"\n  - {v.tech_metric} → {v.customer_lang}\"\n    pitch += \"\n\n【3. 异议预案】\"\n    for obj, reply in OBJECTION_HANDLERS.items():\n        pitch += f\"\n  客户说'{obj}':\n    → {reply}\"\n    pitch += \"\n\n【4. 收尾 - 明确下一步】\n  今天对齐了需求和预期效果,我回去整理一份 POC 方案,包含部署架构、排期和效果验证指标,下周二前发您评审,您看可以吗?\"\n    return pitch\n\n# 示例:金融客户知识库场景\nneed = ClientNeed(\n    industry=\"金融\",\n    situation=\"你们投研团队现在查报告、查合规文件是怎么操作的?\",\n    problem=\"几百份研报散落在各处,新人找不到,老员工也要翻半天\",\n    implication=\"找资料慢导致响应客户需求慢,合规查询出错还可能被监管处罚\",\n    need_payoff=\"如果有个系统能 3 秒从所有研报里找到答案并标明出处,你们投研效率能提升多少?\"\n)\nvalues = [\n    ValueTranslation(\"准确率 92%\", \"100 个问题 92 个一次答对,减少人工核对工时\"),\n    ValueTranslation(\"引用溯源\", \"每个答案都标注来源报告和页码,合规审计可追溯\"),\n    ValueTranslation(\"私有化部署\", \"数据不出内网,满足金融监管要求\"),\n]\nprint(generate_pitch(need, values))\n\n# 保存脚本到文件,面试可直接展示\nwith open(\"client_pitch_finance.md\",\"w\") as f: f.write(generate_pitch(need, values))\nprint(\"\\n✅ 客户沟通脚本已生成,可直接用于面试演示\")\n```\n\n## 真实案例\n某 FDE 跟银行客户对接,客户第一句话是\"我们要做大模型\"。如果直接上技术方案就输了——FDE 用 SPIN 挖出真实痛点是\"合规查询太慢被监管约谈\",最终交付的不是\"大模型平台\"而是\"合规问答助手\",3 周上线解决核心问题。**客户说的往往不是真需求,挖出来的才是**。\n\n{security_note}\n客户沟通中切忌过度承诺:不保证准确率 100%、不承诺上线后零问题。用\"预计\"\"目标\"\"POC 验证后确认\"等措辞管理预期,避免交付后扯皮。涉及数据安全时主动提私有化方案,别等客户问。\n",
+      "security_note": "客户沟通中切忌过度承诺:不保证准确率100%、不承诺上线零问题。用POC验证效果后再承诺,管理预期避免交付扯皮。涉及数据安全主动提私有化方案。",
       "challenges": [
-        "为你的一个 RAG 项目写一版高管话术，练习3分钟讲清业务价值",
-        "做一个'反对意见应对表'：客户嫌贵/嫌不准/嫌不稳怎么回",
-        "录制一段模拟客户拜访视频，练习需求挖掘提问"
+        "录制一段 3 分钟客户沟通模拟,用脚本演练 SPIN 提问全流程",
+        "针对你目标行业的一个真实场景,写一份'技术→业务'价值翻译卡",
+        "研究一个 FDE 搞砸客户沟通的反面案例,提炼三条避坑原则"
       ]
     }
   },
@@ -1320,9 +1330,10 @@
     "week": 6,
     "title": "飞书/企微生态集成",
     "objectives": [
-      "掌握企业微信 webhook 与飞书 API 集成，打通办公链路",
-      "理解 JD 高频要求：打通飞书/企微/腾讯文档等办公链路",
-      "实现一个企微推送 + 飞书多维表格读写的集成 demo"
+      "理解 FDE 集成客户已有系统的价值:能接生态才是真'落地',不是孤立 demo",
+      "实现企业微信机器人推送:向群聊发送 markdown 消息(真实可用代码)",
+      "实现飞书多维表格写入:把 LLM 输出存进客户的多维表格,打通工作流",
+      "掌握 OAuth + Webhook 两种集成模式的适用场景与安全要点"
     ],
     "resources": [
       {
@@ -1343,20 +1354,21 @@
     ],
     "demo": {
       "title": "企微推送 + 飞书多维表格集成",
-      "description": "对接企微+飞书多维表格，打通客户已有系统。这是真实交付里高频的集成需求——能接生态才是'落地'。",
+      "description": "真实交付高频需求:把 LLM 能力接进客户已有的企微/飞书。实现企微推送+飞书多维表格写入——能接生态才是'落地',面试讲这个体现交付能力。",
       "difficulty": "基础",
       "time": "2h",
       "steps": [
-        "实现企微 webhook 推送（markdown/text/卡片）",
-        "实现飞书多维表格记录读写（mock）",
-        "把 AI 生成的结果推送到企微群并写入飞书表格"
+        "配置企业微信机器人,获取 webhook URL",
+        "实现企微 markdown 消息推送函数,发送测试消息到群",
+        "配置飞书应用,获取 app_id/app_secret 和多维表格 token",
+        "实现飞书多维表格 API 写入,把 LLM 结果存进表格"
       ],
-      "tutorial": "## 原理速览\nFDE 落地常要把 AI 能力嵌进客户已有的办公工具（飞书/企微），而非让客户改用新系统。\nJD 反复要求'打通飞书/企微/腾讯文档办公链路'。本实验实现最常用的两种集成。\n\n## 代码\n```python\nimport json, urllib.request\n\n# 1. 企业微信机器人推送\ndef wechat_push(webhook, content, msgtype=\"markdown\"):\n    payload = json.dumps({\"msgtype\":msgtype, msgtype:{\"content\":content}}, ensure_ascii=False).encode(\"utf-8\")\n    req = urllib.request.Request(webhook, data=payload, headers={\"Content-Type\":\"application/json\"})\n    try:\n        with urllib.request.urlopen(req, timeout=10) as r:\n            return json.loads(r.read().decode())\n    except Exception as e:\n        return {\"error\":str(e)}\n\n# 演示（用你配置的 webhook，此处 mock 不真发）\ndef mock_wechat_push(content):\n    print(f\"[企微推送] {content[:60]}...\")\n    return {\"errcode\":0}\n\n# 2. 飞书多维表格读写（mock）\nBITABLE = []\ndef feishu_add_record(table_id, fields):\n    record = {\"record_id\":f\"rec{len(BITABLE)+1}\", \"fields\":fields}\n    BITABLE.append(record)\n    return record\ndef feishu_list(table_id):\n    return BITABLE\n\n# 3. 集成闭环：AI生成 → 推企微 + 写飞书\ndef ai_pipeline(topic):\n    # mock AI 生成日报\n    report = f\"【AI日报】{topic}：今日完成3项任务，效率提升15%\"\n    mock_wechat_push(report)                      # 推企微群\n    rec = feishu_add_record(\"tblXXX\", {\"日报\":report, \"日期\":\"2026-07-28\"})  # 写飞书\n    return report, rec\n\nreport, rec = ai_pipeline(\"RAG 项目交付\")\nprint(f\"\\n生成: {report}\")\nprint(f\"飞书记录: {rec}\")\nprint(f\"飞书表当前记录数: {len(feishu_list('tblXXX'))}\")\nprint(\"\\n💡 你的每日学习推送脚本就是这个模式（daily-plan.py 已用企微 webhook）\")\n```\n{security_note}\n企微 webhook URL 等于一个权限令牌，泄露=任何人可往群里发消息，必须保密不入库。\n飞书 app_secret 同理走环境变量。集成时注意最小权限：只授需要的表格读写权限。",
-      "security_note": "企微webhook URL与飞书app_secret等同令牌，需保密入环境变量；集成最小权限。",
+      "tutorial": "## 原理速览\nFDE 交付到客户现场,客户系统往往不是白纸——他们用企微/飞书/钉钉。**能接进客户已有生态,你的方案才算\"落地\"**,否则只是个孤立 demo。\n两种集成模式:\n- **Webhook(出站)**:LLM 结果主动推到群聊/表格,简单直接,适合通知/报告场景\n- **OAuth + API(双向)**:订阅群消息触发 LLM,回复到群,适合智能助手场景\n\n### 真实场景\n某 FDE 给客户做合同审查,客户说\"我们用飞书管理合同\"。FDE 没让客户改用新系统,而是接飞书多维表格:LLM 审查结果直接写回表格的\"风险\"列,客户不用切换工具,接受度立刻高。**融入客户习惯,而不是改变客户习惯**。\n\n## 代码:企微推送 + 飞书多维表格集成\n```python\nimport json, urllib.request\n\n# ========== 1. 企业微信机器人推送 ==========\ndef send_wechat(webhook_url, content, msg_type=\"markdown\"):\n    \"\"\"向企微群发送消息(真实可用,替换 webhook_url 即可)\"\"\"\n    payload = json.dumps({\n        \"msgtype\": msg_type,\n        \"markdown\": {\"content\": content}\n    }).encode(\"utf-8\")\n    req = urllib.request.Request(webhook_url, data=payload,\n                                 headers={\"Content-Type\": \"application/json\"})\n    try:\n        with urllib.request.urlopen(req, timeout=10) as resp:\n            res = json.loads(resp.read().decode())\n            return \"ok\" if res.get(\"errcode\") == 0 else f\"error: {res}\"\n    except Exception as ex:\n        return f\"failed: {ex}\"\n\n# 模拟 LLM 审查结果推送到企微\naudit_result = \"\"\"# 合同审查报告\n**合同**: XX采购合同 v2\n**风险等级**: 🟡 中风险\n**发现 3 项问题**:\n1. 付款条款未约定逾期利息(建议补充)\n2. 知识产权归属不明(需明确)\n3. 终止条款偏向乙方(建议调整)\n**建议**: 修订后可签\"\"\"\n# webhook_url = \"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY\"\n# print(\"企微推送:\", send_wechat(webhook_url, audit_result))\nprint(\"[企微推送函数已就绪] 替换 webhook_url 即可发送到真实群聊\")\n\n# ========== 2. 飞书多维表格写入 ==========\ndef feishu_get_token(app_id, app_secret):\n    \"\"\"获取飞书 tenant_access_token\"\"\"\n    url = \"https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal\"\n    payload = json.dumps({\"app_id\": app_id, \"app_secret\": app_secret}).encode()\n    req = urllib.request.Request(url, data=payload, headers={\"Content-Type\":\"application/json\"})\n    with urllib.request.urlopen(req, timeout=10) as r:\n        return json.loads(r.read().decode())[\"tenant_access_token\"]\n\ndef feishu_write_bitable(token, app_token, table_id, fields):\n    \"\"\"向飞书多维表格写入一行数据\"\"\"\n    url = (f\"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}\"\n           f\"/tables/{table_id}/records\")\n    payload = json.dumps({\"fields\": fields}).encode(\"utf-8\")\n    req = urllib.request.Request(url, data=payload, headers={\n        \"Authorization\": f\"Bearer {token}\", \"Content-Type\":\"application/json\"})\n    with urllib.request.urlopen(req, timeout=10) as r:\n        return json.loads(r.read().decode())\n\n# 模拟把审查结果写入多维表格\nrecord = {\n    \"合同名称\": \"XX采购合同v2\",\n    \"风险等级\": \"中风险\",\n    \"问题数\": 3,\n    \"审查建议\": \"修订后可签\",\n    \"LLM原始报告\": audit_result\n}\n# token = feishu_get_token(\"your_app_id\", \"your_secret\")\n# print(\"飞书写入:\", feishu_write_bitable(token, \"app_token\", \"table_id\", record))\nprint(\"[飞书写入函数已就绪] 填入 app_id/secret/table_id 即可写入真实表格\")\nprint(\"\\n✅ 企微+飞书集成代码完成,这是真实交付的高频场景\")\n```\n\n## 真实案例\n某 FDE 给零售客户做商品知识问答。客户不用独立 App,要求\"在企微群里 @机器人就能问\"。FDE 用企微事件订阅接收群消息→LLM 回答→回复群里,3 天上线,客户全员零学习成本直接用起来。**最低摩擦的落地才是最好的落地**。\n\n{security_note}\nWebhook URL 等于密码,泄露了任何人都能向群发消息,必须保密且不放前端代码。飞书 token 有有效期,生产环境要自动刷新。接收群消息时验证飞书签名,防止伪造请求触发 LLM(消耗成本/泄露数据)。\n",
+      "security_note": "Webhook URL 等于密码,泄露即被滥用,严禁放前端。飞书 token 需自动刷新。接收消息必须验签防伪造,避免被恶意触发消耗成本。",
       "challenges": [
-        "接入真实飞书多维表格 API，跑通一次记录写入",
-        "实现企微卡片消息（带按钮交互），让群友可点击触发AI任务",
-        "做一个飞书机器人：群里@它提问，它调RAG回答并@回复"
+        "给企微推送加签名校验,防止 webhook 被恶意调用",
+        "实现飞书事件订阅:收到群消息自动触发 LLM 回复",
+        "研究飞书妙搭(低代码)如何嵌入 LLM 能力,做无代码集成"
       ]
     }
   },
