@@ -1,6 +1,6 @@
-# Day 26：容器化 LLM 服务安全
+# Day 26：FDE 交付流程与行业方案模板
 
-> 🟠 Agent 安全与部署运维 · 第 4 周
+> 🟡 客户落地实战与面试 · 第 6 周
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-26.ipynb)
 
@@ -10,321 +10,147 @@
 
 ## 学习目标
 
-1. 理解 Docker/K8s 化 LLM 服务的安全挑战
-2. 掌握容器安全最佳实践
-3. 实现安全的 LLM 服务容器化部署
+1. 掌握 FDE 交付全流程：需求拆解→POC→方案设计→开发集成→上线护航→运维迭代
+2. 理解每个交付阶段的产出物与验收标准
+3. 建立可复用的交付方法论模板，提升交付效率与质量
+4. 理解政企、金融、制造三大行业的 AI 落地场景与差异化要求
+5. 掌握行业落地的合规约束：数据不出域、审计、私有化
+6. 为每个行业设计一个典型 RAG/Agent 落地方案模板
 
 ## 推荐资料
 
-- 📖 文档 [Docker Security Best Practices](https://docs.docker.com/engine/security/)
-- 📖 文档 [Kubernetes Security for LLM Workloads](https://kubernetes.io/docs/concepts/security/)
-- 🎬 视频 [Docker Security for ML Services](https://www.youtube.com/watch?v=k7v8e2p3z1R)
+- 📄 文章 [Palantir Forward Deployed Engineering](https://www.palantir.com/)
+- 📄 文章 [解决方案架构师方法论](https://aws.amazon.com/architecture/)
+- 📖 书籍 [交付即服务 DaaS 方法论](https://martinfowler.com/)
+- 📊 报告 [金融 AI 落地合规指南](https://www.cfca.org.cn/)
+- 📊 报告 [制造业数字化转型](https://www.miit.gov.cn/)
+- 📄 文章 [政企大模型私有化实践](https://www.gov.cn/)
 
-## Demo 练习：容器化 LLM 安全：从 Dockerfile 到 K8s 加固
+## Demo 练习：FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器
 
-编写安全的 Dockerfile 和 K8s manifest，部署 LLM 推理服务并验证安全配置
+生成交付流程模板，定义每阶段产出物、验收标准、风险点与话术
+
+**第二部分：** 为政企/金融/制造生成差异化落地方案模板，含合规要点与技术选型
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 2h |
+| 进阶 | 约 4h |
 
 ### 复现步骤
 
-1. 编写安全 Dockerfile（非 root、最小镜像、多阶段构建）
-2. 编写安全的 K8s Deployment（资源限制、安全上下文、网络策略）
-3. 实现容器镜像安全扫描
-4. 验证安全配置
+1. 定义 6 个交付阶段及各阶段产出物
+2. 为每阶段定义验收标准与常见风险
+3. 生成可复用的交付模板文件
+4. 定义三大行业的场景、数据特点、合规约束
+5. 为每行业生成 RAG/Agent 方案模板
+6. 输出行业适配的技术选型清单
 
-## 推荐练习方式：🐳 DevOps 实操
-
-## 推荐练习方式：手写 Dockerfile + K8s + Trivy 扫描
-
-> 容器安全是基础设施安全，正确的方式是手写 Dockerfile 和 YAML，用工具扫描，不是写 Python。
-
-### 步骤
-
-1. **手写安全 Dockerfile**：
-   ```dockerfile
-   # 你的任务：从头写一个安全的 LLM 服务镜像
-   FROM python:3.11-slim
-
-   # 创建非 root 用户
-   RUN useradd -m -s /bin/bash llmuser
-
-   # 只复制必要文件
-   COPY --chown=llmuser:llmuser app/ /app/
-   WORKDIR /app
-
-   # 安装依赖（固定版本）
-   RUN pip install --no-cache-dir fastapi==0.104.1 uvicorn==0.24.0
-
-   # 切换非 root 用户
-   USER llmuser
-
-   # 只暴露必要端口
-   EXPOSE 8000
-
-   # 健康检查
-   HEALTHCHECK --interval=30s --timeout=3s \
-     CMD curl -f http://localhost:8000/health || exit 1
-
-   CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-   ```
-
-2. **手写 docker-compose.yml**：
-   ```yaml
-   version: "3.9"
-   services:
-     llm-api:
-       build: .
-       ports: ["8000:8000"]
-       read_only: true           # 只读文件系统
-       cap_drop: [ALL]           # 删除所有 Linux capabilities
-       cap_add: [NET_BIND_SERVICE]
-       security_opt: [no-new-privileges:true]
-       mem_limit: 512m
-       cpus: "1.0"
-       networks: [llm-net]
-   networks:
-     llm-net:
-       driver: bridge
-   ```
-
-3. **手写 K8s 安全 Deployment**：
-   ```yaml
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-     name: llm-service
-   spec:
-     template:
-       spec:
-         containers:
-         - name: llm-api
-           image: your-registry/llm-api:latest
-           securityContext:
-             runAsNonRoot: true
-             runAsUser: 1000
-             readOnlyRootFilesystem: true
-             allowPrivilegeEscalation: false
-             capabilities:
-               drop: ["ALL"]
-           resources:
-             limits:
-               memory: "512Mi"
-               cpu: "1000m"
-         podSecurityContext:
-           seccompProfile:
-             type: RuntimeDefault
-   ```
-
-4. **用 Trivy 扫描镜像漏洞**：
-   ```bash
-   # 安装 Trivy
-   brew install trivy
-
-   # 扫描你写的 Dockerfile
-   trivy config Dockerfile
-
-   # 构建并扫描镜像
-   docker build -t llm-api:secure .
-   trivy image llm-api:secure
-
-   # 记录发现的漏洞和修复建议
-   ```
-
-5. **检查清单**：
-   - [ ] 非 root 用户运行
-   - [ ] 只读文件系统
-   - [ ] 最小化 capabilities
-   - [ ] 资源限制
-   - [ ] 健康检查
-   - [ ] Trivy 扫描无 HIGH/CRITICAL 漏洞
-
-### 为什么不写代码？
-容器安全的核心技能是**写好 Dockerfile 和 K8s manifest**，以及用工具扫描。
-这些是 YAML 和 Dockerfile 的世界，不是 Python。代码版本作为附录保留。
-
----
-
-## 附录：代码参考
-
-> 以下为 Python 代码实现，作为推荐练习方式的补充参考。
-
-## 环境准备
-```bash
-# 需要 Docker 和（可选）Kubernetes
-docker --version
-kubectl version --client
-```
+## 保姆教程
 
 ## 原理速览
-LLM 容器化安全要点：
-1. 非 root 运行：容器内不使用 root 用户
-2. 最小镜像：用 distroless/alpine 减小攻击面
-3. 资源限制：CPU/memory limits 防止 DoS
-4. 只读文件系统：root filesystem read-only
-5. 网络隔离：NetworkPolicy 限制流量
-6. Secret 管理：不硬编码敏感信息
+FDE 的核心能力不只是写代码，而是'把需求变成上线可用的系统'的全流程掌控。
+6/6 JD 要求'需求拆解、方案设计、落地交付、上线护航'。本实验把这套方法论模板化，
+让你每个项目都按标准流程跑，避免漏环节、踩交付坑。
 
-## 安全 Dockerfile
-```dockerfile
-# ---- 不安全 Dockerfile ----
-# FROM python:3.11
-# RUN pip install vllm openai
-# COPY app.py /app.py
-# CMD ["python", "/app.py"]  # 以 root 运行！
-
-# ---- 安全 Dockerfile ----
-# 多阶段构建，最小化最终镜像
-FROM python:3.11-slim AS builder
-WORKDIR /build
-COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
-
-FROM python:3.11-slim
-# 创建非 root 用户
-RUN useradd -m -u 1001 appuser
-WORKDIR /app
-# 复制依赖（从 builder）
-COPY --from=builder /root/.local /home/appuser/.local
-COPY app.py .
-# 设置权限
-RUN chown -R appuser:appuser /app
-USER appuser
-# 健康检查
-HEALTHCHECK --interval=30s --timeout=3s   CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
-EXPOSE 8000
-ENV PATH=/home/appuser/.local/bin:$PATH
-CMD ["python", "app.py"]
-```
-
-## 安全 K8s Deployment
-```yaml
-# llm-deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: llm-service
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: llm-service
-  template:
-    spec:
-      securityContext:
-        runAsNonRoot: true       # 非 root 运行
-        runAsUser: 1001
-        fsGroup: 1001
-        seccompProfile:
-          type: RuntimeDefault
-      containers:
-      - name: llm
-        image: secure-llm:v1
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true  # 只读文件系统
-          capabilities:
-            drop: ["ALL"]                # 移除所有 capabilities
-        resources:
-          requests:
-            memory: "2Gi"
-            cpu: "1000m"
-          limits:
-            memory: "4Gi"               # 内存上限
-            cpu: "2000m"
-        env:
-        - name: API_KEY
-          valueFrom:
-            secretKeyRef:               # 从 Secret 读取
-              name: llm-secrets
-              key: api-key
-        volumeMounts:
-        - name: tmp
-          mountPath: /tmp               # tmp 目录单独挂载（可写）
-      volumes:
-      - name: tmp
-        emptyDir: {}
----
-apiVersion: networking.k8s.io
-kind: NetworkPolicy
-metadata:
-  name: llm-network-policy
-spec:
-  podSelector:
-    matchLabels:
-      app: llm-service
-  policyTypes:
-  - Ingress
-  - Egress
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: ingress
-    ports:
-    - port: 8000
-  egress:
-  - {}  # 允许出站（按需收紧）
-```
-
-## 验证脚本
+## 代码
 ```python
-import subprocess, json
+PHASES_DELIVERY = [
+    {"name":"需求拆解", "deliverable":"需求清单+场景画像", "exit":"客户确认痛点与目标指标",
+     "risk":"需求发散失控", "talk":"我们先把痛点量化成指标，再定方案"},
+    {"name":"POC 验证", "deliverable":"可演示原型", "exit":"原型跑通且客户认可可行性",
+     "risk":"POC 沦为炫技", "talk":"这个原型用您的真实数据，跑通就能看效果"},
+    {"name":"方案设计", "deliverable":"架构图+技术选型+排期", "exit":"架构评审通过",
+     "risk":"过度设计", "talk":"架构按可交付最小闭环设计，先跑通再优化"},
+    {"name":"开发集成", "deliverable":"可部署系统+测试报告", "exit":"通过验收测试",
+     "risk":"集成方接口变更", "talk":"接口契约提前锁定，变更走评审"},
+    {"name":"上线护航", "deliverable":"上线检查单+监控看板", "exit":"稳定运行7天",
+     "risk":"上线即故障", "talk":"灰度上线，监控先行，随时可回滚"},
+    {"name":"运维迭代", "deliverable":"运维手册+效果报告", "exit":"交付效果达标",
+     "risk":"交付即失联", "talk":"交付后持续跟踪指标，定期复盘迭代"},
+]
 
-def check_container_security():
-    """检查容器安全配置"""
-    checks = []
+print("=== FDE 交付流程模板 ===")
+for i, p in enumerate(PHASES_DELIVERY, 1):
+    print(f"\n阶段{i}: {p['name']}")
+    print(f"  产出: {p['deliverable']}")
+    print(f"  验收: {p['exit']}")
+    print(f"  风险: {p['risk']}")
+    print(f"  话术: {p['talk']}")
 
-    # 1. 非 root 检查
-    result = subprocess.run(
-        ["docker", "inspect", "--format", "{{.Config.User}}", "secure-llm:v1"],
-        capture_output=True, text=True)
-    user = result.stdout.strip()
-    checks.append(("Non-root", user != "" and user != "root", f"User: {user or 'root'}"))
-
-    # 2. 镜像大小
-    result = subprocess.run(
-        ["docker", "images", "secure-llm:v1", "--format", "{{.Size}}"],
-        capture_output=True, text=True)
-    size = result.stdout.strip()
-    checks.append(("Image Size", True, f"Size: {size}"))
-
-    # 3. 检查是否暴露不必要的端口
-    result = subprocess.run(
-        ["docker", "inspect", "--format", "{{json .Config.ExposedPorts}}", "secure-llm:v1"],
-        capture_output=True, text=True)
-    ports = result.stdout.strip()
-    checks.append(("Exposed Ports", "8000" in ports, f"Ports: {ports}"))
-
-    print("=== Container Security Check ===
-")
-    for name, passed, detail in checks:
-        status = "PASS" if passed else "FAIL"
-        print(f"  [{status:4s}] {name:15s} {detail}")
-
-# check_container_security()
+# 生成交付模板文件
+with open("delivery_template.md","w") as f:
+    f.write("# FDE 交付模板\n\n")
+    for p in PHASES_DELIVERY:
+        f.write(f"## {p['name']}\n- 产出: {p['deliverable']}\n- 验收: {p['exit']}\n- 风险: {p['risk']}\n\n")
+print("\n✅ 已生成 delivery_template.md，每个项目复用此模板")
 ```
+每阶段确认数据授权与留存；上线必须可回滚，避免影响客户生产环境。
+交付阶段涉及客户数据与内网，每个阶段都要确认数据授权范围与留存期限，
+上线阶段必须带可回滚机制，避免交付的系统出问题无法回退影响客户生产。
 
-## 安全分析
-容器化安全是 FDE 部署的基础技能：非 root + 最小镜像 + 资源限制 + 只读 FS + 网络隔离 = 基本安全基线。
+---
+
+## 第二部分：三大行业 RAG/Agent 方案模板生成器
+
+## 原理速览
+FDE 落地的难度因行业而异：政企重私有化与审计、金融重合规与隔离、制造重稳定性与产线集成。
+2/6 JD 明确要求行业经验。本实验把行业知识模板化，进客户现场前先备好行业方案。
+
+## 代码
+```python
+INDUSTRIES = {
+    "政企": {
+        "场景": ["政策问答", "公文写作辅助", "办事指南检索"],
+        "数据特点": "涉密、内网隔离、强审计",
+        "合规": "数据不出域、全程审计、私有化部署",
+        "技术选型": "私有化Ollama + 本地向量库 + 审计日志",
+        "方案要点": "全栈私有化，模型与数据都在内网，每次调用留痕",
+    },
+    "金融": {
+        "场景": ["投研报告生成", "风控问答", "合规审查"],
+        "数据特点": "敏感、强监管、高准确率要求",
+        "合规": "数据隔离、引用可溯源、幻觉零容忍",
+        "技术选型": "私有化+RAG+引用溯源+人工复核",
+        "方案要点": "答案必须带引用且可溯源，幻觉一律拦截，关键决策人工复核",
+    },
+    "制造": {
+        "场景": ["设备手册问答", "故障诊断Agent", "产线SOP助手"],
+        "数据特点": "结构化+非结构化混合、实时性要求",
+        "合规": "产线稳定第一、可离线运行",
+        "技术选型": "边端部署+RAG+故障诊断Agent+离线缓存",
+        "方案要点": "边端部署保证低延迟与离线可用，故障诊断Agent接入设备数据",
+    },
+}
+
+print("=== 行业落地方案模板 ===")
+for ind, cfg in INDUSTRIES.items():
+    print(f"\n【{ind}】")
+    for k, v in cfg.items():
+        print(f"  {k}: {v}")
+
+# 生成方案文档
+for ind, cfg in INDUSTRIES.items():
+    with open(f"solution_{ind}.md","w") as f:
+        f.write(f"# {ind}行业 AI 落地方案\n\n")
+        for k,v in cfg.items(): f.write(f"## {k}\n{v}\n\n")
+print("\n✅ 已生成 3 份行业方案文档，进客户现场前先对号入座")
+```
+政企/金融强制私有化+审计；金融答案可溯源防幻觉；制造边端需安全更新机制。
+政企/金融方案必须私有化且全程审计；金融答案需可溯源防幻觉误导决策；
+制造方案要考虑边端离线场景的安全更新与漏洞修复机制。
 
 ## 进阶挑战
 
-1. 用 Trivy 做容器镜像漏洞扫描
-   - 💡 **思路提示**：trivy image 扫描镜像层漏洞，配合 CI pipeline 在构建时拦截高危镜像
-   - 📎 **参考**：[Trivy — 容器漏洞扫描器](https://github.com/aquasecurity/trivy)
-2. 实现 K8s 的 Pod Security Standards (restricted)
-   - 💡 **思路提示**：K8s Pod Security Standards restricted 级别禁止 privileged、hostNetwork、hostPID 等
-   - 📎 **参考**：[K8s Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
-3. 设计 GPU 资源的 QoS 策略
-   - 💡 **思路提示**：用 NVIDIA GPU Operator 的 vGPU 切分或 time-slicing 做多租户 GPU 资源隔离
-   - 📎 **参考**：[NVIDIA GPU Operator 文档](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/)
+1. 为'企业知识库 RAG'项目套用此模板，填一份完整交付方案
+2. 加入'交付风险评估表'：技术/数据/组织/合规四维度打分
+3. 写一份'交付复盘模板'：项目结束后的经验沉淀格式
+4. 为医疗行业补一份方案模板（电子病历问答+辅助诊断）
+5. 设计金融场景的'幻觉拦截+人工复核'闭环
+6. 研究一个标杆案例（如某银行 RAG 落地），提炼可复制方法论
 
 ---
 
 ## 明日预告
 
-**Day 27：红队实战：Garak 与 PyRIT 自动化测试**
-> 🟠 Agent 安全与部署运维 · 第 4 周
+**Day 27：客户沟通与方案设计**
+> 🟡 客户落地实战与面试 · 第 6 周

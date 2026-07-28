@@ -1,6 +1,6 @@
-# Day 28：FDE 面试准备与最终复习
+# Day 28：飞书/企微生态集成
 
-> 🟠 Agent 安全与部署运维 · 第 4 周
+> 🟡 客户落地实战与面试 · 第 6 周
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-28.ipynb)
 
@@ -10,222 +10,91 @@
 
 ## 学习目标
 
-1. 梳理 28 天知识体系，构建 AI 安全知识图谱
-2. 整理 FDE 岗位面试高频考点
-3. 完成模拟面试和项目展示准备
+1. 掌握企业微信 webhook 与飞书 API 集成，打通办公链路
+2. 理解 JD 高频要求：打通飞书/企微/腾讯文档等办公链路
+3. 实现一个企微推送 + 飞书多维表格读写的集成 demo
 
 ## 推荐资料
 
-- 📌 文章 [What is a Forward Deployed Engineer?](https://www.openai.com/careers/forward-deployed-engineer)
-- 📌 文章 [AI Security Engineer Interview Guide](https://www.csoonline.com/)
-- 🎬 视频 [How to Get an AI Security Engineer Job](https://www.youtube.com/watch?v=5v2e9k3z2pQ)
+- 📚 文档 [企业微信机器人 webhook](https://developer.work.weixin.qq.com/document/path/91770)
+- 📚 文档 [飞书开放平台 API](https://open.feishu.cn/document/)
+- 📚 文档 [飞书多维表格 API](https://open.feishu.cn/document/server-docs/docs/bitable-v1/)
 
-## Demo 练习：FDE 面试准备：知识图谱与模拟面试
+## Demo 练习：企微推送 + 飞书多维表格集成
 
-整理 28 天的知识体系，构建可视化知识图谱，准备 FDE 面试高频问题与项目展示话术
+实现企业微信机器人推送 + 飞书多维表格数据读写，打通办公链路
 
 | 难度 | 预计时间 |
 |------|----------|
-| 复习 | 2.5h |
+| 进阶 | 2h |
 
 ### 复现步骤
 
-1. 构建 AI 安全知识图谱（4 大领域 x 28 天）
-2. 整理 FDE 面试高频问题清单
-3. 准备项目展示话术（3 个项目）
-4. 完成模拟面试问答
+1. 实现企微 webhook 推送（markdown/text/卡片）
+2. 实现飞书多维表格记录读写（mock）
+3. 把 AI 生成的结果推送到企微群并写入飞书表格
 
-## 推荐练习方式：📚 学习与复习
+## 保姆教程
 
-## 推荐练习方式：知识图谱 + 模拟面试
+## 原理速览
+FDE 落地常要把 AI 能力嵌进客户已有的办公工具（飞书/企微），而非让客户改用新系统。
+JD 反复要求'打通飞书/企微/腾讯文档办公链路'。本实验实现最常用的两种集成。
 
-> 面试准备的核心是**组织知识体系**和**练习表达**，不是写代码。
-
-### 步骤
-
-1. **画一张 28 天知识图谱**（用 Excalidraw 或纸笔）：
-   - 打开 https://excalidraw.com/
-   - 画出四个核心模块及其关系：
-     ```
-     LLM 基础 ──→ Prompt Injection ──→ RAG 安全 ──→ Agent 安全
-         │              │                  │              │
-     Transformer    注入检测         文档投毒        MCP 投毒
-     KV Cache        越狱防御         向量投毒        多 Agent 横移
-     幻觉检测        Guardrails       三层防御        部署加固
-     ```
-   - 标注每个节点对应的 Day 编号
-   - 标注哪些是攻击技术（红色），哪些是防御技术（绿色）
-
-2. **准备面试高频问题卡片**（手写 20 张）：
-   - 正面写问题，背面写 3 句话的核心答案
-   - 示例：
-     - Q: "什么是 Prompt Injection？如何防御？"
-     - A: "攻击者通过输入文本覆盖系统指令。防御：输入过滤+输出检查+system prompt 隔离+attention 分析。我在 Day 8 实现了检测器。"
-     - Q: "RAG 系统有哪些安全风险？"
-     - A: "间接注入、文档投毒、向量投毒、分块边界注入。三层防御：输入过滤+检索结果清洗+输出检查。Day 19 实现了完整 pipeline。"
-
-3. **录制项目讲解视频**（每个 3 分钟）：
-   - 项目 1：安全 LLM 推理服务（Day 7）— 讲架构、讲安全设计、讲遇到的问题
-   - 项目 2：安全 API 网关（Day 14）— 讲认证、限流、审计链路
-   - 项目 3：企业级安全 RAG（Day 21）— 讲三层防御、用户隔离
-
-4. **找同学做模拟面试**（30 分钟）：
-   - 让同学问技术问题，你用 STAR 法则回答
-   - 录音回听，改进表达
-   - 重点练习：如何在 1 分钟内说清楚一个安全问题的攻防链路
-
-### 为什么不写代码？
-面试准备是**知识整合和表达练习**，不是编程。画知识图谱帮你建立体系，
-写 Q&A 卡片帮你提炼核心，模拟面试帮你练习表达。这些都不是代码能做到的。
-代码版本（面试题库）作为附录保留。
-
----
-
-## 附录：代码参考
-
-> 以下为 Python 代码实现，作为推荐练习方式的补充参考。
-
-## 知识图谱
-
-### Week 1: LLM 核心原理与安全基础
-- Day 1: Transformer & Attention → Q/K/V 计算, attention 权重, injection 热点
-- Day 2: Tokenization → BPE 分词, token 边界注入, 绕过关键词过滤
-- Day 3: GPT 演进 → Base vs Instruct, RLHF, 越狱与对齐
-- Day 4: KV Cache → 缓存投毒, 前缀复用风险
-- Day 5: 幻觉检测 → 自一致性, 幻觉对安全的影响
-- Day 6: 安全评估 → 多维度评分, toxicity/bias/jailbreak
-- Day 7: 实战项目 → 安全 LLM 推理服务（4层防御）
-
-### Week 2: Prompt Injection 攻防实战
-- Day 8: Injection 入门 → 6种攻击模式, 检测器
-- Day 9: 越狱技术 → DAN, CoT, 多轮诱导, 检测
-- Day 10: API 安全 → Key 管理, SSRF, 速率限制, 签名
-- Day 11: Function Calling → 工具劫持, 参数注入, 返回值污染
-- Day 12: 流式输出 → SSE 安全, buffer-and-check
-- Day 13: Guardrails → 纵深防御, 多层 pipeline
-- Day 14: 实战项目 → 安全 API 网关
-
-### Week 3: RAG 安全全链路
-- Day 15: 间接注入 → RAG 文档投毒
-- Day 16: 分块注入 → 边界注入, 跨块攻击
-- Day 17: Embedding 投毒 → 向量操纵, 检索劫持
-- Day 18: 向量 DB → 持久化投毒, 来源认证
-- Day 19: 三层防御 → 输入-检索-输出全链路
-- Day 20: 红队测试 → 自动化扫描, 5类攻击
-- Day 21: 实战项目 → 企业级安全 RAG
-
-### Week 4: Agent 安全与部署运维
-- Day 22: ReAct Agent → observation 注入, goal 劫持
-- Day 23: MCP 安全 → 工具描述投毒, 返回值污染
-- Day 24: 多 Agent → 记忆投毒, 横向移动
-- Day 25: vLLM → 部署加固, 认证限流
-- Day 26: 容器化 → Docker/K8s 安全, 最小权限
-- Day 27: 红队实战 → Garak, PyRIT, 自动化评估
-- Day 28: 面试准备 → 知识图谱, 模拟面试
-
-## FDE 面试高频问题
-
-### 技术问题
+## 代码
 ```python
-INTERVIEW_QA = {
-    "LLM 基础": [
-        "解释 Self-Attention 的计算过程",
-        "BPE 分词如何被利用做 token 边界注入？",
-        "RLHF 如何影响模型安全？有什么局限性？",
-        "KV Cache 投毒的原理和防御方案？",
-        "如何检测和缓解 LLM 幻觉？",
-    ],
-    "Prompt Injection": [
-        "Direct vs Indirect Injection 的区别？",
-        "举例 3 种 jailbreak 技术并解释原理",
-        "如何设计纵深防御来对抗 prompt injection？",
-        "流式输出的安全挑战和解决方案？",
-        "Function Calling 有哪些攻击面？",
-    ],
-    "RAG 安全": [
-        "RAG 系统面临的主要安全威胁？",
-        "如何防御间接注入攻击？",
-        "向量数据库投毒如何检测和防御？",
-        "描述安全 RAG 的三层防御架构",
-        "如何对 RAG 系统做红队测试？",
-    ],
-    "Agent 安全": [
-        "ReAct Agent 的攻击面有哪些？",
-        "MCP 协议的安全风险？",
-        "多 Agent 系统中如何防止横向移动？",
-        "Agent 记忆投毒的原理和防御？",
-        "如何设计 Agent 执行沙箱？",
-    ],
-    "部署运维": [
-        "vLLM 的安全加固清单？",
-        "LLM 容器化的安全最佳实践？",
-        "如何监控 LLM 服务的安全状态？",
-        "如何设计 LLM 服务的审计日志？",
-        "Garak 和 PyRIT 的区别和适用场景？",
-    ],
-}
+import json, urllib.request
 
-# 打印问题清单供复习
-for topic, questions in INTERVIEW_QA.items():
-    print(f"
-### {topic}")
-    for i, q in enumerate(questions, 1):
-        print(f"  {i}. {q}")
+# 1. 企业微信机器人推送
+def wechat_push(webhook, content, msgtype="markdown"):
+    payload = json.dumps({"msgtype":msgtype, msgtype:{"content":content}}, ensure_ascii=False).encode("utf-8")
+    req = urllib.request.Request(webhook, data=payload, headers={"Content-Type":"application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return json.loads(r.read().decode())
+    except Exception as e:
+        return {"error":str(e)}
+
+# 演示（用你配置的 webhook，此处 mock 不真发）
+def mock_wechat_push(content):
+    print(f"[企微推送] {content[:60]}...")
+    return {"errcode":0}
+
+# 2. 飞书多维表格读写（mock）
+BITABLE = []
+def feishu_add_record(table_id, fields):
+    record = {"record_id":f"rec{len(BITABLE)+1}", "fields":fields}
+    BITABLE.append(record)
+    return record
+def feishu_list(table_id):
+    return BITABLE
+
+# 3. 集成闭环：AI生成 → 推企微 + 写飞书
+def ai_pipeline(topic):
+    # mock AI 生成日报
+    report = f"【AI日报】{topic}：今日完成3项任务，效率提升15%"
+    mock_wechat_push(report)                      # 推企微群
+    rec = feishu_add_record("tblXXX", {"日报":report, "日期":"2026-07-28"})  # 写飞书
+    return report, rec
+
+report, rec = ai_pipeline("RAG 项目交付")
+print(f"\n生成: {report}")
+print(f"飞书记录: {rec}")
+print(f"飞书表当前记录数: {len(feishu_list('tblXXX'))}")
+print("\n💡 你的每日学习推送脚本就是这个模式（daily-plan.py 已用企微 webhook）")
 ```
-
-### 项目展示话术
-```python
-PROJECTS = [
-    {
-        "name": "安全 LLM 推理服务 (Day 7)",
-        "summary": "用 FastAPI + OpenAI 搭建带输入过滤、输出检查、速率限制、审计日志的 LLM 服务",
-        "highlights": ["4层防御架构", "正则+语义双检测", "可配置规则引擎"],
-        "interview_talking": "我在项目中实现了纵深防御策略，包含输入端的正则和编码检测、"
-                            "输出端的敏感信息过滤，以及速率限制和完整审计日志。"
-                            "这让我理解了生产级 LLM 服务的安全基线。",
-    },
-    {
-        "name": "安全 API 网关 (Day 14)",
-        "summary": "整合认证、多层过滤、限流、审计的生产级 LLM API 网关",
-        "highlights": ["JWT+APIKey 双认证", "可配置规则引擎", "完整审计链路"],
-        "interview_talking": "这个项目整合了第二周所有安全组件。我设计了 JWT 和 API Key 双模式认证，"
-                            "可配置的规则引擎让安全策略可以热加载，审计日志支持事后追溯。",
-    },
-    {
-        "name": "企业级安全 RAG (Day 21)",
-        "summary": "包含文档安全扫描、三层防御 RAG、用户隔离、审计的完整应用",
-        "highlights": ["三层防御", "用户隔离", "文档安全扫描"],
-        "interview_talking": "这是最复杂的项目。我实现了文档上传安全扫描、三层防御的 RAG pipeline"
-                            "（输入-检索-输出），以及多用户的数据隔离。这让我理解了企业级 AI 应用"
-                            "的安全架构设计。",
-    },
-]
-
-print("
-=== 项目展示准备 ===")
-for p in PROJECTS:
-    print(f"
-{p['name']}")
-    print(f"  概述: {p['summary']}")
-    print(f"  亮点: {', '.join(p['highlights'])}")
-    print(f"  面试话术: {p['interview_talking']}")
-```
-
-## 安全分析
-面试核心：能说清楚"攻击原理 → 防御方案 → 工程实现"的完整链路。项目展示要突出安全思维和工程能力。
+企微webhook URL与飞书app_secret等同令牌，需保密入环境变量；集成最小权限。
+企微 webhook URL 等于一个权限令牌，泄露=任何人可往群里发消息，必须保密不入库。
+飞书 app_secret 同理走环境变量。集成时注意最小权限：只授需要的表格读写权限。
 
 ## 进阶挑战
 
-1. 录制 3 个项目的 demo 视频
-   - 💡 **思路提示**：用 OBS 或 QuickTime 录屏，每个 demo 控制在 3-5 分钟，重点展示攻击-防御-结果
-   - 📎 **参考**：[OBS Studio 官网](https://obsproject.com/)
-2. 准备一份 1-page 的安全架构图
-   - 💡 **思路提示**：用 draw.io 或 Excalidraw 画安全架构图，展示数据流 + 防御层 + 信任边界
-   - 📎 **参考**：[Excalidraw 在线画图](https://excalidraw.com/)
-3. 找同学做模拟面试并录音回听
-   - 💡 **思路提示**：用 STAR 法则（Situation-Task-Action-Result）回答行为问题；技术问题先讲原理再讲实战经验
-   - 📎 **参考**：[STAR 面试法指南](https://www.themuse.com/advice/interviewing-questions-and-answers-the-star-method)
+1. 接入真实飞书多维表格 API，跑通一次记录写入
+2. 实现企微卡片消息（带按钮交互），让群友可点击触发AI任务
+3. 做一个飞书机器人：群里@它提问，它调RAG回答并@回复
 
 ---
 
-> 🎉 恭喜完成全部 28 天课程！接下来可以整理项目集、准备面试话术。
+## 明日预告
+
+**Day 29：模型微调：SFT 数据与 LoRA 配置**
+> 🟡 客户落地实战与面试 · 第 6 周

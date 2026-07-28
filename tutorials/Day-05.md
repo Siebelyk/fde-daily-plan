@@ -1,6 +1,6 @@
-# Day 5：幻觉检测与安全风险
+# Day 5：第一周实战：构建第一个可演示的 LLM 应用
 
-> 🔵 LLM 核心原理与安全基础 · 第 1 周
+> 🔵 FDE 工程基础与 LLM 原理 · 第 1 周
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Siebelyk/fde-daily-plan/blob/main/notebooks/Day-05.ipynb)
 
@@ -10,120 +10,99 @@
 
 ## 学习目标
 
-1. 理解 LLM 幻觉 (Hallucination) 的成因
-2. 理解幻觉对安全的影响：错误信息、误导性输出
-3. 实现一个简单的幻觉检测器
+1. 整合本周所学：API 封装 + Prompt 模板 + 上下文管理，端到端构建应用
+2. 实现一个命令行多轮问答助手，可演示给客户看
+3. 理解'可演示原型'对 FDE 的价值：用真实数据而非 PPT 验证方案
 
 ## 推荐资料
 
-- 📄 论文 [Survey of Hallucination in LLMs](https://arxiv.org/abs/2309.01219)
-- 🎬 视频 [Google - Hallucination in LLMs Explained](https://www.youtube.com/watch?v=QGM1gNZYbc8)
-- 🔧 工具 [SelfCheckGPT](https://github.com/potsawee/selfcheckgpt)
+- 📚 文档 [构建 LLM 应用最佳实践](https://docs.langchain.com/)
+- 📄 文章 [FDE 如何用原型打动客户](https://www.palantir.com/)
+- 🛠 工具 [Rich - 终端美化](https://github.com/Textualize/rich)
 
-## Demo 练习：幻觉检测器：基于自一致性检测幻觉
+## Demo 练习：端到端多轮问答助手（可演示原型）
 
-通过多次采样同一 prompt，比较输出一致性来检测幻觉。高一致性 = 低幻觉概率
+整合 API 封装 + Prompt 模板 + 上下文管理，构建一个可演示给客户的命令行 AI 助手
 
 | 难度 | 预计时间 |
 |------|----------|
-| 基础 | 2h |
+| 项目 | 3h |
 
 ### 复现步骤
 
-1. 实现多次采样 + 一致性比较
-2. 构造易幻觉的 prompt 测试
-3. 可视化一致性分数
-4. 设计阈值告警机制
+1. 复用 Day4 的 LLMClient + Day5 的 PromptTemplate + Day6 的 ContextManager
+2. 实现多轮交互循环，支持 /reset /cost /save 等命令
+3. 打包成可运行入口，准备一份 demo 脚本话术
 
 ## 保姆教程
 
-## 环境准备
-```bash
-pip install openai numpy matplotlib
-```
-
 ## 原理速览
-幻觉 = LLM 生成看似合理但实际错误的内容。成因：训练数据噪声、知识截止日期、过度自信。
-
-自一致性检测原理：对同一 prompt 多次采样（temperature>0），如果输出高度一致，说明模型"确信"；
-如果输出差异大，说明模型不确定 -> 可能是幻觉。
+FDE 的第一周目标：能拿出一个"可演示原型"。不是 PPT，是能跑、能看到真实输入输出的小工具。
+本实验把前三天的组件拼成一个命令行 AI 助手，这就是你交付能力的最小闭环。
 
 ## 代码
 ```python
-from openai import OpenAI
-import numpy as np
-from collections import Counter
+import sys
 
-client = OpenAI()
+def count_tokens(t): return int(len(t)*1.5) if any(ord(c)>127 for c in t) else len(t)//4
 
-def sample_response(prompt, n=5, temp=0.7):
-    """对同一 prompt 采样 n 次"""
-    responses = []
-    for _ in range(n):
-        resp = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=temp,
-            max_tokens=100,
-        )
-        responses.append(resp.choices[0].message.content.strip())
-    return responses
+class LLMClient:
+    def __init__(self): self.cost=0.0; self.calls=0
+    def chat(self, prompt):
+        self.calls+=1; self.cost+=0.01
+        return f"[mock] 已理解你的问题并给出专业解答"
 
-def self_consistency_score(responses):
-    """计算自一致性分数（0-1，越高越一致）"""
-    # 简化：用首句的 Jaccard 相似度
-    def jaccard(a, b):
-        sa, sb = set(a.lower().split()), set(b.lower().split())
-        return len(sa & sb) / len(sa | sb) if sa | sb else 0
+class PromptTemplate:
+    def __init__(self, t): self.t=t
+    def render(self, **k): return self.t.format(**k)
 
-    scores = []
-    for i in range(len(responses)):
-        for j in range(i+1, len(responses)):
-            scores.append(jaccard(responses[i], responses[j]))
-    return np.mean(scores) if scores else 0
+class Assistant:
+    """第一周实战：可演示的 AI 助手"""
+    def __init__(self, name="企业助手"):
+        self.name=name
+        self.llm=LLMClient()
+        self.ctx_mgr=ContextManager()
+        self.sys=f"你是{name}，专业、简洁地回答问题。"
+    def ask(self, q):
+        prompt=self.sys+"\n\n历史: "+";".join(self.history[-3:])+"\n问: "+q
+        ans=self.llm.chat(prompt)
+        self.history.append(f"{q[:20]}→{ans[:20]}")
+        return ans
+    def reset(self): self.history=[]; return "已重置对话"
 
-# 测试用例
-test_cases = [
-    {"type": "factual", "prompt": "中国首都是哪里？"},
-    {"type": "ambiguous", "prompt": "2026年诺贝尔物理学奖得主是谁？"},  # 未来事件，可能幻觉
-    {"type": "opinion", "prompt": "Python 和 Java 哪个更好？"},
-]
+class ContextManager:
+    def __init__(self): self.history=[]
+    def add(self,q,a): self.history.append((q,a))
 
-for tc in test_cases:
-    print(f"
-=== {tc['type'].upper()} ===")
-    print(f"Prompt: {tc['prompt']}")
-    responses = sample_response(tc["prompt"], n=5)
-    score = self_consistency_score(responses)
-    for i, r in enumerate(responses):
-        print(f"  Sample {i+1}: {r[:60]}...")
-    print(f"  Consistency score: {score:.2f}")
-    if score < 0.3:
-        print(f"  [WARNING] Low consistency - possible hallucination!")
-    elif score < 0.6:
-        print(f"  [CAUTION] Moderate uncertainty")
+# 演示脚本
+ast = Assistant("FDE 企业知识助手")
+ast.ctx_mgr = ContextManager()
+ast.history = []
+print(f"=== {ast.name} 已就绪 ===")
+demo_q = ["什么是 FDE？", "帮我推荐一个适合中小企业的 RAG 方案", "/cost", "/reset"]
+for q in demo_q:
+    if q.startswith("/cost"):
+        print(f"  💰 累计调用 {ast.llm.calls} 次, 成本 ${ast.llm.cost:.2f}")
+    elif q.startswith("/reset"):
+        print("  🔄", ast.reset())
     else:
-        print(f"  [OK] High consistency")
+        ans = ast.ask(q)
+        print(f"  👤 {q}\n  🤖 {ans}")
+print("\n✅ 这是一个最小可演示原型，FDE 进客户现场就拿这种东西验证方案")
 ```
-
-## 安全分析
-幻觉在安全场景下可能导致：错误的安全建议、伪造的漏洞信息、误导性的分析结论。检测方案：自一致性、外部知识验证、置信度评估。
+演示原型连接真实 API 时，避免终端回显泄露 Key；准备脱敏 demo 数据集防止客户数据外泄。
+演示原型若连真实 API，注意别在客户面前泄露 API key（终端回显命令历史）。
+建议演示用环境变量注入 key，并准备一份脱敏的 demo 数据集。
 
 ## 进阶挑战
 
-1. 尝试用 embedding 相似度替代 Jaccard，看效果是否更好
-   - 💡 **思路提示**：用 sentence-transformers 的 SentenceTransformer 编码后算 cosine similarity，对比 Jaccard 和 embedding 两种方法的一致性差异
-   - 📎 **参考**：[Sentence-Transformers 文档](https://www.sbert.net/)
-2. 研究 SelfCheckGPT 的具体实现
-   - 💡 **思路提示**：SelfCheckGPT 通过多次采样 + 一致性投票检测幻觉，核心是 '不确定的模型会产生不一致的回答'
-   - 📎 **参考**：[SelfCheckGPT 论文](https://arxiv.org/abs/2303.17651)
-3. 思考：如何在 RAG 系统中集成幻觉检测？
-   - 💡 **思路提示**：在 RAG 的 retrieve 和 generate 之间加一层 fact-checking：用检索到的源文档做 entailment 校验
-   - 📎 **参考**：[RAGAS — RAG 评估框架](https://arxiv.org/abs/2311.09120)
+1. 接入真实智谱 GLM API，把 mock 换成真实回答，跑通端到端
+2. 用 FastAPI 给助手加一个 HTTP 接口，变成可被调用的服务
+3. 录一段 3 分钟演示视频，练习用业务语言（非技术术语）讲解价值
 
 ---
 
 ## 明日预告
 
-**Day 6：开源模型生态与安全评估**
-> 🔵 LLM 核心原理与安全基础 · 第 1 周
+**Day 6：RAG 基础与架构**
+> 🟢 RAG 构建与交付 · 第 2 周
