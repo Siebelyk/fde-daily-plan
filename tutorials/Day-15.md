@@ -19,22 +19,17 @@
 
 ## 推荐资料
 
-- 📄 文章 [LangChain Router 意图路由](https://python.langchain.com/docs/modules/agents/agent_types/router)
-- 📝 论文 [LLM 路由与意图理解](https://arxiv.org/abs/2310.02157)
-- 📚 文档 [Semantic Router 语义路由](https://github.com/aurelio-labs/semantic-router)
-- 🧩 框架 [LangGraph 多 Agent 编排](https://langchain-ai.github.io/langgraph/)
-- 🧩 框架 [AutoGen 多 Agent](https://microsoft.github.io/autogen/)
-- 📄 文章 [多 Agent 系统设计模式](https://www.anthropic.com/engineering/building-effective-agents)
+- 🧩 框架 [LangGraph 工作流编排](https://langchain-ai.github.io/langgraph/)
+- 🛠 工具 [Semantic Router - 语义路由](https://github.com/aurelio-labs/semantic-router)
+- 📄 文章 [Anthropic - 构建有效 Agent 工作流](https://www.anthropic.com/engineering/building-effective-agents)
 
 ## Demo 练习：意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流
 
-实现意图分类器，把用户问题路由到售后/技术/销售三个 Agent
-
-**第二部分：** 编排检索 Agent、写作 Agent、审核 Agent，跑通一个内容生产业务流程
+意图路由决定系统好不好用。对比关键词/向量/LLM 三种路由，再做三 Agent 协同工作流——客户场景里90%是路由问题。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 项目 | 约 5h |
+| 进阶 | 约 5h |
 
 ### 复现步骤
 

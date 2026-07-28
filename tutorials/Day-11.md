@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📝 论文 [ReAct: Synergizing Reasoning and Acting in LLMs](https://arxiv.org/abs/2210.03629)
-- 🎬 视频 [ReAct Agent Architecture Explained](https://www.youtube.com/watch?v=j4zF8v0p1qE)
-- 📄 文章 [Agent Injection Attacks - Research Blog](https://arxiv.org/abs/2302.03529)
+- 📝 论文 [ReAct: 推理+行动 (Yao et al.)](https://arxiv.org/abs/2210.03629)
+- 📄 文章 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
+- 🎓 课程 [DeepLearning.AI - Functions, Tools and Agents](https://www.deeplearning.ai/short-courses/functions-tools-and-agents/)
 
 ## Demo 练习：ReAct Agent 构建与风险认知
 
-实现简化版 ReAct Agent，演示攻击者如何通过操纵工具返回值或外部数据劫持 Agent 的推理链
+用 ReAct 范式从零搭一个会推理+会调工具的 Agent。这是 Agent 开发的祖师爷模式，面试必问——理解它再看 LangChain 就通了。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 2.5h |
+| 基础 | 2.5h |
 
 ### 复现步骤
 

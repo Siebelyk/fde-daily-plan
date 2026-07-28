@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 🛠 工具 [ChromaDB Documentation](https://docs.trychroma.com/)
-- 🛠 工具 [FAISS - Facebook AI Similarity Search](https://github.com/facebookresearch/faiss)
-- 📄 文章 [Vector Database Security Concerns](https://www.pinecone.io/learn/)
+- 📚 文档 [Chroma 向量库安全](https://docs.trychroma.com/)
+- 🛠 工具 [FAISS 向量检索](https://github.com/facebookresearch/faiss)
+- 📄 文章 [Pinecone - RAG 安全实践](https://www.pinecone.io/learn/)
 
 ## Demo 练习：RAG 安全全链路：从投毒到防御
 
-模拟向量数据库环境，演示攻击者如何通过投毒实现持久化的间接注入，并设计防御方案
+RAG 安全是交付必查项。复现文档投毒+间接注入，再做防御——政企/金融客户的安全审查会专门考这个。
 
 | 难度 | 预计时间 |
 |------|----------|

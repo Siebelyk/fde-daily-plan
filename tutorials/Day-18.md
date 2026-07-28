@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📚 文档 [Docker Security Best Practices](https://docs.docker.com/engine/security/)
-- 📚 文档 [Kubernetes Security for LLM Workloads](https://kubernetes.io/docs/concepts/security/)
-- 🎬 视频 [Docker Security for ML Services](https://www.youtube.com/watch?v=k7v8e2p3z1R)
+- 📚 文档 [Docker 官方文档](https://docs.docker.com/)
+- 🗺️ 指南 [Docker 构建 Python 镜像最佳实践](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+- 🛠 工具 [Docker Compose 文档](https://docs.docker.com/compose/)
 
 ## Demo 练习：容器化交付：从 Dockerfile 到镜像分发
 
-编写安全的 Dockerfile 和 K8s manifest，部署 LLM 推理服务并验证安全配置
+容器化是交付的硬要求。写 Dockerfile 打包 LLM 服务镜像，4/6 岗位要求 Docker——能交付镜像才算'落地'。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 2h |
+| 基础 | 2h |
 
 ### 复现步骤
 

@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📚 文档 [FastAPI Security Guide](https://fastapi.tiangolo.com/tutorial/security/)
-- 🧩 框架 [LangChain + FastAPI Integration](https://python.langchain.com/)
-- 🛠 工具 [Docker Compose for RAG](https://docs.docker.com/compose/)
+- 📚 文档 [FastAPI 官方教程](https://fastapi.tiangolo.com/)
+- 📚 文档 [LangChain + FastAPI 部署](https://python.langchain.com/docs/tutorials/rag/)
+- 📚 文档 [Docker Compose 文档](https://docs.docker.com/compose/)
 
 ## Demo 练习：交付级 RAG 知识库：企业级可演示产品
 
-构建一个生产级安全 RAG 应用，包含文档上传安全扫描、三层防御 RAG、多用户隔离、审计日志、Docker 部署
+第二周项目交付：FastAPI 后端+文档管理+向量入库+引用回溯+审计。这是你能写进简历、面试演示的完整 RAG 产品。
 
 | 难度 | 预计时间 |
 |------|----------|

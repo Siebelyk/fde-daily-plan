@@ -12,13 +12,13 @@
     "resources": [
       {
         "type": "文章",
-        "title": "什么是 Forward Deployed Engineer",
-        "url": "https://www.palantir.com/docs/foundations/forward-deployed-engineering"
+        "title": "Forward Deployed Engineer 是什么",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       },
       {
         "type": "文章",
-        "title": "Python 工程化最佳实践",
-        "url": "https://docs.python-guide.org/"
+        "title": "OpenAI Cookbook - 实战示例集",
+        "url": "https://cookbook.openai.com/"
       },
       {
         "type": "工具",
@@ -28,8 +28,8 @@
     ],
     "demo": {
       "title": "FDE 能力雷达 + 环境自检脚本",
-      "description": "生成基于真实 JD 的能力雷达图，并写一个环境自检脚本验证 Python/包/工具链是否就绪",
-      "difficulty": "基础",
+      "description": "低门槛：3分钟跑出图。生成你自己的 FDE 能力雷达，对照 6 个真实 JD 找短板——这份图面试时能直接拿出来讲。",
+      "difficulty": "入门",
       "time": "2h",
       "steps": [
         "运行脚本生成 FDE 能力雷达图，对照 6 个 JD 找出自己短板",
@@ -64,35 +64,25 @@
         "url": "https://www.youtube.com/watch?v=wjZofJX0v4M"
       },
       {
-        "type": "论文",
-        "title": "Attention Is All You Need",
-        "url": "https://arxiv.org/abs/1706.03762"
-      },
-      {
         "type": "视频",
         "title": "Karpathy - Let's build GPT",
         "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY"
       },
       {
-        "type": "视频",
-        "title": "Karpathy - Let's build the GPT Tokenizer",
-        "url": "https://www.youtube.com/watch?v=zduSFxRajv6"
-      },
-      {
         "type": "文章",
-        "title": "Jay Alammar - The Illustrated Word2vec",
-        "url": "https://jalammar.github.io/illustrated-word2vec/"
+        "title": "Jay Alammar - 图解 Transformer",
+        "url": "https://jalammar.github.io/illustrated-transformer/"
       },
       {
-        "type": "文档",
-        "title": "OpenAI - tiktoken Documentation",
+        "type": "工具",
+        "title": "tiktoken - OpenAI 分词器",
         "url": "https://github.com/openai/tiktoken"
       }
     ],
     "demo": {
       "title": "Attention 权重可视化：理解模型如何'看'你的 prompt + Token 计数与边界分析：成本与效果的双重视角",
-      "description": "用 NumPy 手写 Single-Head Attention，可视化权重矩阵，分析 injection 中哪些 token 获得最高注意力\n\n**第二部分：** 用 BPE 分词器展示同一文本不同分词方式，演示攻击者如何利用 token 边界绕过关键词过滤",
-      "difficulty": "基础",
+      "description": "看懂 Transformer 不靠背公式。可视化 Attention 权重，直观看到模型如何'看'你的 prompt——面试高频考点，3行代码出图。",
+      "difficulty": "入门",
       "time": "约 3h",
       "steps": [
         "pip install numpy matplotlib",
@@ -136,16 +126,6 @@
         "url": "https://platform.openai.com/docs/api-reference"
       },
       {
-        "type": "文档",
-        "title": "智谱 GLM API",
-        "url": "https://open.bigmodel.cn/dev/api"
-      },
-      {
-        "type": "文档",
-        "title": "Ollama 本地模型",
-        "url": "https://ollama.com/"
-      },
-      {
         "type": "指南",
         "title": "OpenAI Prompt Engineering Guide",
         "url": "https://platform.openai.com/docs/guides/prompt-engineering"
@@ -156,15 +136,20 @@
         "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/"
       },
       {
-        "type": "论文",
-        "title": "Chain-of-Thought Prompting",
-        "url": "https://arxiv.org/abs/2201.11903"
+        "type": "文档",
+        "title": "智谱 GLM API 文档",
+        "url": "https://open.bigmodel.cn/dev/api"
+      },
+      {
+        "type": "文档",
+        "title": "Ollama - 本地跑大模型",
+        "url": "https://ollama.com/"
       }
     ],
     "demo": {
       "title": "多 Provider 统一封装 + 模型选型对比 + Prompt 模板库 + 技法效果对比",
-      "description": "实现一个统一 LLM Client，支持 OpenAI/智谱/Ollama 后端切换，并对比不同模型的成本与延迟\n\n**第二部分：** 实现 Prompt 模板引擎，对比 Zero-shot / Few-shot / CoT 在分类任务上的效果差异",
-      "difficulty": "基础",
+      "description": "一套多 Provider 封装代码，换 API key 就能切换厂商。Prompt 模板库直接复用——日常交付高频用的轮子，能写进简历。",
+      "difficulty": "入门",
       "time": "约 4h",
       "steps": [
         "实现统一 chat() 接口，三种 Provider 后端可切换",
@@ -200,24 +185,29 @@
     "resources": [
       {
         "type": "文章",
-        "title": "Context Engineering 概念",
-        "url": "https://www.anthropic.com/news/claude-context"
+        "title": "Anthropic - 上下文工程最佳实践",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       },
       {
         "type": "文档",
-        "title": "LLM 上下文窗口与 Token 限制",
+        "title": "OpenAI - 文本生成与上下文管理",
         "url": "https://platform.openai.com/docs/guides/text-generation"
       },
       {
         "type": "论文",
-        "title": "Lost in the Middle 上下文衰减",
+        "title": "Lost in the Middle - 长上下文衰减",
         "url": "https://arxiv.org/abs/2307.03172"
+      },
+      {
+        "type": "工具",
+        "title": "mem0 - LLM 记忆层框架",
+        "url": "https://github.com/mem0ai/mem0"
       }
     ],
     "demo": {
       "title": "上下文管理器：预算分配 + 记忆策略",
-      "description": "实现 ContextManager，在固定 token 预算内分配 System/历史/检索内容，支持三种记忆策略",
-      "difficulty": "进阶",
+      "description": "上下文管理是交付核心。实现预算分配+记忆策略，跑一个不爆 token 的多轮助手——客户现场最常踩的坑就是上下文溢出。",
+      "difficulty": "基础",
       "time": "2h",
       "steps": [
         "实现 token 预算分配器：System + 历史 + 检索 + 用户输入 四段",
@@ -246,24 +236,24 @@
     "resources": [
       {
         "type": "文档",
-        "title": "构建 LLM 应用最佳实践",
-        "url": "https://docs.langchain.com/"
+        "title": "OpenAI Cookbook - 构建应用示例",
+        "url": "https://cookbook.openai.com/"
       },
       {
-        "type": "文章",
-        "title": "FDE 如何用原型打动客户",
-        "url": "https://www.palantir.com/"
+        "type": "文档",
+        "title": "LangChain 快速开始",
+        "url": "https://python.langchain.com/docs/tutorials/llm_chain/"
       },
       {
         "type": "工具",
-        "title": "Rich - 终端美化",
-        "url": "https://github.com/Textualize/rich"
+        "title": "Gradio - 快速搭 LLM 演示界面",
+        "url": "https://www.gradio.app/"
       }
     ],
     "demo": {
       "title": "端到端多轮问答助手（可演示原型）",
-      "description": "整合 API 封装 + Prompt 模板 + 上下文管理，构建一个可演示给客户的命令行 AI 助手",
-      "difficulty": "项目",
+      "description": "第一周收尾：搭一个能多轮对话、能引用资料的助手原型。Gradio 一键出界面，直接能演示给客户/面试官看。",
+      "difficulty": "基础",
       "time": "3h",
       "steps": [
         "复用 Day4 的 LLMClient + Day5 的 PromptTemplate + Day6 的 ContextManager",
@@ -292,24 +282,24 @@
     "resources": [
       {
         "type": "论文",
-        "title": "RAG 原始论文",
+        "title": "RAG 原始论文 (Lewis et al.)",
         "url": "https://arxiv.org/abs/2005.11401"
       },
       {
         "type": "文章",
-        "title": "LangChain RAG 教程",
-        "url": "https://python.langchain.com/docs/tutorials/rag/"
+        "title": "Pinecone - RAG 从零讲清",
+        "url": "https://www.pinecone.io/learn/retrieval-augmented-generation/"
       },
       {
-        "type": "文章",
-        "title": "RAG vs 微调如何选",
-        "url": "https://www.pinecone.io/learn/retrieval-augmented-generation/"
+        "type": "文档",
+        "title": "LangChain RAG 教程",
+        "url": "https://python.langchain.com/docs/tutorials/rag/"
       }
     ],
     "demo": {
       "title": "最简 RAG：从零跑通检索增强生成闭环",
-      "description": "用 TF-IDF 检索 + mock 生成，实现最简但完整的 RAG 流程，理解每一环作用",
-      "difficulty": "基础",
+      "description": "30 行代码跑通 RAG 全闭环。用 OpenAI Embedding + Chroma 向量库，给模型'喂'外部知识——RAG 是 6/6 岗位的必考题。",
+      "difficulty": "入门",
       "time": "2h",
       "steps": [
         "实现文档加载与分块（固定长度 + 重叠）",
@@ -340,39 +330,29 @@
     "resources": [
       {
         "type": "文档",
-        "title": "LangChain Text Splitters Guide",
-        "url": "https://python.langchain.com/docs/modules/data_connection/document_transformers/"
-      },
-      {
-        "type": "文章",
-        "title": "Chunk Boundary Injection in RAG",
-        "url": "https://research.lightsail.ai/"
-      },
-      {
-        "type": "工具",
-        "title": "LlamaIndex - Node Parser",
-        "url": "https://docs.llamaindex.ai/"
+        "title": "LangChain 文本分割",
+        "url": "https://python.langchain.com/docs/concepts/text_splitters/"
       },
       {
         "type": "文档",
-        "title": "OpenAI - Embeddings Guide",
+        "title": "OpenAI Embeddings 指南",
         "url": "https://platform.openai.com/docs/guides/embeddings"
       },
       {
-        "type": "视频",
-        "title": "Vector Embeddings Explained - Google Cloud",
-        "url": "https://www.youtube.com/watch?v=d6uWqBaDQU4"
+        "type": "文档",
+        "title": "Chroma 向量数据库文档",
+        "url": "https://docs.trychroma.com/"
       },
       {
-        "type": "论文",
-        "title": "Poisoning Language Models during Instruction Tuning",
-        "url": "https://arxiv.org/abs/2305.05670"
+        "type": "工具",
+        "title": "LlamaIndex 文档",
+        "url": "https://docs.llamaindex.ai/"
       }
     ],
     "demo": {
       "title": "分块策略对比实验：不同策略对检索质量的影响 + Embedding + 向量数据库：构建可交付的检索能力",
-      "description": "演示攻击者如何利用文档分块策略，将注入指令分散在块边界处，绕过单块安全检查\n\n**第二部分：** 演示攻击者如何构造特殊文档，使其 embedding 接近热门查询，从而在检索时被优先返回",
-      "difficulty": "进阶",
+      "description": "分块策略决定检索质量。对比固定/递归/语义分块对召回的影响，选对策略——交付 RAG 时客户第一个问的就是'你分块怎么做'。",
+      "difficulty": "基础",
       "time": "约 4h",
       "steps": [
         "实现不同分块策略（固定/递归/语义）",
@@ -410,23 +390,23 @@
     "resources": [
       {
         "type": "文章",
-        "title": "BM25 检索算法",
+        "title": "Pinecone - BM25 关键词检索",
         "url": "https://www.pinecone.io/learn/bm25/"
       },
       {
-        "type": "文章",
-        "title": "Cross-Encoder 重排",
+        "type": "文档",
+        "title": "sentence-transformers - Cross-Encoder 重排",
         "url": "https://www.sbert.net/examples/applications/cross-encoder/"
       },
       {
-        "type": "论文",
-        "title": "Hybrid Retrieval 混合检索",
-        "url": "https://arxiv.org/abs/2210.01467"
+        "type": "文档",
+        "title": "Cohere Reranker 文档",
+        "url": "https://docs.cohere.com/docs/reranking"
       }
     ],
     "demo": {
       "title": "混合检索 + 重排 + 引用回溯",
-      "description": "实现 BM25+向量混合召回，再用 Cross-Encoder mock 重排，最后输出带引用的答案",
+      "description": "混合检索+重排是生产 RAG 的标配。BM25+向量召回再用 Cross-Encoder 精排，带引用回溯——这套是可交付级检索的核心。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
@@ -459,37 +439,22 @@
       {
         "type": "框架",
         "title": "Ragas - RAG 评测框架",
-        "url": "https://github.com/explodinggradients/ragas"
-      },
-      {
-        "type": "文章",
-        "title": "RAG 评测指标体系",
         "url": "https://docs.ragas.io/"
       },
       {
-        "type": "工具",
-        "title": "TruLens LLM 评估",
-        "url": "https://www.trulens.org/"
-      },
-      {
-        "type": "论文",
-        "title": "Not what you've signed up for: Compromising Real-World LLM-integrated Apps",
-        "url": "https://arxiv.org/abs/2302.12173"
+        "type": "文章",
+        "title": "OpenAI - 评估 LLM 应用",
+        "url": "https://cookbook.openai.com/examples/evaluation/getting_started_with_openai_evals"
       },
       {
         "type": "文章",
-        "title": "OWASP LLM02 - Insecure Output Handling",
-        "url": "https://owasp.org/www-project-top-10-for-llms/"
-      },
-      {
-        "type": "视频",
-        "title": "Prompt Injection via RAG - Deep Dive",
-        "url": "https://www.youtube.com/watch?v=3RkG9e7e8BQ"
+        "title": "OWASP LLM Top 10 安全风险",
+        "url": "https://owasp.org/www-project-top-10-for-llm-applications/"
       }
     ],
     "demo": {
       "title": "RAG 评测 pipeline：召回率+忠实度+引用正确率 + RAG 安全检查点：间接注入复现与防御",
-      "description": "构建评测数据集，自动计算 RAG 的召回率、答案准确率、引用正确率与忠实度\n\n**第二部分：** 构造含恶意指令的知识库文档，观察 RAG 系统如何被间接注入控制执行非预期行为",
+      "description": "不能只跑通，还要证明有效。用 Ragas 量化召回率/忠实度/引用正确率——交付时客户要的是评测报告，不是'我觉得效果好'。",
       "difficulty": "进阶",
       "time": "约 4h",
       "steps": [
@@ -527,23 +492,23 @@
     "resources": [
       {
         "type": "文档",
-        "title": "FastAPI Security Guide",
-        "url": "https://fastapi.tiangolo.com/tutorial/security/"
+        "title": "FastAPI 官方教程",
+        "url": "https://fastapi.tiangolo.com/"
       },
       {
-        "type": "框架",
-        "title": "LangChain + FastAPI Integration",
-        "url": "https://python.langchain.com/"
+        "type": "文档",
+        "title": "LangChain + FastAPI 部署",
+        "url": "https://python.langchain.com/docs/tutorials/rag/"
       },
       {
-        "type": "工具",
-        "title": "Docker Compose for RAG",
+        "type": "文档",
+        "title": "Docker Compose 文档",
         "url": "https://docs.docker.com/compose/"
       }
     ],
     "demo": {
       "title": "交付级 RAG 知识库：企业级可演示产品",
-      "description": "构建一个生产级安全 RAG 应用，包含文档上传安全扫描、三层防御 RAG、多用户隔离、审计日志、Docker 部署",
+      "description": "第二周项目交付：FastAPI 后端+文档管理+向量入库+引用回溯+审计。这是你能写进简历、面试演示的完整 RAG 产品。",
       "difficulty": "项目",
       "time": "3.5h",
       "steps": [
@@ -576,24 +541,24 @@
     "resources": [
       {
         "type": "论文",
-        "title": "ReAct: Synergizing Reasoning and Acting in LLMs",
+        "title": "ReAct: 推理+行动 (Yao et al.)",
         "url": "https://arxiv.org/abs/2210.03629"
       },
       {
-        "type": "视频",
-        "title": "ReAct Agent Architecture Explained",
-        "url": "https://www.youtube.com/watch?v=j4zF8v0p1qE"
+        "type": "文章",
+        "title": "Anthropic - 构建有效 Agent",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       },
       {
-        "type": "文章",
-        "title": "Agent Injection Attacks - Research Blog",
-        "url": "https://arxiv.org/abs/2302.03529"
+        "type": "课程",
+        "title": "DeepLearning.AI - Functions, Tools and Agents",
+        "url": "https://www.deeplearning.ai/short-courses/functions-tools-and-agents/"
       }
     ],
     "demo": {
       "title": "ReAct Agent 构建与风险认知",
-      "description": "实现简化版 ReAct Agent，演示攻击者如何通过操纵工具返回值或外部数据劫持 Agent 的推理链",
-      "difficulty": "进阶",
+      "description": "用 ReAct 范式从零搭一个会推理+会调工具的 Agent。这是 Agent 开发的祖师爷模式，面试必问——理解它再看 LangChain 就通了。",
+      "difficulty": "基础",
       "time": "2.5h",
       "steps": [
         "实现简化版 ReAct Agent（Reason -> Act -> Observe 循环）",
@@ -626,38 +591,23 @@
       {
         "type": "文档",
         "title": "LangChain 官方文档",
-        "url": "https://python.langchain.com/docs/get_started/introduction"
+        "url": "https://python.langchain.com/docs/introduction/"
       },
       {
         "type": "文档",
-        "title": "LlamaIndex 文档",
-        "url": "https://docs.llamaindex.ai/"
-      },
-      {
-        "type": "课程",
-        "title": "LangChain 实战教程",
-        "url": "https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/"
-      },
-      {
-        "type": "文档",
-        "title": "OpenAI - Function Calling Guide",
+        "title": "OpenAI Function Calling 指南",
         "url": "https://platform.openai.com/docs/guides/function-calling"
       },
       {
-        "type": "视频",
-        "title": "OpenAI - Function Calling Guide",
-        "url": "https://www.youtube.com/watch?v=0AEj4loG3Zc"
-      },
-      {
-        "type": "文章",
-        "title": "Tool Injection Attacks on LLM Agents",
-        "url": "https://arxiv.org/abs/2307.03529"
+        "type": "课程",
+        "title": "DeepLearning.AI - LangChain for LLM Apps",
+        "url": "https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/"
       }
     ],
     "demo": {
       "title": "用框架范式构建 Tool Calling Agent + Function Calling 工具开发与安全执行",
-      "description": "用 LangChain 核心抽象构建一个能调用多个工具的 Agent（本地 mock，无需真实 API）\n\n**第二部分：** 演示攻击者如何通过注入恶意 function description 或操纵 function 返回值来劫持 LLM 的工具调用",
-      "difficulty": "进阶",
+      "description": "LangChain 是 4/6 岗位点名要求的框架。用 Function Calling 让模型调用你写的工具，跑通'查天气/查订单'的真实场景。",
+      "difficulty": "基础",
       "time": "约 4.5h",
       "steps": [
         "实现 LangChain 风格的 LLM/Tool/Agent 最小抽象",
@@ -693,24 +643,24 @@
     ],
     "resources": [
       {
-        "type": "论文",
-        "title": "Multi-Agent System Security",
-        "url": "https://arxiv.org/abs/2306.06899"
+        "type": "框架",
+        "title": "LangGraph - 状态化多 Agent 编排",
+        "url": "https://langchain-ai.github.io/langgraph/"
       },
       {
         "type": "框架",
-        "title": "AutoGen Multi-Agent Framework",
+        "title": "AutoGen - 微软多 Agent 框架",
         "url": "https://microsoft.github.io/autogen/"
       },
       {
-        "type": "视频",
-        "title": "Multi-Agent Coordination & Security",
-        "url": "https://www.youtube.com/watch?v=3r5v8e2k2pZ"
+        "type": "文章",
+        "title": "Anthropic - 构建有效 Agent",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       }
     ],
     "demo": {
       "title": "多 Agent 协同编排：构建业务工作流",
-      "description": "模拟多 Agent 系统，演示攻击者如何通过投毒一个 Agent 的记忆，影响其他协作的 Agent",
+      "description": "多 Agent 协同是交付复杂业务的关键。用 LangGraph 编排'检索-写作-审核'三 Agent 工作流——这是真实业务里最常见的编排模式。",
       "difficulty": "进阶",
       "time": "2.5h",
       "steps": [
@@ -741,23 +691,23 @@
     "resources": [
       {
         "type": "文档",
-        "title": "Model Context Protocol Specification",
+        "title": "MCP 官方文档",
         "url": "https://modelcontextprotocol.io/"
       },
       {
-        "type": "视频",
-        "title": "MCP Protocol Security Overview",
-        "url": "https://www.youtube.com/watch?v=7q5v8e2z3pY"
+        "type": "指南",
+        "title": "MCP 快速开始",
+        "url": "https://modelcontextprotocol.io/quickstart/server"
       },
       {
-        "type": "文章",
-        "title": "MCP Security Risks and Mitigations",
-        "url": "https://invariantlabs.ai/"
+        "type": "工具",
+        "title": "MCP Server 示例库",
+        "url": "https://github.com/modelcontextprotocol/servers"
       }
     ],
     "demo": {
       "title": "MCP 系统集成：打通 CRM/ERP/OA",
-      "description": "模拟 MCP 服务端，演示攻击者如何通过篡改工具描述或返回值来劫持通过 MCP 连接的 LLM Agent",
+      "description": "MCP 是 4/6 岗位要求的新协议。用 MCP 让 LLM 打通 CRM/ERP/OA，跑通一个'查客户档案'的集成 demo——这是当前最热的集成方向。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
@@ -789,40 +739,25 @@
     ],
     "resources": [
       {
-        "type": "文章",
-        "title": "LangChain Router 意图路由",
-        "url": "https://python.langchain.com/docs/modules/agents/agent_types/router"
-      },
-      {
-        "type": "论文",
-        "title": "LLM 路由与意图理解",
-        "url": "https://arxiv.org/abs/2310.02157"
-      },
-      {
-        "type": "文档",
-        "title": "Semantic Router 语义路由",
-        "url": "https://github.com/aurelio-labs/semantic-router"
-      },
-      {
         "type": "框架",
-        "title": "LangGraph 多 Agent 编排",
+        "title": "LangGraph 工作流编排",
         "url": "https://langchain-ai.github.io/langgraph/"
       },
       {
-        "type": "框架",
-        "title": "AutoGen 多 Agent",
-        "url": "https://microsoft.github.io/autogen/"
+        "type": "工具",
+        "title": "Semantic Router - 语义路由",
+        "url": "https://github.com/aurelio-labs/semantic-router"
       },
       {
         "type": "文章",
-        "title": "多 Agent 系统设计模式",
+        "title": "Anthropic - 构建有效 Agent 工作流",
         "url": "https://www.anthropic.com/engineering/building-effective-agents"
       }
     ],
     "demo": {
       "title": "意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流",
-      "description": "实现意图分类器，把用户问题路由到售后/技术/销售三个 Agent\n\n**第二部分：** 编排检索 Agent、写作 Agent、审核 Agent，跑通一个内容生产业务流程",
-      "difficulty": "项目",
+      "description": "意图路由决定系统好不好用。对比关键词/向量/LLM 三种路由，再做三 Agent 协同工作流——客户场景里90%是路由问题。",
+      "difficulty": "进阶",
       "time": "约 5h",
       "steps": [
         "定义意图空间与对应 Agent",
@@ -858,23 +793,23 @@
     "resources": [
       {
         "type": "文档",
-        "title": "vLLM Documentation",
+        "title": "vLLM 官方文档",
         "url": "https://docs.vllm.ai/"
       },
       {
-        "type": "视频",
-        "title": "vLLM Deployment Tutorial",
-        "url": "https://www.youtube.com/watch?v=2r5v8e3k4pZ"
+        "type": "文档",
+        "title": "SGLang 官方文档",
+        "url": "https://docs.sglang.ai/"
       },
       {
-        "type": "工具",
-        "title": "TGI (Text Generation Inference)",
-        "url": "https://huggingface.co/docs/text-generation-inference/"
+        "type": "文档",
+        "title": "HuggingFace TGI 文档",
+        "url": "https://huggingface.co/docs/text-generation-inference/en/"
       }
     ],
     "demo": {
       "title": "vLLM 部署实战：从零搭建推理服务",
-      "description": "搭建 vLLM 推理服务，从默认配置开始逐步加固安全配置，对比加固前后的安全表现",
+      "description": "vLLM 是推理部署的事实标准。从零起一个 vLLM 服务，对比 SGLang——JD 明确要求 vLLM/SGLang，部署岗必考。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
@@ -905,24 +840,24 @@
     "resources": [
       {
         "type": "文档",
-        "title": "OpenAI - Streaming API Reference",
+        "title": "OpenAI 流式输出 API",
         "url": "https://platform.openai.com/docs/api-reference/streaming"
       },
       {
-        "type": "文章",
-        "title": "LLM Output Leakage Attacks",
-        "url": "https://arxiv.org/abs/2308.05421"
+        "type": "文档",
+        "title": "FastAPI 流式响应",
+        "url": "https://fastapi.tiangolo.com/advanced/custom-response/"
       },
       {
-        "type": "标准",
-        "title": "OWASP LLM02 - Insecure Output Handling",
-        "url": "https://owasp.org/www-project-top-10-for-llms/"
+        "type": "文章",
+        "title": "Anthropic - 流式与工具使用",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       }
     ],
     "demo": {
       "title": "流式输出实现：SSE 实时返回",
-      "description": "模拟流式 API 输出中的 token-by-token 泄露，实现实时敏感信息检测和流式过滤",
-      "difficulty": "进阶",
+      "description": "流式输出是 LLM 应用的体验关键。用 SSE 实时逐字返回，对比非流式体验——带流式的 demo 客户感知差别巨大。",
+      "difficulty": "基础",
       "time": "1.5h",
       "steps": [
         "模拟 token-by-token 流式输出",
@@ -952,24 +887,24 @@
     "resources": [
       {
         "type": "文档",
-        "title": "Docker Security Best Practices",
-        "url": "https://docs.docker.com/engine/security/"
+        "title": "Docker 官方文档",
+        "url": "https://docs.docker.com/"
       },
       {
-        "type": "文档",
-        "title": "Kubernetes Security for LLM Workloads",
-        "url": "https://kubernetes.io/docs/concepts/security/"
+        "type": "指南",
+        "title": "Docker 构建 Python 镜像最佳实践",
+        "url": "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/"
       },
       {
-        "type": "视频",
-        "title": "Docker Security for ML Services",
-        "url": "https://www.youtube.com/watch?v=k7v8e2p3z1R"
+        "type": "工具",
+        "title": "Docker Compose 文档",
+        "url": "https://docs.docker.com/compose/"
       }
     ],
     "demo": {
       "title": "容器化交付：从 Dockerfile 到镜像分发",
-      "description": "编写安全的 Dockerfile 和 K8s manifest，部署 LLM 推理服务并验证安全配置",
-      "difficulty": "进阶",
+      "description": "容器化是交付的硬要求。写 Dockerfile 打包 LLM 服务镜像，4/6 岗位要求 Docker——能交付镜像才算'落地'。",
+      "difficulty": "基础",
       "time": "2h",
       "steps": [
         "编写安全 Dockerfile（非 root、最小镜像、多阶段构建）",
@@ -1005,34 +940,24 @@
         "url": "https://kubernetes.io/docs/"
       },
       {
-        "type": "文章",
-        "title": "K8s 部署 LLM 推理服务",
-        "url": "https://kubernetes.io/blog/"
-      },
-      {
         "type": "工具",
         "title": "Helm 包管理",
         "url": "https://helm.sh/"
       },
       {
         "type": "文档",
-        "title": "Prometheus 监控",
+        "title": "Prometheus 监控文档",
         "url": "https://prometheus.io/docs/"
       },
       {
-        "type": "工具",
-        "title": "Grafana 可视化",
-        "url": "https://grafana.com/"
-      },
-      {
-        "type": "文章",
-        "title": "LLM 可观测性实践",
-        "url": "https://www.datadoghq.com/"
+        "type": "文档",
+        "title": "Grafana 可视化文档",
+        "url": "https://grafana.com/docs/"
       }
     ],
     "demo": {
       "title": "生成 K8s 部署 YAML + 私有化交付清单 + LLM 服务监控：指标导出 + 用量统计 + 成本告警",
-      "description": "用脚本生成 LLM 服务的 K8s 部署清单，并输出私有化交付检查清单\n\n**第二部分：** 实现 Prometheus 风格的指标导出，统计 token 用量与成本，触发成本告警",
+      "description": "K8s 部署+监控是生产级标配。生成部署 YAML+Prometheus 采集指标+Grafana 看板——这套是私有化交付的标准件。",
       "difficulty": "进阶",
       "time": "约 4.5h",
       "steps": [
@@ -1068,24 +993,24 @@
     ],
     "resources": [
       {
-        "type": "论文",
-        "title": "PagedAttention (vLLM)",
-        "url": "https://arxiv.org/abs/2309.06180"
-      },
-      {
-        "type": "文章",
-        "title": "LLM 推理优化技术",
+        "type": "文档",
+        "title": "vLLM 性能优化",
         "url": "https://docs.vllm.ai/"
       },
       {
         "type": "工具",
         "title": "GPTCache 语义缓存",
         "url": "https://github.com/zilliztech/GPTCache"
+      },
+      {
+        "type": "文章",
+        "title": "OpenAI - 降低 LLM 成本技巧",
+        "url": "https://cookbook.openai.com/"
       }
     ],
     "demo": {
       "title": "语义缓存 + 批处理 + 模型路由",
-      "description": "实现三大成本优化手段，量化对比优化前后的成本与延迟",
+      "description": "上线后就是成本与性能。语义缓存+批处理+模型路由，三招把推理成本打下来——客户最关心的'用起来贵不贵'。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
@@ -1114,24 +1039,24 @@
     ],
     "resources": [
       {
-        "type": "框架",
-        "title": "FastAPI 文档",
+        "type": "文档",
+        "title": "FastAPI 官方文档",
         "url": "https://fastapi.tiangolo.com/"
       },
       {
-        "type": "工具",
-        "title": "Docker Compose 多服务",
+        "type": "文档",
+        "title": "Docker Compose 部署",
         "url": "https://docs.docker.com/compose/"
       },
       {
         "type": "文章",
-        "title": "生产 LLM 服务架构",
-        "url": "https://www.anthropic.com/"
+        "title": "LangChain 生产部署指南",
+        "url": "https://python.langchain.com/docs/tutorials/rag/"
       }
     ],
     "demo": {
       "title": "生产级 LLM 服务骨架（FastAPI+流式+缓存+监控）",
-      "description": "整合部署交付全栈，构建一个可交付客户的生产级 LLM 服务骨架",
+      "description": "第四周收尾：一套生产级 LLM 服务骨架(FastAPI+流式+缓存+监控)。这是你能直接交付、面试演示的完整后端。",
       "difficulty": "项目",
       "time": "3h",
       "steps": [
@@ -1162,39 +1087,29 @@
     ],
     "resources": [
       {
+        "type": "文章",
+        "title": "OWASP LLM Top 10",
+        "url": "https://owasp.org/www-project-top-10-for-llm-applications/"
+      },
+      {
         "type": "论文",
-        "title": "Prompt Injection attack against LLM-integrated Apps",
+        "title": "Prompt Injection 综述",
         "url": "https://arxiv.org/abs/2306.05485"
       },
       {
-        "type": "视频",
-        "title": "IBM - Prompt Injection Attacks Explained",
-        "url": "https://www.youtube.com/watch?v=Sv8xOP2f3Y4"
-      },
-      {
-        "type": "标准",
-        "title": "OWASP LLM01 - Prompt Injection",
-        "url": "https://owasp.org/www-project-top-10-for-llms/"
-      },
-      {
         "type": "文档",
-        "title": "OpenAI API Security Best Practices",
+        "title": "OpenAI 安全最佳实践",
         "url": "https://platform.openai.com/docs/guides/safety-best-practices"
       },
       {
-        "type": "标准",
-        "title": "OWASP API Security Top 10 (2023)",
-        "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/"
-      },
-      {
-        "type": "文章",
-        "title": "Securing LLM APIs in Production",
-        "url": "https://blog.langchain.dev/securing-llm-apps/"
+        "type": "工具",
+        "title": "Garak - LLM 漏洞扫描器",
+        "url": "https://github.com/leondz/garak"
       }
     ],
     "demo": {
       "title": "Prompt Injection 攻击库：从经典到现代 + API 安全攻防：Key 泄露到 SSRF",
-      "description": "实现并测试多种 prompt injection 技术，然后构建检测器识别每种攻击模式\n\n**第二部分：** 模拟 LLM API 面临的常见攻击，并实现对应的防御措施",
+      "description": "安全是 FDE 差异化能力。复现经典 Prompt Injection + API Key 泄露/SSRF——这些是客户安全团队会问的，能答上就拉开差距。",
       "difficulty": "进阶",
       "time": "约 4h",
       "steps": [
@@ -1232,24 +1147,24 @@
     ],
     "resources": [
       {
-        "type": "工具",
-        "title": "ChromaDB Documentation",
+        "type": "文档",
+        "title": "Chroma 向量库安全",
         "url": "https://docs.trychroma.com/"
       },
       {
         "type": "工具",
-        "title": "FAISS - Facebook AI Similarity Search",
+        "title": "FAISS 向量检索",
         "url": "https://github.com/facebookresearch/faiss"
       },
       {
         "type": "文章",
-        "title": "Vector Database Security Concerns",
+        "title": "Pinecone - RAG 安全实践",
         "url": "https://www.pinecone.io/learn/"
       }
     ],
     "demo": {
       "title": "RAG 安全全链路：从投毒到防御",
-      "description": "模拟向量数据库环境，演示攻击者如何通过投毒实现持久化的间接注入，并设计防御方案",
+      "description": "RAG 安全是交付必查项。复现文档投毒+间接注入，再做防御——政企/金融客户的安全审查会专门考这个。",
       "difficulty": "进阶",
       "time": "2h",
       "steps": [
@@ -1281,39 +1196,24 @@
     ],
     "resources": [
       {
-        "type": "论文",
-        "title": "Agent Injection Attack",
-        "url": "https://arxiv.org/abs/2402.08584"
-      },
-      {
-        "type": "文章",
-        "title": "多 Agent 安全攻防",
-        "url": "https://www.anthropic.com/engineering/"
-      },
-      {
         "type": "工具",
-        "title": "Agent 安全评估框架",
-        "url": "https://github.com/"
-      },
-      {
-        "type": "工具",
-        "title": "Garak - LLM Vulnerability Scanner",
+        "title": "Garak - LLM 红队工具",
         "url": "https://github.com/leondz/garak"
       },
       {
         "type": "工具",
-        "title": "PyRIT - Python Risk Identification Toolkit",
+        "title": "PyRIT - 微软 AI 红队",
         "url": "https://github.com/Azure/PyRIT"
       },
       {
-        "type": "文档",
-        "title": "OWASP LLM Top 10 - Testing Guide",
-        "url": "https://owasp.org/www-project-top-10-for-llms/"
+        "type": "文章",
+        "title": "OWASP LLM Top 10",
+        "url": "https://owasp.org/www-project-top-10-for-llm-applications/"
       }
     ],
     "demo": {
       "title": "Agent 注入攻防靶场：从劫持到横向移动到防御 + 红队实战：用 Garak + PyRIT 做 LLM 安全评估",
-      "description": "构建一个 Agent 安全靶场，复现工具劫持、记忆投毒、横向移动，并实现防御\n\n**第二部分：** 安装并使用 Garak 和 PyRIT 对 LLM 服务做自动化安全评估，生成评估报告",
+      "description": "Agent 注入是当前研究热点。用 Garak+PyRIT 做红队测试——把攻防作为差异化卖点，面试加分项。",
       "difficulty": "进阶",
       "time": "约 5h",
       "steps": [
@@ -1353,39 +1253,24 @@
     ],
     "resources": [
       {
-        "type": "框架",
-        "title": "NeMo Guardrails",
+        "type": "工具",
+        "title": "NeMo Guardrails - NVIDIA 防护",
         "url": "https://github.com/NVIDIA/NeMo-Guardrails"
       },
       {
-        "type": "框架",
+        "type": "工具",
         "title": "Guardrails AI",
         "url": "https://www.guardrailsai.com/"
       },
       {
-        "type": "文章",
-        "title": "Building LLM Security Guardrails",
-        "url": "https://llm-guardrails.com/"
-      },
-      {
-        "type": "框架",
-        "title": "FastAPI Documentation",
-        "url": "https://fastapi.tiangolo.com/"
-      },
-      {
         "type": "文档",
-        "title": "OpenAI API Reference",
-        "url": "https://platform.openai.com/docs/api-reference"
-      },
-      {
-        "type": "工具",
-        "title": "Redis (for rate limiting)",
-        "url": "https://redis.io/docs/"
+        "title": "FastAPI 中间件",
+        "url": "https://fastapi.tiangolo.com/tutorial/middleware/"
       }
     ],
     "demo": {
       "title": "多层防御工程：从规则到语义的防护链 + 安全 LLM 网关：生产级防护",
-      "description": "构建一个完整的多层防御 pipeline：输入过滤 -> 语义检测 -> LLM 调用 -> 输出检查 -> 审计\n\n**第二部分：** 整合本周所有安全组件，搭建一个可部署的 LLM API 网关，包含认证、输入过滤、输出检查、速率限制、审计日志",
+      "description": "整合多层防御做一个安全网关：输入过滤+输出审查+护栏。这是能交付的安全组件，不只是理论。",
       "difficulty": "项目",
       "time": "约 5.5h",
       "steps": [
@@ -1428,39 +1313,24 @@
     "resources": [
       {
         "type": "文章",
-        "title": "Palantir Forward Deployed Engineering",
-        "url": "https://www.palantir.com/"
+        "title": "Anthropic - 构建有效 Agent",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       },
       {
-        "type": "文章",
-        "title": "解决方案架构师方法论",
+        "type": "文档",
+        "title": "AWS 参考架构",
         "url": "https://aws.amazon.com/architecture/"
       },
       {
-        "type": "书籍",
-        "title": "交付即服务 DaaS 方法论",
-        "url": "https://martinfowler.com/"
-      },
-      {
-        "type": "报告",
-        "title": "金融 AI 落地合规指南",
-        "url": "https://www.cfca.org.cn/"
-      },
-      {
-        "type": "报告",
-        "title": "制造业数字化转型",
-        "url": "https://www.miit.gov.cn/"
-      },
-      {
         "type": "文章",
-        "title": "政企大模型私有化实践",
-        "url": "https://www.gov.cn/"
+        "title": "Martin Fowler - 企业架构",
+        "url": "https://martinfowler.com/"
       }
     ],
     "demo": {
       "title": "FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器",
-      "description": "生成交付流程模板，定义每阶段产出物、验收标准、风险点与话术\n\n**第二部分：** 为政企/金融/制造生成差异化落地方案模板，含合规要点与技术选型",
-      "difficulty": "进阶",
+      "description": "交付方法论+行业方案模板：政企/金融/制造三套现成方案。进客户现场前先备好话术和选型清单——客户沟通的弹药库。",
+      "difficulty": "基础",
       "time": "约 4h",
       "steps": [
         "定义 6 个交付阶段及各阶段产出物",
@@ -1496,23 +1366,23 @@
     "resources": [
       {
         "type": "文章",
-        "title": "技术转业务价值沟通法",
-        "url": "https://hbr.org/"
+        "title": "Anthropic - 客户落地与 Agent",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       },
       {
-        "type": "书籍",
-        "title": "解决方案销售",
-        "url": "https://www.spinselling.com/"
+        "type": "文档",
+        "title": "OpenAI Cookbook - 应用案例",
+        "url": "https://cookbook.openai.com/"
       },
       {
         "type": "文章",
-        "title": "FDE 如何与客户高管对话",
-        "url": "https://www.palantir.com/"
+        "title": "HBR - 需求沟通方法",
+        "url": "https://hbr.org/2022/01/the-right-way-to-onboard-new-customers"
       }
     ],
     "demo": {
       "title": "技术方案→业务价值翻译器",
-      "description": "把技术指标（准确率/延迟/成本）翻译成客户能感知的业务价值",
+      "description": "把技术方案翻译成客户能懂的业务价值。写一份'给客户讲'的方案——FDE 面试必考'你怎么跟客户沟通'。",
       "difficulty": "基础",
       "time": "2h",
       "steps": [
@@ -1542,24 +1412,24 @@
     "resources": [
       {
         "type": "文档",
-        "title": "企业微信机器人 webhook",
+        "title": "企业微信开发者文档",
         "url": "https://developer.work.weixin.qq.com/document/path/91770"
       },
       {
         "type": "文档",
-        "title": "飞书开放平台 API",
+        "title": "飞书开放平台文档",
         "url": "https://open.feishu.cn/document/"
       },
       {
         "type": "文档",
         "title": "飞书多维表格 API",
-        "url": "https://open.feishu.cn/document/server-docs/docs/bitable-v1/"
+        "url": "https://open.feishu.cn/document/server-docs/docs/bitable-v1/bitable-overview"
       }
     ],
     "demo": {
       "title": "企微推送 + 飞书多维表格集成",
-      "description": "实现企业微信机器人推送 + 飞书多维表格数据读写，打通办公链路",
-      "difficulty": "进阶",
+      "description": "对接企微+飞书多维表格，打通客户已有系统。这是真实交付里高频的集成需求——能接生态才是'落地'。",
+      "difficulty": "基础",
       "time": "2h",
       "steps": [
         "实现企微 webhook 推送（markdown/text/卡片）",
@@ -1589,16 +1459,6 @@
     ],
     "resources": [
       {
-        "type": "论文",
-        "title": "InstructGPT (RLHF)",
-        "url": "https://arxiv.org/abs/2203.02155"
-      },
-      {
-        "type": "论文",
-        "title": "LoRA 高效微调",
-        "url": "https://arxiv.org/abs/2106.09685"
-      },
-      {
         "type": "工具",
         "title": "LLaMA-Factory 微调框架",
         "url": "https://github.com/hiyouga/LLaMA-Factory"
@@ -1609,19 +1469,14 @@
         "url": "https://github.com/modelscope/data-juicer"
       },
       {
-        "type": "工具",
-        "title": "EasyDataset",
-        "url": "https://github.com/conardxue/easy-dataset"
-      },
-      {
-        "type": "平台",
-        "title": "PAI-iTag 数据标注",
-        "url": "https://www.aliyun.com/product/bigdata/ai"
+        "type": "论文",
+        "title": "LoRA - 低秩微调",
+        "url": "https://arxiv.org/abs/2106.09685"
       }
     ],
     "demo": {
       "title": "SFT 数据准备 + LoRA 配置 + 微调流程演示 + 语料处理 pipeline + 标注格式转换",
-      "description": "构建 SFT 数据集，配置 LoRA 微调参数，演示微调流程（概念演示，无需真训练）\n\n**第二部分：** 实现语料清洗去重脱敏 pipeline，并转换成 SFT/评测两种标注格式",
+      "description": "微调是 1/6 岗位要求。用 LLaMA-Factory 跑 SFT+LoRA，处理语料——虽非主线但了解流程面试能加分。",
       "difficulty": "进阶",
       "time": "约 4.5h",
       "steps": [
@@ -1657,25 +1512,25 @@
     ],
     "resources": [
       {
-        "type": "文章",
-        "title": "What is a Forward Deployed Engineer?",
-        "url": "https://www.openai.com/careers/forward-deployed-engineer"
+        "type": "文档",
+        "title": "Anthropic - 构建有效 Agent",
+        "url": "https://www.anthropic.com/engineering/building-effective-agents"
       },
       {
-        "type": "文章",
-        "title": "AI Security Engineer Interview Guide",
-        "url": "https://www.csoonline.com/"
+        "type": "文档",
+        "title": "OpenAI Cookbook",
+        "url": "https://cookbook.openai.com/"
       },
       {
-        "type": "视频",
-        "title": "How to Get an AI Security Engineer Job",
-        "url": "https://www.youtube.com/watch?v=5v2e9k3z2pQ"
+        "type": "课程",
+        "title": "DeepLearning.AI 短课程全集",
+        "url": "https://www.deeplearning.ai/short-courses/"
       }
     ],
     "demo": {
       "title": "FDE 面试准备：知识图谱与模拟面试",
-      "description": "整理 28 天的知识体系，构建可视化知识图谱，准备 FDE 面试高频问题与项目展示话术",
-      "difficulty": "复习",
+      "description": "面试冲刺：生成知识图谱+模拟面试。把 30 天学的串成可讲的项目链——这才是能拿 offer 的临门一脚。",
+      "difficulty": "基础",
       "time": "2.5h",
       "steps": [
         "构建 AI 安全知识图谱（4 大领域 x 28 天）",

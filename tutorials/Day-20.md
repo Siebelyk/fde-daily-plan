@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📝 论文 [PagedAttention (vLLM)](https://arxiv.org/abs/2309.06180)
-- 📄 文章 [LLM 推理优化技术](https://docs.vllm.ai/)
+- 📚 文档 [vLLM 性能优化](https://docs.vllm.ai/)
 - 🛠 工具 [GPTCache 语义缓存](https://github.com/zilliztech/GPTCache)
+- 📄 文章 [OpenAI - 降低 LLM 成本技巧](https://cookbook.openai.com/)
 
 ## Demo 练习：语义缓存 + 批处理 + 模型路由
 
-实现三大成本优化手段，量化对比优化前后的成本与延迟
+上线后就是成本与性能。语义缓存+批处理+模型路由，三招把推理成本打下来——客户最关心的'用起来贵不贵'。
 
 | 难度 | 预计时间 |
 |------|----------|

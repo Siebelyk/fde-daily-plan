@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📚 文档 [构建 LLM 应用最佳实践](https://docs.langchain.com/)
-- 📄 文章 [FDE 如何用原型打动客户](https://www.palantir.com/)
-- 🛠 工具 [Rich - 终端美化](https://github.com/Textualize/rich)
+- 📚 文档 [OpenAI Cookbook - 构建应用示例](https://cookbook.openai.com/)
+- 📚 文档 [LangChain 快速开始](https://python.langchain.com/docs/tutorials/llm_chain/)
+- 🛠 工具 [Gradio - 快速搭 LLM 演示界面](https://www.gradio.app/)
 
 ## Demo 练习：端到端多轮问答助手（可演示原型）
 
-整合 API 封装 + Prompt 模板 + 上下文管理，构建一个可演示给客户的命令行 AI 助手
+第一周收尾：搭一个能多轮对话、能引用资料的助手原型。Gradio 一键出界面，直接能演示给客户/面试官看。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 项目 | 3h |
+| 基础 | 3h |
 
 ### 复现步骤
 

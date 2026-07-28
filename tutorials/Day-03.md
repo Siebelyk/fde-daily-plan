@@ -20,21 +20,18 @@
 ## 推荐资料
 
 - 📚 文档 [OpenAI API 参考](https://platform.openai.com/docs/api-reference)
-- 📚 文档 [智谱 GLM API](https://open.bigmodel.cn/dev/api)
-- 📚 文档 [Ollama 本地模型](https://ollama.com/)
 - 🗺️ 指南 [OpenAI Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering)
 - 🎓 课程 [DeepLearning.AI - ChatGPT Prompt Engineering](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
-- 📝 论文 [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
+- 📚 文档 [智谱 GLM API 文档](https://open.bigmodel.cn/dev/api)
+- 📚 文档 [Ollama - 本地跑大模型](https://ollama.com/)
 
 ## Demo 练习：多 Provider 统一封装 + 模型选型对比 + Prompt 模板库 + 技法效果对比
 
-实现一个统一 LLM Client，支持 OpenAI/智谱/Ollama 后端切换，并对比不同模型的成本与延迟
-
-**第二部分：** 实现 Prompt 模板引擎，对比 Zero-shot / Few-shot / CoT 在分类任务上的效果差异
+一套多 Provider 封装代码，换 API key 就能切换厂商。Prompt 模板库直接复用——日常交付高频用的轮子，能写进简历。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 基础 | 约 4h |
+| 入门 | 约 4h |
 
 ### 复现步骤
 

@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📄 文章 [什么是 Forward Deployed Engineer](https://www.palantir.com/docs/foundations/forward-deployed-engineering)
-- 📄 文章 [Python 工程化最佳实践](https://docs.python-guide.org/)
+- 📄 文章 [Forward Deployed Engineer 是什么](https://www.anthropic.com/engineering/building-effective-agents)
+- 📄 文章 [OpenAI Cookbook - 实战示例集](https://cookbook.openai.com/)
 - 🛠 工具 [uv - 极速 Python 包管理](https://github.com/astral-sh/uv)
 
 ## Demo 练习：FDE 能力雷达 + 环境自检脚本
 
-生成基于真实 JD 的能力雷达图，并写一个环境自检脚本验证 Python/包/工具链是否就绪
+低门槛：3分钟跑出图。生成你自己的 FDE 能力雷达，对照 6 个真实 JD 找短板——这份图面试时能直接拿出来讲。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 基础 | 2h |
+| 入门 | 2h |
 
 ### 复现步骤
 

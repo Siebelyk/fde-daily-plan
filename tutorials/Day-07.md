@@ -19,22 +19,18 @@
 
 ## 推荐资料
 
-- 📚 文档 [LangChain Text Splitters Guide](https://python.langchain.com/docs/modules/data_connection/document_transformers/)
-- 📄 文章 [Chunk Boundary Injection in RAG](https://research.lightsail.ai/)
-- 🛠 工具 [LlamaIndex - Node Parser](https://docs.llamaindex.ai/)
-- 📚 文档 [OpenAI - Embeddings Guide](https://platform.openai.com/docs/guides/embeddings)
-- 🎬 视频 [Vector Embeddings Explained - Google Cloud](https://www.youtube.com/watch?v=d6uWqBaDQU4)
-- 📝 论文 [Poisoning Language Models during Instruction Tuning](https://arxiv.org/abs/2305.05670)
+- 📚 文档 [LangChain 文本分割](https://python.langchain.com/docs/concepts/text_splitters/)
+- 📚 文档 [OpenAI Embeddings 指南](https://platform.openai.com/docs/guides/embeddings)
+- 📚 文档 [Chroma 向量数据库文档](https://docs.trychroma.com/)
+- 🛠 工具 [LlamaIndex 文档](https://docs.llamaindex.ai/)
 
 ## Demo 练习：分块策略对比实验：不同策略对检索质量的影响 + Embedding + 向量数据库：构建可交付的检索能力
 
-演示攻击者如何利用文档分块策略，将注入指令分散在块边界处，绕过单块安全检查
-
-**第二部分：** 演示攻击者如何构造特殊文档，使其 embedding 接近热门查询，从而在检索时被优先返回
+分块策略决定检索质量。对比固定/递归/语义分块对召回的影响，选对策略——交付 RAG 时客户第一个问的就是'你分块怎么做'。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 约 4h |
+| 基础 | 约 4h |
 
 ### 复现步骤
 

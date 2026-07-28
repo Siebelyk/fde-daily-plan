@@ -19,18 +19,13 @@
 
 ## 推荐资料
 
-- 🧩 框架 [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
-- 🧩 框架 [Guardrails AI](https://www.guardrailsai.com/)
-- 📄 文章 [Building LLM Security Guardrails](https://llm-guardrails.com/)
-- 🧩 框架 [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- 📚 文档 [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
-- 🛠 工具 [Redis (for rate limiting)](https://redis.io/docs/)
+- 🛠 工具 [NeMo Guardrails - NVIDIA 防护](https://github.com/NVIDIA/NeMo-Guardrails)
+- 🛠 工具 [Guardrails AI](https://www.guardrailsai.com/)
+- 📚 文档 [FastAPI 中间件](https://fastapi.tiangolo.com/tutorial/middleware/)
 
 ## Demo 练习：多层防御工程：从规则到语义的防护链 + 安全 LLM 网关：生产级防护
 
-构建一个完整的多层防御 pipeline：输入过滤 -> 语义检测 -> LLM 调用 -> 输出检查 -> 审计
-
-**第二部分：** 整合本周所有安全组件，搭建一个可部署的 LLM API 网关，包含认证、输入过滤、输出检查、速率限制、审计日志
+整合多层防御做一个安全网关：输入过滤+输出审查+护栏。这是能交付的安全组件，不只是理论。
 
 | 难度 | 预计时间 |
 |------|----------|

@@ -16,17 +16,18 @@
 
 ## 推荐资料
 
-- 📄 文章 [Context Engineering 概念](https://www.anthropic.com/news/claude-context)
-- 📚 文档 [LLM 上下文窗口与 Token 限制](https://platform.openai.com/docs/guides/text-generation)
-- 📝 论文 [Lost in the Middle 上下文衰减](https://arxiv.org/abs/2307.03172)
+- 📄 文章 [Anthropic - 上下文工程最佳实践](https://www.anthropic.com/engineering/building-effective-agents)
+- 📚 文档 [OpenAI - 文本生成与上下文管理](https://platform.openai.com/docs/guides/text-generation)
+- 📝 论文 [Lost in the Middle - 长上下文衰减](https://arxiv.org/abs/2307.03172)
+- 🛠 工具 [mem0 - LLM 记忆层框架](https://github.com/mem0ai/mem0)
 
 ## Demo 练习：上下文管理器：预算分配 + 记忆策略
 
-实现 ContextManager，在固定 token 预算内分配 System/历史/检索内容，支持三种记忆策略
+上下文管理是交付核心。实现预算分配+记忆策略，跑一个不爆 token 的多轮助手——客户现场最常踩的坑就是上下文溢出。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 2h |
+| 基础 | 2h |
 
 ### 复现步骤
 

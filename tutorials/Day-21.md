@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 🧩 框架 [FastAPI 文档](https://fastapi.tiangolo.com/)
-- 🛠 工具 [Docker Compose 多服务](https://docs.docker.com/compose/)
-- 📄 文章 [生产 LLM 服务架构](https://www.anthropic.com/)
+- 📚 文档 [FastAPI 官方文档](https://fastapi.tiangolo.com/)
+- 📚 文档 [Docker Compose 部署](https://docs.docker.com/compose/)
+- 📄 文章 [LangChain 生产部署指南](https://python.langchain.com/docs/tutorials/rag/)
 
 ## Demo 练习：生产级 LLM 服务骨架（FastAPI+流式+缓存+监控）
 
-整合部署交付全栈，构建一个可交付客户的生产级 LLM 服务骨架
+第四周收尾：一套生产级 LLM 服务骨架(FastAPI+流式+缓存+监控)。这是你能直接交付、面试演示的完整后端。
 
 | 难度 | 预计时间 |
 |------|----------|

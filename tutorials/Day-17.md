@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📚 文档 [OpenAI - Streaming API Reference](https://platform.openai.com/docs/api-reference/streaming)
-- 📄 文章 [LLM Output Leakage Attacks](https://arxiv.org/abs/2308.05421)
-- 📌 标准 [OWASP LLM02 - Insecure Output Handling](https://owasp.org/www-project-top-10-for-llms/)
+- 📚 文档 [OpenAI 流式输出 API](https://platform.openai.com/docs/api-reference/streaming)
+- 📚 文档 [FastAPI 流式响应](https://fastapi.tiangolo.com/advanced/custom-response/)
+- 📄 文章 [Anthropic - 流式与工具使用](https://www.anthropic.com/engineering/building-effective-agents)
 
 ## Demo 练习：流式输出实现：SSE 实时返回
 
-模拟流式 API 输出中的 token-by-token 泄露，实现实时敏感信息检测和流式过滤
+流式输出是 LLM 应用的体验关键。用 SSE 实时逐字返回，对比非流式体验——带流式的 demo 客户感知差别巨大。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 1.5h |
+| 基础 | 1.5h |
 
 ### 复现步骤
 

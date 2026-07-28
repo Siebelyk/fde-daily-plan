@@ -19,18 +19,13 @@
 
 ## 推荐资料
 
-- 🧩 框架 [Ragas - RAG 评测框架](https://github.com/explodinggradients/ragas)
-- 📄 文章 [RAG 评测指标体系](https://docs.ragas.io/)
-- 🛠 工具 [TruLens LLM 评估](https://www.trulens.org/)
-- 📝 论文 [Not what you've signed up for: Compromising Real-World LLM-integrated Apps](https://arxiv.org/abs/2302.12173)
-- 📄 文章 [OWASP LLM02 - Insecure Output Handling](https://owasp.org/www-project-top-10-for-llms/)
-- 🎬 视频 [Prompt Injection via RAG - Deep Dive](https://www.youtube.com/watch?v=3RkG9e7e8BQ)
+- 🧩 框架 [Ragas - RAG 评测框架](https://docs.ragas.io/)
+- 📄 文章 [OpenAI - 评估 LLM 应用](https://cookbook.openai.com/examples/evaluation/getting_started_with_openai_evals)
+- 📄 文章 [OWASP LLM Top 10 安全风险](https://owasp.org/www-project-top-10-for-llm-applications/)
 
 ## Demo 练习：RAG 评测 pipeline：召回率+忠实度+引用正确率 + RAG 安全检查点：间接注入复现与防御
 
-构建评测数据集，自动计算 RAG 的召回率、答案准确率、引用正确率与忠实度
-
-**第二部分：** 构造含恶意指令的知识库文档，观察 RAG 系统如何被间接注入控制执行非预期行为
+不能只跑通，还要证明有效。用 Ragas 量化召回率/忠实度/引用正确率——交付时客户要的是评测报告，不是'我觉得效果好'。
 
 | 难度 | 预计时间 |
 |------|----------|

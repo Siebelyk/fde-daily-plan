@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📚 文档 [Model Context Protocol Specification](https://modelcontextprotocol.io/)
-- 🎬 视频 [MCP Protocol Security Overview](https://www.youtube.com/watch?v=7q5v8e2z3pY)
-- 📄 文章 [MCP Security Risks and Mitigations](https://invariantlabs.ai/)
+- 📚 文档 [MCP 官方文档](https://modelcontextprotocol.io/)
+- 🗺️ 指南 [MCP 快速开始](https://modelcontextprotocol.io/quickstart/server)
+- 🛠 工具 [MCP Server 示例库](https://github.com/modelcontextprotocol/servers)
 
 ## Demo 练习：MCP 系统集成：打通 CRM/ERP/OA
 
-模拟 MCP 服务端，演示攻击者如何通过篡改工具描述或返回值来劫持通过 MCP 连接的 LLM Agent
+MCP 是 4/6 岗位要求的新协议。用 MCP 让 LLM 打通 CRM/ERP/OA，跑通一个'查客户档案'的集成 demo——这是当前最热的集成方向。
 
 | 难度 | 预计时间 |
 |------|----------|

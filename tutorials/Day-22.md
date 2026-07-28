@@ -19,18 +19,14 @@
 
 ## 推荐资料
 
-- 📝 论文 [Prompt Injection attack against LLM-integrated Apps](https://arxiv.org/abs/2306.05485)
-- 🎬 视频 [IBM - Prompt Injection Attacks Explained](https://www.youtube.com/watch?v=Sv8xOP2f3Y4)
-- 📌 标准 [OWASP LLM01 - Prompt Injection](https://owasp.org/www-project-top-10-for-llms/)
-- 📚 文档 [OpenAI API Security Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
-- 📌 标准 [OWASP API Security Top 10 (2023)](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
-- 📄 文章 [Securing LLM APIs in Production](https://blog.langchain.dev/securing-llm-apps/)
+- 📄 文章 [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-llm-applications/)
+- 📝 论文 [Prompt Injection 综述](https://arxiv.org/abs/2306.05485)
+- 📚 文档 [OpenAI 安全最佳实践](https://platform.openai.com/docs/guides/safety-best-practices)
+- 🛠 工具 [Garak - LLM 漏洞扫描器](https://github.com/leondz/garak)
 
 ## Demo 练习：Prompt Injection 攻击库：从经典到现代 + API 安全攻防：Key 泄露到 SSRF
 
-实现并测试多种 prompt injection 技术，然后构建检测器识别每种攻击模式
-
-**第二部分：** 模拟 LLM API 面临的常见攻击，并实现对应的防御措施
+安全是 FDE 差异化能力。复现经典 Prompt Injection + API Key 泄露/SSRF——这些是客户安全团队会问的，能答上就拉开差距。
 
 | 难度 | 预计时间 |
 |------|----------|

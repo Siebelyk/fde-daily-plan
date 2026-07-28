@@ -30,19 +30,19 @@ _从 FDE 岗位认知到 LLM 原理，掌握 API/Prompt/Context 工程，构建�
 
 | Day | 主题 | Demo | 难度 |
 |-----|------|------|------|
-| [Day 1](tutorials/Day-01.md) | FDE 岗位认知与开发环境搭建 | FDE 能力雷达 + 环境自检脚本 | 基础 |
-| [Day 2](tutorials/Day-02.md) | LLM 原理：Transformer 与 Token 工程 | Attention 权重可视化：理解模型如何'看'你的 prompt + Token 计数与边界分析：成本与效果的双重视角 | 基础 |
-| [Day 3](tutorials/Day-03.md) | API 调用与 Prompt 工程 | 多 Provider 统一封装 + 模型选型对比 + Prompt 模板库 + 技法效果对比 | 基础 |
-| [Day 4](tutorials/Day-04.md) | Context Engineering：上下文窗口管理 | 上下文管理器：预算分配 + 记忆策略 | 进阶 |
-| [Day 5](tutorials/Day-05.md) | 第一周实战：构建第一个可演示的 LLM 应用 | 端到端多轮问答助手（可演示原型） | 项目 |
+| [Day 1](tutorials/Day-01.md) | FDE 岗位认知与开发环境搭建 | FDE 能力雷达 + 环境自检脚本 | 入门 |
+| [Day 2](tutorials/Day-02.md) | LLM 原理：Transformer 与 Token 工程 | Attention 权重可视化：理解模型如何'看'你的 prompt + Token 计数与边界分析：成本与效果的双重视角 | 入门 |
+| [Day 3](tutorials/Day-03.md) | API 调用与 Prompt 工程 | 多 Provider 统一封装 + 模型选型对比 + Prompt 模板库 + 技法效果对比 | 入门 |
+| [Day 4](tutorials/Day-04.md) | Context Engineering：上下文窗口管理 | 上下文管理器：预算分配 + 记忆策略 | 基础 |
+| [Day 5](tutorials/Day-05.md) | 第一周实战：构建第一个可演示的 LLM 应用 | 端到端多轮问答助手（可演示原型） | 基础 |
 
 ### 第 2 周：🟢 RAG 构建与交付
 _从分块到向量库到重排评测，构建可交付级 RAG 知识库（含安全检查点）_
 
 | Day | 主题 | Demo | 难度 |
 |-----|------|------|------|
-| [Day 6](tutorials/Day-06.md) | RAG 基础与架构 | 最简 RAG：从零跑通检索增强生成闭环 | 基础 |
-| [Day 7](tutorials/Day-07.md) | 分块策略与向量数据库构建 | 分块策略对比实验：不同策略对检索质量的影响 + Embedding + 向量数据库：构建可交付的检索能力 | 进阶 |
+| [Day 6](tutorials/Day-06.md) | RAG 基础与架构 | 最简 RAG：从零跑通检索增强生成闭环 | 入门 |
+| [Day 7](tutorials/Day-07.md) | 分块策略与向量数据库构建 | 分块策略对比实验：不同策略对检索质量的影响 + Embedding + 向量数据库：构建可交付的检索能力 | 基础 |
 | [Day 8](tutorials/Day-08.md) | 检索与重排：混合检索 + Cross-Encoder 重排 | 混合检索 + 重排 + 引用回溯 | 进阶 |
 | [Day 9](tutorials/Day-09.md) | RAG 评测与安全检查点 | RAG 评测 pipeline：召回率+忠实度+引用正确率 + RAG 安全检查点：间接注入复现与防御 | 进阶 |
 | [Day 10](tutorials/Day-10.md) | 第二周实战：交付级 RAG 知识库 | 交付级 RAG 知识库：企业级可演示产品 | 项目 |
@@ -52,11 +52,11 @@ _从 ReAct Agent 到 LangChain 到 MCP，开发并编排多 Agent 业务工作�
 
 | Day | 主题 | Demo | 难度 |
 |-----|------|------|------|
-| [Day 11](tutorials/Day-11.md) | Agent 基础与 ReAct 范式 | ReAct Agent 构建与风险认知 | 进阶 |
-| [Day 12](tutorials/Day-12.md) | LangChain 框架与 Function Calling 工具开发 | 用框架范式构建 Tool Calling Agent + Function Calling 工具开发与安全执行 | 进阶 |
+| [Day 11](tutorials/Day-11.md) | Agent 基础与 ReAct 范式 | ReAct Agent 构建与风险认知 | 基础 |
+| [Day 12](tutorials/Day-12.md) | LangChain 框架与 Function Calling 工具开发 | 用框架范式构建 Tool Calling Agent + Function Calling 工具开发与安全执行 | 基础 |
 | [Day 13](tutorials/Day-13.md) | 多 Agent 协同与 Workflow 编排 | 多 Agent 协同编排：构建业务工作流 | 进阶 |
 | [Day 14](tutorials/Day-14.md) | MCP 协议与系统集成 | MCP 系统集成：打通 CRM/ERP/OA | 进阶 |
-| [Day 15](tutorials/Day-15.md) | 意图路由与多 Agent 工作流编排 | 意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流 | 项目 |
+| [Day 15](tutorials/Day-15.md) | 意图路由与多 Agent 工作流编排 | 意图路由器：关键词/向量/LLM 三种方式 + 检索-写作-审核三 Agent 协同工作流 | 进阶 |
 
 ### 第 4 周：🟠 部署交付与生产化
 _从 vLLM 部署到 K8s 到监控优化，交付生产级 LLM 服务_
@@ -64,8 +64,8 @@ _从 vLLM 部署到 K8s 到监控优化，交付生产级 LLM 服务_
 | Day | 主题 | Demo | 难度 |
 |-----|------|------|------|
 | [Day 16](tutorials/Day-16.md) | 推理引擎：vLLM/SGLang 部署 | vLLM 部署实战：从零搭建推理服务 | 进阶 |
-| [Day 17](tutorials/Day-17.md) | 流式输出：SSE/WebSocket 实现 | 流式输出实现：SSE 实时返回 | 进阶 |
-| [Day 18](tutorials/Day-18.md) | Docker 容器化交付 | 容器化交付：从 Dockerfile 到镜像分发 | 进阶 |
+| [Day 17](tutorials/Day-17.md) | 流式输出：SSE/WebSocket 实现 | 流式输出实现：SSE 实时返回 | 基础 |
+| [Day 18](tutorials/Day-18.md) | Docker 容器化交付 | 容器化交付：从 Dockerfile 到镜像分发 | 基础 |
 | [Day 19](tutorials/Day-19.md) | K8s 部署与 LLM 服务监控 | 生成 K8s 部署 YAML + 私有化交付清单 + LLM 服务监控：指标导出 + 用量统计 + 成本告警 | 进阶 |
 | [Day 20](tutorials/Day-20.md) | 性能与成本优化 | 语义缓存 + 批处理 + 模型路由 | 进阶 |
 | [Day 21](tutorials/Day-21.md) | 第四周实战：生产级 LLM 服务部署 | 生产级 LLM 服务骨架（FastAPI+流式+缓存+监控） | 项目 |
@@ -85,11 +85,11 @@ _从交付方法论到行业方案到客户沟通，完成面试冲刺_
 
 | Day | 主题 | Demo | 难度 |
 |-----|------|------|------|
-| [Day 26](tutorials/Day-26.md) | FDE 交付流程与行业方案模板 | FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器 | 进阶 |
+| [Day 26](tutorials/Day-26.md) | FDE 交付流程与行业方案模板 | FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器 | 基础 |
 | [Day 27](tutorials/Day-27.md) | 客户沟通与方案设计 | 技术方案→业务价值翻译器 | 基础 |
-| [Day 28](tutorials/Day-28.md) | 飞书/企微生态集成 | 企微推送 + 飞书多维表格集成 | 进阶 |
+| [Day 28](tutorials/Day-28.md) | 飞书/企微生态集成 | 企微推送 + 飞书多维表格集成 | 基础 |
 | [Day 29](tutorials/Day-29.md) | 模型微调：SFT 数据与 LoRA 配置 | SFT 数据准备 + LoRA 配置 + 微调流程演示 + 语料处理 pipeline + 标注格式转换 | 进阶 |
-| [Day 30](tutorials/Day-30.md) | 面试冲刺：知识图谱与模拟面试 | FDE 面试准备：知识图谱与模拟面试 | 复习 |
+| [Day 30](tutorials/Day-30.md) | 面试冲刺：知识图谱与模拟面试 | FDE 面试准备：知识图谱与模拟面试 | 基础 |
 
 ## 快速开始
 

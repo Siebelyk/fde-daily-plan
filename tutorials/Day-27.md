@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📄 文章 [技术转业务价值沟通法](https://hbr.org/)
-- 📖 书籍 [解决方案销售](https://www.spinselling.com/)
-- 📄 文章 [FDE 如何与客户高管对话](https://www.palantir.com/)
+- 📄 文章 [Anthropic - 客户落地与 Agent](https://www.anthropic.com/engineering/building-effective-agents)
+- 📚 文档 [OpenAI Cookbook - 应用案例](https://cookbook.openai.com/)
+- 📄 文章 [HBR - 需求沟通方法](https://hbr.org/2022/01/the-right-way-to-onboard-new-customers)
 
 ## Demo 练习：技术方案→业务价值翻译器
 
-把技术指标（准确率/延迟/成本）翻译成客户能感知的业务价值
+把技术方案翻译成客户能懂的业务价值。写一份'给客户讲'的方案——FDE 面试必考'你怎么跟客户沟通'。
 
 | 难度 | 预计时间 |
 |------|----------|

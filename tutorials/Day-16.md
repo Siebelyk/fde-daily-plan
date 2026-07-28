@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📚 文档 [vLLM Documentation](https://docs.vllm.ai/)
-- 🎬 视频 [vLLM Deployment Tutorial](https://www.youtube.com/watch?v=2r5v8e3k4pZ)
-- 🛠 工具 [TGI (Text Generation Inference)](https://huggingface.co/docs/text-generation-inference/)
+- 📚 文档 [vLLM 官方文档](https://docs.vllm.ai/)
+- 📚 文档 [SGLang 官方文档](https://docs.sglang.ai/)
+- 📚 文档 [HuggingFace TGI 文档](https://huggingface.co/docs/text-generation-inference/en/)
 
 ## Demo 练习：vLLM 部署实战：从零搭建推理服务
 
-搭建 vLLM 推理服务，从默认配置开始逐步加固安全配置，对比加固前后的安全表现
+vLLM 是推理部署的事实标准。从零起一个 vLLM 服务，对比 SGLang——JD 明确要求 vLLM/SGLang，部署岗必考。
 
 | 难度 | 预计时间 |
 |------|----------|

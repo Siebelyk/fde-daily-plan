@@ -20,21 +20,17 @@
 ## 推荐资料
 
 - 🎬 视频 [3Blue1Brown - But what is a GPT?](https://www.youtube.com/watch?v=wjZofJX0v4M)
-- 📝 论文 [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 - 🎬 视频 [Karpathy - Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
-- 🎬 视频 [Karpathy - Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajv6)
-- 📄 文章 [Jay Alammar - The Illustrated Word2vec](https://jalammar.github.io/illustrated-word2vec/)
-- 📚 文档 [OpenAI - tiktoken Documentation](https://github.com/openai/tiktoken)
+- 📄 文章 [Jay Alammar - 图解 Transformer](https://jalammar.github.io/illustrated-transformer/)
+- 🛠 工具 [tiktoken - OpenAI 分词器](https://github.com/openai/tiktoken)
 
 ## Demo 练习：Attention 权重可视化：理解模型如何'看'你的 prompt + Token 计数与边界分析：成本与效果的双重视角
 
-用 NumPy 手写 Single-Head Attention，可视化权重矩阵，分析 injection 中哪些 token 获得最高注意力
-
-**第二部分：** 用 BPE 分词器展示同一文本不同分词方式，演示攻击者如何利用 token 边界绕过关键词过滤
+看懂 Transformer 不靠背公式。可视化 Attention 权重，直观看到模型如何'看'你的 prompt——面试高频考点，3行代码出图。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 基础 | 约 3h |
+| 入门 | 约 3h |
 
 ### 复现步骤
 

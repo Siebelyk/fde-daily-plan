@@ -19,22 +19,17 @@
 
 ## 推荐资料
 
-- 📄 文章 [Palantir Forward Deployed Engineering](https://www.palantir.com/)
-- 📄 文章 [解决方案架构师方法论](https://aws.amazon.com/architecture/)
-- 📖 书籍 [交付即服务 DaaS 方法论](https://martinfowler.com/)
-- 📊 报告 [金融 AI 落地合规指南](https://www.cfca.org.cn/)
-- 📊 报告 [制造业数字化转型](https://www.miit.gov.cn/)
-- 📄 文章 [政企大模型私有化实践](https://www.gov.cn/)
+- 📄 文章 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
+- 📚 文档 [AWS 参考架构](https://aws.amazon.com/architecture/)
+- 📄 文章 [Martin Fowler - 企业架构](https://martinfowler.com/)
 
 ## Demo 练习：FDE 交付流程模板 + 阶段验收清单 + 三大行业 RAG/Agent 方案模板生成器
 
-生成交付流程模板，定义每阶段产出物、验收标准、风险点与话术
-
-**第二部分：** 为政企/金融/制造生成差异化落地方案模板，含合规要点与技术选型
+交付方法论+行业方案模板：政企/金融/制造三套现成方案。进客户现场前先备好话术和选型清单——客户沟通的弹药库。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 约 4h |
+| 基础 | 约 4h |
 
 ### 复现步骤
 

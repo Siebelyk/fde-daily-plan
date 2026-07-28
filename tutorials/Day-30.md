@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📄 文章 [What is a Forward Deployed Engineer?](https://www.openai.com/careers/forward-deployed-engineer)
-- 📄 文章 [AI Security Engineer Interview Guide](https://www.csoonline.com/)
-- 🎬 视频 [How to Get an AI Security Engineer Job](https://www.youtube.com/watch?v=5v2e9k3z2pQ)
+- 📚 文档 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
+- 📚 文档 [OpenAI Cookbook](https://cookbook.openai.com/)
+- 🎓 课程 [DeepLearning.AI 短课程全集](https://www.deeplearning.ai/short-courses/)
 
 ## Demo 练习：FDE 面试准备：知识图谱与模拟面试
 
-整理 28 天的知识体系，构建可视化知识图谱，准备 FDE 面试高频问题与项目展示话术
+面试冲刺：生成知识图谱+模拟面试。把 30 天学的串成可讲的项目链——这才是能拿 offer 的临门一脚。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 复习 | 2.5h |
+| 基础 | 2.5h |
 
 ### 复现步骤
 

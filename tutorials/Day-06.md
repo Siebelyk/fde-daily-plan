@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📝 论文 [RAG 原始论文](https://arxiv.org/abs/2005.11401)
-- 📄 文章 [LangChain RAG 教程](https://python.langchain.com/docs/tutorials/rag/)
-- 📄 文章 [RAG vs 微调如何选](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+- 📝 论文 [RAG 原始论文 (Lewis et al.)](https://arxiv.org/abs/2005.11401)
+- 📄 文章 [Pinecone - RAG 从零讲清](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+- 📚 文档 [LangChain RAG 教程](https://python.langchain.com/docs/tutorials/rag/)
 
 ## Demo 练习：最简 RAG：从零跑通检索增强生成闭环
 
-用 TF-IDF 检索 + mock 生成，实现最简但完整的 RAG 流程，理解每一环作用
+30 行代码跑通 RAG 全闭环。用 OpenAI Embedding + Chroma 向量库，给模型'喂'外部知识——RAG 是 6/6 岗位的必考题。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 基础 | 2h |
+| 入门 | 2h |
 
 ### 复现步骤
 

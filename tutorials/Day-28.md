@@ -16,17 +16,17 @@
 
 ## 推荐资料
 
-- 📚 文档 [企业微信机器人 webhook](https://developer.work.weixin.qq.com/document/path/91770)
-- 📚 文档 [飞书开放平台 API](https://open.feishu.cn/document/)
-- 📚 文档 [飞书多维表格 API](https://open.feishu.cn/document/server-docs/docs/bitable-v1/)
+- 📚 文档 [企业微信开发者文档](https://developer.work.weixin.qq.com/document/path/91770)
+- 📚 文档 [飞书开放平台文档](https://open.feishu.cn/document/)
+- 📚 文档 [飞书多维表格 API](https://open.feishu.cn/document/server-docs/docs/bitable-v1/bitable-overview)
 
 ## Demo 练习：企微推送 + 飞书多维表格集成
 
-实现企业微信机器人推送 + 飞书多维表格数据读写，打通办公链路
+对接企微+飞书多维表格，打通客户已有系统。这是真实交付里高频的集成需求——能接生态才是'落地'。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 2h |
+| 基础 | 2h |
 
 ### 复现步骤
 

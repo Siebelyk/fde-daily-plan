@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📝 论文 [Multi-Agent System Security](https://arxiv.org/abs/2306.06899)
-- 🧩 框架 [AutoGen Multi-Agent Framework](https://microsoft.github.io/autogen/)
-- 🎬 视频 [Multi-Agent Coordination & Security](https://www.youtube.com/watch?v=3r5v8e2k2pZ)
+- 🧩 框架 [LangGraph - 状态化多 Agent 编排](https://langchain-ai.github.io/langgraph/)
+- 🧩 框架 [AutoGen - 微软多 Agent 框架](https://microsoft.github.io/autogen/)
+- 📄 文章 [Anthropic - 构建有效 Agent](https://www.anthropic.com/engineering/building-effective-agents)
 
 ## Demo 练习：多 Agent 协同编排：构建业务工作流
 
-模拟多 Agent 系统，演示攻击者如何通过投毒一个 Agent 的记忆，影响其他协作的 Agent
+多 Agent 协同是交付复杂业务的关键。用 LangGraph 编排'检索-写作-审核'三 Agent 工作流——这是真实业务里最常见的编排模式。
 
 | 难度 | 预计时间 |
 |------|----------|

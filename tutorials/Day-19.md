@@ -20,17 +20,13 @@
 ## 推荐资料
 
 - 📚 文档 [Kubernetes 官方文档](https://kubernetes.io/docs/)
-- 📄 文章 [K8s 部署 LLM 推理服务](https://kubernetes.io/blog/)
 - 🛠 工具 [Helm 包管理](https://helm.sh/)
-- 📚 文档 [Prometheus 监控](https://prometheus.io/docs/)
-- 🛠 工具 [Grafana 可视化](https://grafana.com/)
-- 📄 文章 [LLM 可观测性实践](https://www.datadoghq.com/)
+- 📚 文档 [Prometheus 监控文档](https://prometheus.io/docs/)
+- 📚 文档 [Grafana 可视化文档](https://grafana.com/docs/)
 
 ## Demo 练习：生成 K8s 部署 YAML + 私有化交付清单 + LLM 服务监控：指标导出 + 用量统计 + 成本告警
 
-用脚本生成 LLM 服务的 K8s 部署清单，并输出私有化交付检查清单
-
-**第二部分：** 实现 Prometheus 风格的指标导出，统计 token 用量与成本，触发成本告警
+K8s 部署+监控是生产级标配。生成部署 YAML+Prometheus 采集指标+Grafana 看板——这套是私有化交付的标准件。
 
 | 难度 | 预计时间 |
 |------|----------|

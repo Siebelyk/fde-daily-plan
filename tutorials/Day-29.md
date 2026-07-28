@@ -19,18 +19,13 @@
 
 ## 推荐资料
 
-- 📝 论文 [InstructGPT (RLHF)](https://arxiv.org/abs/2203.02155)
-- 📝 论文 [LoRA 高效微调](https://arxiv.org/abs/2106.09685)
 - 🛠 工具 [LLaMA-Factory 微调框架](https://github.com/hiyouga/LLaMA-Factory)
 - 🛠 工具 [Data-Juicer 语料处理](https://github.com/modelscope/data-juicer)
-- 🛠 工具 [EasyDataset](https://github.com/conardxue/easy-dataset)
-- ☁️ 平台 [PAI-iTag 数据标注](https://www.aliyun.com/product/bigdata/ai)
+- 📝 论文 [LoRA - 低秩微调](https://arxiv.org/abs/2106.09685)
 
 ## Demo 练习：SFT 数据准备 + LoRA 配置 + 微调流程演示 + 语料处理 pipeline + 标注格式转换
 
-构建 SFT 数据集，配置 LoRA 微调参数，演示微调流程（概念演示，无需真训练）
-
-**第二部分：** 实现语料清洗去重脱敏 pipeline，并转换成 SFT/评测两种标注格式
+微调是 1/6 岗位要求。用 LLaMA-Factory 跑 SFT+LoRA，处理语料——虽非主线但了解流程面试能加分。
 
 | 难度 | 预计时间 |
 |------|----------|

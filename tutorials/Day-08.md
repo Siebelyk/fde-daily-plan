@@ -16,13 +16,13 @@
 
 ## 推荐资料
 
-- 📄 文章 [BM25 检索算法](https://www.pinecone.io/learn/bm25/)
-- 📄 文章 [Cross-Encoder 重排](https://www.sbert.net/examples/applications/cross-encoder/)
-- 📝 论文 [Hybrid Retrieval 混合检索](https://arxiv.org/abs/2210.01467)
+- 📄 文章 [Pinecone - BM25 关键词检索](https://www.pinecone.io/learn/bm25/)
+- 📚 文档 [sentence-transformers - Cross-Encoder 重排](https://www.sbert.net/examples/applications/cross-encoder/)
+- 📚 文档 [Cohere Reranker 文档](https://docs.cohere.com/docs/reranking)
 
 ## Demo 练习：混合检索 + 重排 + 引用回溯
 
-实现 BM25+向量混合召回，再用 Cross-Encoder mock 重排，最后输出带引用的答案
+混合检索+重排是生产 RAG 的标配。BM25+向量召回再用 Cross-Encoder 精排，带引用回溯——这套是可交付级检索的核心。
 
 | 难度 | 预计时间 |
 |------|----------|

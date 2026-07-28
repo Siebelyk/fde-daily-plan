@@ -19,22 +19,17 @@
 
 ## 推荐资料
 
-- 📚 文档 [LangChain 官方文档](https://python.langchain.com/docs/get_started/introduction)
-- 📚 文档 [LlamaIndex 文档](https://docs.llamaindex.ai/)
-- 🎓 课程 [LangChain 实战教程](https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/)
-- 📚 文档 [OpenAI - Function Calling Guide](https://platform.openai.com/docs/guides/function-calling)
-- 🎬 视频 [OpenAI - Function Calling Guide](https://www.youtube.com/watch?v=0AEj4loG3Zc)
-- 📄 文章 [Tool Injection Attacks on LLM Agents](https://arxiv.org/abs/2307.03529)
+- 📚 文档 [LangChain 官方文档](https://python.langchain.com/docs/introduction/)
+- 📚 文档 [OpenAI Function Calling 指南](https://platform.openai.com/docs/guides/function-calling)
+- 🎓 课程 [DeepLearning.AI - LangChain for LLM Apps](https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/)
 
 ## Demo 练习：用框架范式构建 Tool Calling Agent + Function Calling 工具开发与安全执行
 
-用 LangChain 核心抽象构建一个能调用多个工具的 Agent（本地 mock，无需真实 API）
-
-**第二部分：** 演示攻击者如何通过注入恶意 function description 或操纵 function 返回值来劫持 LLM 的工具调用
+LangChain 是 4/6 岗位点名要求的框架。用 Function Calling 让模型调用你写的工具，跑通'查天气/查订单'的真实场景。
 
 | 难度 | 预计时间 |
 |------|----------|
-| 进阶 | 约 4.5h |
+| 基础 | 约 4.5h |
 
 ### 复现步骤
 
