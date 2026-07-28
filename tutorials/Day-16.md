@@ -142,6 +142,15 @@ def check_security_config():
 
 ## 真实案例
 真实案例：某 FDE 给客户部署 LLM 服务,先用 HuggingFace TGI 跑,发现并发一上来就排队。换 vLLM 后用 PagedAttention,QPS 从 5 提到 40。**推理引擎选型直接影响服务能扛多少并发,是部署岗必考**。
+
+
+## 面试高频问答
+问:vLLM 和 SGLang 怎么选?
+答:vLLM 生态成熟、PagedAttention 稳定,适合通用部署;SGLang 在结构化生成和复杂程序上更快。通用场景 vLLM,复杂推理 SGLang。
+
+## 简历话术
+- ❌ 弱表述:了解推理引擎部署
+- ✅ 强表述:部署 vLLM 推理服务,PagedAttention 优化 QPS 从 5 到 40;对比 SGLang 选型适配场景
 vLLM 部署交付要点：API 认证 + 速率限制 + 输出过滤 + 日志审计 + 资源隔离，生产加反向代理做 TLS。
 
 ## 进阶挑战

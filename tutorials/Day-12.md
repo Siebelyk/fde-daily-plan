@@ -223,6 +223,15 @@ print(f"Sanitized: {clean}")
 真实案例：某 FDE 用 Function Calling 做了查天气+查订单两个工具,Agent 自动判断该调哪个。客户看到'问天气自动调天气工具,问订单自动调订单工具'觉得很智能。**Function Calling 是让 Agent 真正'能用'的关键,不是只会聊天**。
 
 
+## 面试高频问答
+问:Function Calling 和 ReAct Agent 区别?
+答:Function Calling 是模型原生能力,确定调哪个工具;ReAct 是思维范式,Reason+Act 循环,更灵活但更慢。简单场景用 Function Calling,复杂推理用 ReAct。
+
+## 简历话术
+- ❌ 弱表述:了解LangChain 与 Function Calling
+- ✅ 强表述:用 LangChain 构建 Tool Calling Agent,开发可被 Agent 调用的安全工具,实现参数校验与返回清洗
+
+
 ## 进阶挑战
 
 1. 安装真实 langchain，用 LangChain AgentExecutor 跑通同一个多工具 Agent

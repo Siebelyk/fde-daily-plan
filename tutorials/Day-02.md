@@ -180,6 +180,15 @@ token 边界影响计费与检索效果，交付时需精确估算 token 成本�
 真实案例：某 FDE 在客户现场调 prompt 一直效果差,直到他用 Attention 可视化看到模型把注意力放在了无关词上。把 prompt 里的干扰词删掉后准确率从 70% 升到 88%。**理解模型怎么'看'你的 prompt,调优才有方向,不是瞎试**。
 
 
+## 面试高频问答
+问:Transformer 的 Self-Attention 为什么比 RNN 好?
+答:RNN 串行计算慢且长序列梯度消失;Attention 可以并行计算,且直接建模任意两个位置的关系,长依赖不衰减。
+
+## 简历话术
+- ❌ 弱表述:了解理解 LLM
+- ✅ 强表述:理解 Self-Attention 与 Token 计费机制,能用 Attention 可视化辅助 prompt 调优,具备成本优化意识
+
+
 ## 进阶挑战
 
 1. 尝试用真实 BERT tokenizer 获取 embedding，看 attention 分布是否不同
